@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace 'edu.umich.huiyoo.kotlinJpCChatter'
+    namespace 'michigan.mahjong'
     compileSdk 32
 
     defaultConfig {
-        applicationId "edu.umich.huiyoo.kotlinJpCChatter"
+        applicationId "michigan.mahjong"
         minSdk 31
         targetSdk 32
         versionCode 1
