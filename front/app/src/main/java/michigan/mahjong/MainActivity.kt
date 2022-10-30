@@ -31,10 +31,10 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             val navController = rememberNavController()
-            NavHost(navController, startDestination = "CurrentHandView") {
-//                composable("MainMenuView") {
-//                    MainMenuView(this@MainActivity, navController)
-//                }
+            NavHost(navController, startDestination = "MainMenuView") {
+                composable("MainMenuView") {
+                    MainMenuView(this@MainActivity, navController)
+                }
                 composable("CurrentHandView") {
                     CurrentHandView(this@MainActivity, navController, )
                 }
