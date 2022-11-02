@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">mahjong</string>
+	<string name="ek_img_content">ExportKit Image</string>
+	<string name="mahjong_ai_string">Mahjong AI</string>
+	<string name="text_string">Guidebook</string>
+	<string name="text_ek1_string">Get Started</string>
+</resources>
