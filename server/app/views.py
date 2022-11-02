@@ -7,24 +7,50 @@ import os, time
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 
+def invalidlocation(location):
+    return location != "hand" and location != "discard" and location != "open"
+
 @csrf_exempt
 def getcvresult(request):
     if request.method != 'POST':
-        return HttpResponse(status=400)
-
-    if request.FILES.get("image"):
-        content = request.FILES['image']
-        filename = str(time.time())+".jpeg"
-        fs = FileSystemStorage()
-        filename = fs.save(filename, content)
-        imageurl = fs.url(filename)
-    else:
-        imageurl = No
-    
-
-    return JsonResponse({"imagereturn": "Hello world!"})
-
-def getrecmove(request):
-    if request.method != 'GET':
         return HttpResponse(status=404)
-    return JsonResponse({})
+
+    if not request.FILES.get("image"):
+        print("no image")
+        return HttpResponse(status=500)
+
+    content = request.FILES['image']
+    filename = str(time.time())+".jpeg"
+    fs = FileSystemStorage()
+    filename = fs.save(filename, content)
+    imageurl = fs.url(filename)
+    
+    location  = request.POST.get("location")
+    if invalidlocation(location):
+        print("wrong location")
+        return HttpResponse(status=500)
+
+    # replace tmp value with a call to CV
+    tiles = ["Green Dragon"]
+    fs.delete(filename)
+
+    return JsonResponse({"tile_list": {location: tiles}})
+
+@csrf_exempt
+def getrecmove(request):
+    if request.method != 'POST':
+        return HttpResponse(status=404)
+    json_data = json.loads(request.body)
+    tile_list = json_data["tile_list"]
+    
+    if "open" not in tile_list.keys():
+        return HttpResponse(status=500)
+    
+    for location in tile_list.keys():
+        if invalidlocation(location):
+            return HttpResponse(status=500)
+
+    # replace tmp value with call to GameLogic
+    result = "Green Dragon"
+
+    return JsonResponse({"tile": result})
