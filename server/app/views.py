@@ -43,7 +43,7 @@ def getrecmove(request):
     json_data = json.loads(request.body)
     tile_list = json_data["tile_list"]
     
-    if "open" not in tile_list.keys():
+    if "hand" not in tile_list.keys():
         return HttpResponse(status=500)
     
     for location in tile_list.keys():
