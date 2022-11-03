@@ -83,7 +83,7 @@ fun MenuButtons(navController: NavHostController) {
             Text("AI Mahjong Assistant",
                 fontWeight = FontWeight.Bold,
                 style = TextStyle(fontSize = 44.sp),
-                color = Color(0xFF8351AF)
+                color = Color(0xFFb8b0eb)
                 )
         }
         Spacer(modifier = Modifier.fillMaxHeight(.05f))
@@ -94,9 +94,10 @@ fun MenuButtons(navController: NavHostController) {
             horizontalAlignment = Alignment.CenterHorizontally,
 
         ) {
-            TransparentOutLinedButton({navController.navigate("CurrentHandView")}, "Get Started")
-            Spacer(modifier = Modifier.fillMaxHeight(.02f))
-            TransparentOutLinedButton({}, "Guidebook")
+            Spacer(modifier = Modifier.fillMaxHeight(.2f))
+            TransparentOutLinedButton(navController, "CurrentHandView","Get Started")
+            Spacer(modifier = Modifier.fillMaxHeight(.05f))
+            TransparentOutLinedButton(null, "", "Guidebook")
         }
     }
 
@@ -104,13 +105,13 @@ fun MenuButtons(navController: NavHostController) {
 
 
 @Composable
-fun TransparentOutLinedButton(onClick: () -> Unit = {}, text: String) {
+fun TransparentOutLinedButton(navController: NavHostController?, path: String, text: String) {
 
     Button(
-        onClick = { onClick },
+        onClick = { navController?.navigate(path) },
         border = BorderStroke(0.8.dp, Color(0xff9d8eff), ),
-        colors = ButtonDefaults.outlinedButtonColors(contentColor = Color(0xffe3e535), backgroundColor = Color.Transparent),
-        shape = RoundedCornerShape(10.dp),
+        colors = ButtonDefaults.outlinedButtonColors(contentColor = Color(0xff9d8eff), backgroundColor = Color.Transparent),
+        shape = RoundedCornerShape(20.dp),
         elevation =  ButtonDefaults.elevation(
             defaultElevation = 10.dp,
             pressedElevation = 15.dp,
@@ -118,15 +119,14 @@ fun TransparentOutLinedButton(onClick: () -> Unit = {}, text: String) {
         ),
         contentPadding = PaddingValues(),
         modifier = Modifier
-            .height(40.dp)
-            .width(120.dp)
+            .height(30.dp)
+            .width(140.dp)
             .defaultMinSize(minWidth = 1.dp, minHeight = 1.dp)
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Spacer(modifier = Modifier.size(3.dp))
-            Text(text, fontSize = 14.sp)
+            Text(text, fontSize = 15.sp)
         }
     }
 
