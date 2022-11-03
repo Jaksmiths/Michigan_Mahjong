@@ -31,7 +31,7 @@ def getcvresult(request):
         return HttpResponse(status=500)
 
     # replace tmp value with a call to CV
-    tiles = ["Green Dragon"]
+    tiles = ["Green", "North", "Sou3", "Sou2", "Pin3", "Sou4", "Pin8", "Pin2", "Man1", "Man5", "Pin8", "Man6", "South", "Man3:"]
     fs.delete(filename)
 
     return JsonResponse({"tile_list": {location: tiles}})
