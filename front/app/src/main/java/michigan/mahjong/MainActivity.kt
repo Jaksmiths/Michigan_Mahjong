@@ -31,12 +31,15 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             val navController = rememberNavController()
-            NavHost(navController, startDestination = "MainMenuView") {
+            NavHost(navController, startDestination = "Guidebook") {
                 composable("MainMenuView") {
                     MainMenuView(this@MainActivity, navController)
                 }
                 composable("CurrentHandView") {
-                    CurrentHandView(this@MainActivity, navController, )
+                    CurrentHandView(this@MainActivity, navController)
+                }
+                composable("Guidebook"){
+                    Guidebook(this@MainActivity, navController)
                 }
             }
         }
@@ -53,18 +56,3 @@ class MainActivity : ComponentActivity() {
             Manifest.permission.READ_EXTERNAL_STORAGE))
     }
 }
-
-// @Composable
-/*
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    MahjongTheme {
-        Greeting("Android")
-    }
-}
-*/
