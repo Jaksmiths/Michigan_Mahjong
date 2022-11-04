@@ -37,30 +37,6 @@ fun MainMenuView(context: Context, navController: NavHostController){
     MainBackground()
     MenuButtons(navController)
 
-    /*Column(verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier=Modifier.fillMaxHeight(1f)) {
-        Row(){
-            Text("AI Mahjong Assistant",
-                fontWeight = FontWeight.Bold,
-                style = TextStyle(fontSize = 44.sp),
-                color = Color(0xFF8351AF)
-            )
-        }
-        Spacer(modifier = Modifier.fillMaxHeight(.05f))
-        Column(
-            //horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterHorizontally),
-            verticalArrangement = Arrangement.Center,
-            modifier = Modifier.fillMaxWidth(1f),
-            horizontalAlignment = Alignment.CenterHorizontally,
-
-            ) {
-            TransparentOutLinedButton({navController.navigate("CurrentHandView")}, "Get Started")
-            Spacer(modifier = Modifier.fillMaxHeight(.02f))
-            TransparentOutLinedButton({}, "Guidebook")
-        }
-    }
-    */
 }
 
 
