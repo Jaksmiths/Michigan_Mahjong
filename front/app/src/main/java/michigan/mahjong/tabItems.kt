@@ -15,7 +15,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 
@@ -27,7 +30,7 @@ fun CustomTabs(context: Context, navController: NavHostController) {
     val list = listOf("Rulebook", "Strategy Guide")
 
     TabRow(selectedTabIndex = selectedIndex,
-        backgroundColor = Color(0xff1E76DA),
+        backgroundColor = Color.Transparent,
         modifier = Modifier
             .padding(vertical = 4.dp, horizontal = 8.dp)
             .padding(1.dp),
@@ -39,18 +42,23 @@ fun CustomTabs(context: Context, navController: NavHostController) {
             val selected = selectedIndex == index
             Tab(
                 modifier = if (selected) Modifier
-                    .background(
-                        Color.White
-                    )
-                else Modifier
-                    .background(
-                        Color(
-                            0xff1E76DA
+                    .drawBehind {
+                        val strokeWidth = Stroke.DefaultMiter
+                        val y = size.height - strokeWidth / 2
+
+                        drawLine(
+                            Color.LightGray,
+                            Offset(0f, y),
+                            Offset(size.width, y),
+                            strokeWidth
                         )
-                    ),
+                    }
+                else Modifier,
                 selected = selected,
-                onClick = { selectedIndex = index },
-                text = { Text(text = text, color = Color(0xff6FAAEE)) }
+                onClick = { selectedIndex = index
+                            //navController?.navigate(path)
+                          },
+                text = { Text(text = text, color = Color(0xff9d8eff)) }
             )
         }
     }

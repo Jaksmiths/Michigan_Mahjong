@@ -23,6 +23,7 @@ fun Guidebook(context: Context, navController: NavHostController) {
 
     MainBackground()
     CustomTabs(context, navController)
+    //Rulebook(context, navController)
 
 }
 
@@ -39,7 +40,7 @@ fun Rulebook(context: Context, navController: NavHostController) {
 
     var isRefreshing by remember { mutableStateOf(false) }
 
-    MainBackground()
+    //MainBackground()
     
     //temp
     Column() {
