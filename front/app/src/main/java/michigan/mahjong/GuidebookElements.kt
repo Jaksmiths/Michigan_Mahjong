@@ -115,8 +115,7 @@ fun StrategyGuide(context: Context, navController: NavHostController) {
 fun Rule(text: String) {
     Text(
         modifier = Modifier
-            .padding(5.dp)
-            .background(Color.Gray),
+            .padding(5.dp),
         text = text,
         color = Color.White
     )

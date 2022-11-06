@@ -32,7 +32,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             val navController = rememberNavController()
-            NavHost(navController, startDestination = "Rulebook") {
+            NavHost(navController, startDestination = "MainMenuView") {
                 composable("MainMenuView") {
                     MainMenuView(this@MainActivity, navController)
                 }
