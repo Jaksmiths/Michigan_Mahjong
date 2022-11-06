@@ -29,9 +29,10 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+
         setContent {
             val navController = rememberNavController()
-            NavHost(navController, startDestination = "Guidebook") {
+            NavHost(navController, startDestination = "Rulebook") {
                 composable("MainMenuView") {
                     MainMenuView(this@MainActivity, navController)
                 }
@@ -41,6 +42,10 @@ class MainActivity : ComponentActivity() {
                 composable("Guidebook"){
                     Guidebook(this@MainActivity, navController)
                 }
+                composable("Rulebook"){
+                    Rulebook(this@MainActivity, navController)
+                }
+
             }
         }
         
