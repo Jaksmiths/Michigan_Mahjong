@@ -71,21 +71,20 @@ def if_win(hand):
     shun_num, ke_num = 0, 0
     for tile_type in hand:
         # find shun zi
-        if tile_type == 'character' or tile_type == 'bamboo' or tile_type == 'dots':
+        if tile_type in ['character', 'bamboo', 'dots']:
             type_set = set(hand[tile_type])
-            while len(type_set) >= 3:
-                vlist = sorted(list(type_set))
-                idx = 0
-                while idx < len(vlist):
-                    if vlist[idx + 2] - vlist[idx + 1] == 1 and vlist[idx + 1] - vlist[idx] == 1:
-                        shun_num += 1
-                        hand[tile_type].remove(vlist[idx])
-                        hand[tile_type].remove(vlist[idx + 1])
-                        hand[tile_type].remove(vlist[idx + 2])
-                        idx += 3
-                    else:
-                        idx += 1
-                type_set = set(hand[tile_type])
+            vlist = sorted(list(type_set))
+            idx = 0
+            while idx < len(vlist):
+                if idx + 2 < len(vlist) and vlist[idx + 2] - vlist[idx + 1] == 1 and vlist[idx + 1] - vlist[idx] == 1 \
+                        and vlist[idx] in hand[tile_type] and vlist[idx + 1] in hand[tile_type] and vlist[idx + 2] in hand[tile_type]:
+                    shun_num += 1
+                    hand[tile_type].remove(vlist[idx])
+                    hand[tile_type].remove(vlist[idx + 1])
+                    hand[tile_type].remove(vlist[idx + 2])
+                else:
+                    idx += 1
+
         # find ke zi
         temp = dict(Counter(hand[tile_type]))
         for k, v in temp.items():
@@ -101,39 +100,38 @@ def if_win(hand):
     return False
 
 
-def cardsScore(cards, dark):
-    scores = []
-
-    for c in cards:
-        score = 0
-        for cc in cards:
-            gap = abs(cc - c)
-            if gap < 3:
-                score += para[gap] * scale
-
-        scores.append(score)
-
-    return scores
-
 
 def tile_score(type, tiles):
     lwt_score = 1000000
-    discard_idx = 0
+    discard = None
     para = [10, 2, 1]
     scale = 50
     if type in ['character', 'bamboo', 'dots']:
-        for index, c in enumerate(tiles):
+        temp_tiles = copy.deepcopy(tiles)
+        type_set = set(temp_tiles)
+        vlist = sorted(list(type_set))
+        idx = 0
+        while idx < len(vlist):
+            if idx + 2 < len(vlist) and vlist[idx + 2] - vlist[idx + 1] == 1 and vlist[idx + 1] - vlist[idx] == 1 \
+                    and vlist[idx] in temp_tiles and vlist[idx + 1] in temp_tiles and vlist[idx + 2] in temp_tiles:
+                temp_tiles.remove(vlist[idx])
+                temp_tiles.remove(vlist[idx + 1])
+                temp_tiles.remove(vlist[idx + 2])
+            else:
+                idx += 1
+
+        for index, c in enumerate(temp_tiles):
             score = 0
-            for cc in tiles:
+            for cc in temp_tiles:
                 gap = abs(cc - c)
                 if gap < 3:
                     score += para[gap] * scale
 
             if score < lwt_score:
                 lwt_score = score
-                discard_idx = index
+                discard = c
 
-    return discard_idx, lwt_score
+    return discard, lwt_score
 
 
 def cal_result(hand):
@@ -142,10 +140,10 @@ def cal_result(hand):
     card = None
     for type in hand:
         if hand[type]:
-            discard_idx, lwt_score = tile_score(type, hand[type])
+            discard, lwt_score = tile_score(type, hand[type])
             if score is None or lwt_score < score:
                 score = lwt_score
-                card = type[0] + str(hand[type][discard_idx])
+                card = type[0] + str(discard)
     return score, card
 
 
@@ -154,11 +152,11 @@ if __name__ == '__main__':
 
     hand = read_hand('sample_input.json')
     hand = sort_hand(hand)
+    print("sorted hand: ", hand)
+
     hand2 = copy.deepcopy(hand)
-
     print("win:", if_win(hand))
-
-    print("hand2: ", hand2)
+    print("adjusted hand: ", hand)
 
     score, card = cal_result(hand2)
     print("The best discard from hand is %s with score %d." % (card, score))
