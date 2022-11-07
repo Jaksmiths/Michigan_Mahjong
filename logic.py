@@ -105,7 +105,7 @@ def tile_score(type, tiles):
     lwt_score = 1000000
     discard = None
     para = [10, 2, 1]
-    scale = 50
+    scale = 10
     if type in ['character', 'bamboo', 'dots']:
         temp_tiles = copy.deepcopy(tiles)
         type_set = set(temp_tiles)
@@ -120,6 +120,13 @@ def tile_score(type, tiles):
             else:
                 idx += 1
 
+        temp = dict(Counter(temp_tiles))
+        for k, v in temp.items():
+            if v >= 3:
+                temp_tiles.remove(k)
+                temp_tiles.remove(k)
+                temp_tiles.remove(k)
+
         for index, c in enumerate(temp_tiles):
             score = 0
             for cc in temp_tiles:
@@ -130,20 +137,54 @@ def tile_score(type, tiles):
             if score < lwt_score:
                 lwt_score = score
                 discard = c
-
+    else:
+        temp = dict(Counter(tiles))
+        for k, v in temp.items():
+            score = para[0] * v * scale
+            if score < lwt_score:
+                lwt_score = score
+                discard = k
     return discard, lwt_score
 
 
 def cal_result(hand):
     # Calculate best discard from hand.
+    #
+    thirteen_orphans = ['c1', 'c9', 'b1', 'b9', 'd1', 'd9', 'w1', 'w2', 'w3', 'w4', 'r1', 'r2', 'r3']
+    mapping = {'dragon': 'r', 'wind': 'w', 'character': 'c', 'bamboo': 'b', 'dots': 'd'}
+    total_tiles = []
+    for t, v in hand.items():
+        total_tiles += [mapping[t] + str(i) for i in v]
+    count = 0
+    for o in thirteen_orphans:
+        if o in total_tiles:
+            count += 1
+            total_tiles.remove(o)
+    if count >= 10 and len(total_tiles) > 0:
+        return 100, total_tiles[0]
+
+    total_tiles = []
+    for t, v in hand.items():
+        total_tiles += [mapping[t] + str(i) for i in v]
+    temp = dict(Counter(total_tiles))
+    count = 0
+    for k, v in temp.items():
+        if v == 2 or v == 4:
+            count += v / 2
+            for _ in range(v):
+                total_tiles.remove(k)
+    if count >= 5 and len(total_tiles) > 0:
+        return 100, total_tiles[0]
+
     score = None
     card = None
-    for type in hand:
+
+    for type in ['dragon', 'wind', 'character', 'bamboo', 'dots']:
         if hand[type]:
             discard, lwt_score = tile_score(type, hand[type])
             if score is None or lwt_score < score:
                 score = lwt_score
-                card = type[0] + str(discard)
+                card = mapping[type] + str(discard)
     return score, card
 
 
@@ -152,11 +193,11 @@ if __name__ == '__main__':
 
     hand = read_hand('sample_input.json')
     hand = sort_hand(hand)
-    print("sorted hand: ", hand)
-
     hand2 = copy.deepcopy(hand)
+    print("1st:", hand)
+
     print("win:", if_win(hand))
-    print("adjusted hand: ", hand)
+    print("2nd:", hand)
 
     score, card = cal_result(hand2)
     print("The best discard from hand is %s with score %d." % (card, score))
