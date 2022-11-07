@@ -1,6 +1,6 @@
 import json
-import copy
 from collections import Counter
+import copy
 
 '''
 c1-9 = character 1-9
@@ -99,6 +99,7 @@ def if_win(hand):
     return False
 
 
+
 def tile_score(type, tiles):
     lwt_score = 1000000
     discard = None
@@ -175,15 +176,15 @@ def cal_result(hand):
         return 100, total_tiles[0]
 
     score = None
-    card = None
+    tile = None
 
     for type in ['dragon', 'wind', 'character', 'bamboo', 'dots']:
         if hand[type]:
             discard, lwt_score = tile_score(type, hand[type])
             if score is None or lwt_score < score:
                 score = lwt_score
-                card = mapping[type] + str(discard)
-    return score, card
+                tile = mapping[type] + str(discard)
+    return score, tile
 
 
 if __name__ == '__main__':
@@ -198,4 +199,4 @@ if __name__ == '__main__':
     print("2nd:", hand)
 
     score, tile = cal_result(hand2)
-    print("The best discard from hand is %s with score %d." % (tile, score))
+    print("Best discard: %s (%d)." % (tile, score))
