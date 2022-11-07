@@ -1,7 +1,6 @@
 import json
-from collections import Counter
 import copy
-from turtle import width
+from collections import Counter
 
 '''
 c1-9 = character 1-9
@@ -98,7 +97,6 @@ def if_win(hand):
             if v and len(v) == 2 and v[0] == v[1]:
                 return True
     return False
-
 
 
 def tile_score(type, tiles):
@@ -199,5 +197,5 @@ if __name__ == '__main__':
     print("win:", if_win(hand))
     print("2nd:", hand)
 
-    score, card = cal_result(hand2)
-    print("The best discard from hand is %s with score %d." % (card, score))
+    score, tile = cal_result(hand2)
+    print("The best discard from hand is %s with score %d." % (tile, score))
