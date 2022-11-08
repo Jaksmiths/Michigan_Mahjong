@@ -1,0 +1,145 @@
+[33mcommit d82750b6e60da3a3840be6f1c6b761a02b17e0a2[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: Chloe Goh <chloegoh@umich.edu>
+Date:   Tue Nov 8 17:10:34 2022 -0500
+
+    Add game logic code
+
+[33mcommit bcad1931eeff1e3b89891cdf5c693a4bde5d9b3b[m
+Author: jfguo99 <87000207+jfguo99@users.noreply.github.com>
+Date:   Mon Nov 7 00:09:31 2022 -0500
+
+    Update logic.py
+
+[33mcommit 433e26ebecd1e417c3dec5658623cfdd53ded946[m
+Author: jfguo99 <87000207+jfguo99@users.noreply.github.com>
+Date:   Mon Nov 7 00:03:44 2022 -0500
+
+    Update logic.py
+
+[33mcommit 1b813e20342dc03083eb66019514a62163ce3a59[m
+Author: jfguo99 <87000207+jfguo99@users.noreply.github.com>
+Date:   Mon Nov 7 00:02:09 2022 -0500
+
+    Update logic.py
+
+[33mcommit 473cbdac2a4edd45d13ec4b90755ee9f7bf8091e[m
+Author: jfguo99 <87000207+jfguo99@users.noreply.github.com>
+Date:   Sun Nov 6 22:17:33 2022 -0500
+
+    Update logic.py
+
+[33mcommit 9bf8bf2dbd8c022991d3f458b746ded5bd51687b[m
+Author: jfguo99 <87000207+jfguo99@users.noreply.github.com>
+Date:   Sun Nov 6 21:12:16 2022 -0500
+
+    Add files via upload
+    
+    added basic game logic
+
+[33mcommit bd45b722931a6289b669c7fca2f0f1ed5faf8a82[m
+Author: rayshu <rayshu@umich.edu>
+Date:   Sun Nov 6 11:49:05 2022 -0500
+
+    MainMenuView buttons fixed with icon
+    
+    11/6 11AM Raymen
+
+[33mcommit cbbc3f7f8f5f5830f696db64e278a08cabc10c45[m
+Author: rayshu <rayshu@umich.edu>
+Date:   Sun Nov 6 01:19:49 2022 -0400
+
+    work in progress rulebook scroll design
+    
+    11/6 2AM Raymen
+
+[33mcommit a1eff659b0729b0224f82fe91a9ee80c09ddb25b[m
+Author: rayshu <rayshu@umich.edu>
+Date:   Sat Nov 5 01:23:45 2022 -0400
+
+    work in progress rulebook tabs
+    
+    11/5 2AM Raymen
+
+[33mcommit f585de4dce0ca6606f497f83c5793970240ce62d[m
+Author: rayshu <rayshu@umich.edu>
+Date:   Fri Nov 4 17:45:47 2022 -0400
+
+    work in progress rulebook tabs
+    
+    11/4 6PM Raymen
+
+[33mcommit 1d243c5cd21596a26106952021c9dfa68dc1e54c[m
+Author: rayshu <rayshu@umich.edu>
+Date:   Fri Nov 4 16:45:37 2022 -0400
+
+    work in progess rulebook
+    
+    11/4 5PM Raymen
+
+[33mcommit 344e70390862eb7692b5ab8e8a41c75dcb169a00[m
+Merge: 6c76a69 dbbccd8
+Author: Ubuntu <ubuntu@ip-172-31-35-188.us-east-2.compute.internal>
+Date:   Thu Nov 3 23:58:18 2022 +0000
+
+    Merge branch 'master' of https://github.com/Jaksmiths/Michigan_Mahjong
+
+[33mcommit 6c76a691094b95f02befaced80c42cc1c6e93414[m
+Author: Ubuntu <ubuntu@ip-172-31-35-188.us-east-2.compute.internal>
+Date:   Thu Nov 3 23:57:45 2022 +0000
+
+    added more tiles to the base example
+
+[33mcommit dbbccd8806b411d4ea83d11b6c4fa40f33e08afb[m
+Author: Hui Yoo <huiyoo@umich.edu>
+Date:   Thu Nov 3 18:49:53 2022 -0400
+
+    Moved UI elements from MainMenuView
+
+[33mcommit 8a9d5287fa65290ae154f8fa49257a826ce53c07[m
+Author: Ubuntu <ubuntu@ip-172-31-35-188.us-east-2.compute.internal>
+Date:   Wed Nov 2 22:19:18 2022 +0000
+
+    fixed min req. for recmove
+
+[33mcommit eea41abe918354e3b0c96a380a50b711f3b25a19[m
+Merge: cbb4678 156ceca
+Author: Ubuntu <ubuntu@ip-172-31-35-188.us-east-2.compute.internal>
+Date:   Wed Nov 2 21:35:27 2022 +0000
+
+    Merge server and github
+
+[33mcommit cbb4678fd293f3071d043b11146264313bc494c1[m
+Author: Ubuntu <ubuntu@ip-172-31-35-188.us-east-2.compute.internal>
+Date:   Wed Nov 2 21:35:10 2022 +0000
+
+    modified APIs, cleaned media folder
+
+[33mcommit 156cecab89a3d06106a30358975f4adea4d1f6a8[m
+Author: rayshu <rayshu@umich.edu>
+Date:   Sun Oct 30 02:19:59 2022 -0400
+
+    MainMenuView layout complete
+
+[33mcommit 56b928c96c34a2c257e8601e52c8246e1a92338d[m
+Author: Hui Yoo <huiyoo@umich.edu>
+Date:   Sat Oct 29 21:25:34 2022 -0400
+
+    Basic CurrentHand Screen Implementation
+
+[33mcommit 9ae8902f752828e6b262600b2993aef018c8c2f4[m
+Author: Hui Yoo <huiyoo@umich.edu>
+Date:   Fri Oct 28 20:37:04 2022 -0400
+
+    Front-end start
+
+[33mcommit 2109364a65c60d1945f68bbe3814a6008213844b[m
+Author: Ubuntu <ubuntu@ip-172-31-35-188.us-east-2.compute.internal>
+Date:   Thu Oct 27 02:02:21 2022 +0000
+
+    finished server and beginning API
+
+[33mcommit fb9edadc90724920ceb779cc6924a4c958332ab5[m
+Author: Jaksmiths <jaksmith@umich.edu>
+Date:   Wed Oct 26 19:45:09 2022 -0400
+
+    server pem added
