@@ -6,6 +6,7 @@ import json
 import os, time
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
+from .logic import cal_result
 
 def invalidlocation(location):
     return location != "hand" and location != "discard" and location != "open"
@@ -51,6 +52,6 @@ def getrecmove(request):
             return HttpResponse(status=500)
 
     # replace tmp value with call to GameLogic
-    result = "Green Dragon"
+    score, tile = cal_result(tile_list["hand"])
 
-    return JsonResponse({"tile": result})
+    return JsonResponse({"tile": tile})
