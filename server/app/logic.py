@@ -153,6 +153,7 @@ def cal_result(hand, discard=None, open=None):
     hand2 = copy.deepcopy(hand)
     print("Sort : ",hand)
     if if_win(hand2):
+        print("Reslt: ", "winned")
         return ""
     thirteen_orphans = ['c1', 'c9', 'b1', 'b9', 'd1', 'd9', 'w1', 'w2', 'w3', 'w4', 'r1', 'r2', 'r3']
     mapping = {'dragon': 'r', 'wind': 'w', 'character': 'c', 'bamboo': 'b', 'dots': 'd'}
@@ -212,5 +213,5 @@ def out_format(out_tile):
 
 if __name__ == '__main__':
 
-    hand = ["1p", "2p", "3p", "5s", "5s", "5s", "1z", "1z", "1z", "6z", "6z", "6z", "5z", "6z"]
+    hand = ["1p", "2p", "3p", "5s", "5s", "5s", "1z", "1z", "1z", "6z", "6z", "6z", "5z", "5z"]
     cal_result(hand)
