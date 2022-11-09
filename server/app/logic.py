@@ -191,8 +191,8 @@ def cal_result(hand, discard=None, open=None):
                 tile = mapping[type] + str(discard)
 
     tile = out_format(tile)
-    print("Reslt: ", tile)
-    return score, tile
+    print("Reslt: ", tile, score)
+    return tile
 
 def out_format(out_tile):
     if out_tile[0] in ['c', 'b', 'd']:
@@ -212,5 +212,5 @@ def out_format(out_tile):
 
 if __name__ == '__main__':
 
-    hand = ["4z", "2z", "3s", "2s", "3p", "4s", "8p", "2p", "1m", "5m", "8p", "6m", "5z", "3m"]
-    score, tile = cal_result(hand)
+    hand = ["1p", "2p", "3p", "5s", "5s", "5s", "1z", "1z", "1z", "6z", "6z", "6z", "5z", "5z"]
+    cal_result(hand)
