@@ -26,16 +26,16 @@ def getcvresult(request):
     filename = fs.save(filename, content)
     imageurl = fs.url(filename)
     
-    location  = request.POST.get("location")
-    if invalidlocation(location):
-        print("wrong location")
-        return HttpResponse(status=500)
+    #location  = request.POST.get("location")
+    #if invalidlocation(location):
+    #    print("wrong location")
+    #    return HttpResponse(status=500)
 
     # replace tmp value with a call to CV
-    tiles = ["Green", "North", "Sou3", "Sou2", "Pin3", "Sou4", "Pin8", "Pin2", "Man1", "Man5", "Pin8", "Man6", "South", "Man3:"]
+    tiles = ["4z", "2z", "3s", "2s", "3p", "4s", "8p", "2p", "1m", "5m", "8p", "6m", "5z", "3m"]
     fs.delete(filename)
 
-    return JsonResponse({"tile_list": {location: tiles}})
+    return JsonResponse({"tile_list": tiles})
 
 @csrf_exempt
 def getrecmove(request):
@@ -52,6 +52,6 @@ def getrecmove(request):
             return HttpResponse(status=500)
 
     # replace tmp value with call to GameLogic
-    score, tile = cal_result(tile_list["hand"])
+    #score, tile = cal_result(tile_list["hand"])
 
-    return JsonResponse({"tile": tile})
+    return JsonResponse({"tile": "4z", "score": 15})
