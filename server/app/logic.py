@@ -15,14 +15,6 @@ import copy
 7z = Red
 '''
 
-
-def read_hand(filename):
-    # Read hand from json file.
-    with open(filename, "r") as read_file:
-        data = json.load(read_file)
-    return data['tile_list']['hand']
-
-
 def sort_hand(hand):
     # Sort hand tile in to different list.
     character = []
@@ -108,8 +100,6 @@ def if_win(hand):
                 return True
     return False
 
-
-
 def tile_score(type, tiles):
     lwt_score = 1000000
     discard = None
@@ -156,9 +146,14 @@ def tile_score(type, tiles):
     return discard, lwt_score
 
 
-def cal_result(hand):
+def cal_result(hand, discard=None, open=None):
     # Calculate best discard from hand.
-    #
+    print("Input: ", hand)
+    hand = sort_hand(hand)
+    hand2 = copy.deepcopy(hand)
+    print("Sort : ",hand)
+    if if_win(hand2):
+        return ""
     thirteen_orphans = ['c1', 'c9', 'b1', 'b9', 'd1', 'd9', 'w1', 'w2', 'w3', 'w4', 'r1', 'r2', 'r3']
     mapping = {'dragon': 'r', 'wind': 'w', 'character': 'c', 'bamboo': 'b', 'dots': 'd'}
     total_tiles = []
@@ -194,6 +189,9 @@ def cal_result(hand):
             if score is None or lwt_score < score:
                 score = lwt_score
                 tile = mapping[type] + str(discard)
+
+    tile = out_format(tile)
+    print("Reslt: ", tile)
     return score, tile
 
 def out_format(out_tile):
@@ -203,26 +201,16 @@ def out_format(out_tile):
         out_tile = out_tile.replace('d', 'p')
         out_tile = out_tile[1]+out_tile[0]
     else:
-        out_tile.replace('w1', '1z')
-        out_tile.replace('w2', '2z')
-        out_tile.replace('w3', '3z')
-        out_tile.replace('w4', '4z')
-        out_tile.replace('r1', 'z5')
-        out_tile.replace('r2', 'z6')
-        out_tile.replace('r3', 'z7')
+        out_tile = out_tile.replace('w1', '1z')
+        out_tile = out_tile.replace('w2', '2z')
+        out_tile = out_tile.replace('w3', '3z')
+        out_tile = out_tile.replace('w4', '4z')
+        out_tile = out_tile.replace('r1', 'z5')
+        out_tile = out_tile.replace('r2', 'z6')
+        out_tile = out_tile.replace('r3', 'z7')
     return out_tile
 
 if __name__ == '__main__':
-    a = "123"
-    print(a.replace('12', '45'))
 
-    hand = read_hand('sample_input.json')
-    hand = sort_hand(hand)
-    hand2 = copy.deepcopy(hand)
-    print("1st:", hand)
-
-    print("win:", if_win(hand))
-    print("2nd:", hand)
-
-    score, tile = cal_result(hand2)
-    print("Best discard: %s (%d)." % (out_format(tile), score))
+    hand = ["4z", "2z", "3s", "2s", "3p", "4s", "8p", "2p", "1m", "5m", "8p", "6m", "5z", "3m"]
+    score, tile = cal_result(hand)
