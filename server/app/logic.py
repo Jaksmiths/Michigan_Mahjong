@@ -205,12 +205,12 @@ def out_format(out_tile):
         out_tile = out_tile.replace('w2', '2z')
         out_tile = out_tile.replace('w3', '3z')
         out_tile = out_tile.replace('w4', '4z')
-        out_tile = out_tile.replace('r1', 'z5')
-        out_tile = out_tile.replace('r2', 'z6')
-        out_tile = out_tile.replace('r3', 'z7')
+        out_tile = out_tile.replace('r1', '5z')
+        out_tile = out_tile.replace('r2', '6z')
+        out_tile = out_tile.replace('r3', '7z')
     return out_tile
 
 if __name__ == '__main__':
 
-    hand = ["1p", "2p", "3p", "5s", "5s", "5s", "1z", "1z", "1z", "6z", "6z", "6z", "5z", "5z"]
+    hand = ["1p", "2p", "3p", "5s", "5s", "5s", "1z", "1z", "1z", "6z", "6z", "6z", "5z", "6z"]
     cal_result(hand)
