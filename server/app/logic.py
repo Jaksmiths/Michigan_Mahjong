@@ -3,11 +3,16 @@ from collections import Counter
 import copy
 
 '''
-c1-9 = character 1-9
-b1-9 = bamboo 1-9
-d1-9 = dots 1-9
-w1 = East, w2 = West, w3 = South, w4 = North
-r1 = Red, r2 = green, r3 = white
+1-9m = 1-9 man
+1-9s = 1-9 Sou
+1-9p = 1-9 Pin
+1z = East
+2z = South
+3z = West
+4z = North
+5z = White
+6z = Green
+7z = Red
 '''
 
 
@@ -15,7 +20,7 @@ def read_hand(filename):
     # Read hand from json file.
     with open(filename, "r") as read_file:
         data = json.load(read_file)
-    return data['tilelist']
+    return data['tile_list']['hand']
 
 
 def sort_hand(hand):
@@ -26,16 +31,21 @@ def sort_hand(hand):
     wind = []
     dragon = []
     for tile in hand:
-        if tile[0] == 'c':
-            character.append(int(tile[1]))
-        elif tile[0] == 'b':
-            bamboo.append(int(tile[1]))
-        elif tile[0] == 'd':
-            dots.append(int(tile[1]))
-        elif tile[0] == 'w':
-            wind.append(int(tile[1]))
-        elif tile[0] == 'r':
-            dragon.append(int(tile[1]))
+        if tile[1] == 'm':
+            character.append(int(tile[0]))
+        elif tile[1] == 's':
+            bamboo.append(int(tile[0]))
+        elif tile[1] == 'p':
+            dots.append(int(tile[0]))
+        elif tile[1] == 'z':
+            if tile[0] in ['1', '2', '3', '4']:
+                wind.append(int(tile[0]))
+            elif tile[0] == '5':
+                dragon.append(1)
+            elif tile[0] == '6':
+                dragon.append(2)
+            elif tile[0] == '7':
+                dragon.append(3)
     thisdict = {
         "character": character,
         "bamboo": bamboo,
@@ -186,9 +196,25 @@ def cal_result(hand):
                 tile = mapping[type] + str(discard)
     return score, tile
 
+def out_format(out_tile):
+    if out_tile[0] in ['c', 'b', 'd']:
+        out_tile = out_tile.replace('c', 'm')
+        out_tile = out_tile.replace('b', 's')
+        out_tile = out_tile.replace('d', 'p')
+        out_tile = out_tile[1]+out_tile[0]
+    else:
+        out_tile.replace('w1', '1z')
+        out_tile.replace('w2', '2z')
+        out_tile.replace('w3', '3z')
+        out_tile.replace('w4', '4z')
+        out_tile.replace('r1', 'z5')
+        out_tile.replace('r2', 'z6')
+        out_tile.replace('r3', 'z7')
+    return out_tile
 
 if __name__ == '__main__':
-    print('- - - Start - - -')
+    a = "123"
+    print(a.replace('12', '45'))
 
     hand = read_hand('sample_input.json')
     hand = sort_hand(hand)
@@ -199,4 +225,4 @@ if __name__ == '__main__':
     print("2nd:", hand)
 
     score, tile = cal_result(hand2)
-    print("Best discard: %s (%d)." % (tile, score))
+    print("Best discard: %s (%d)." % (out_format(tile), score))
