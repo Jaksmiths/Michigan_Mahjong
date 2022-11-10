@@ -7,6 +7,8 @@ import os, time
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 from .logic import cal_result
+from .inference import get_tiles
+
 
 def invalidlocation(location):
     return location != "hand" and location != "discard" and location != "open"
@@ -32,7 +34,8 @@ def getcvresult(request):
     #    return HttpResponse(status=500)
 
     # replace tmp value with a call to CV
-    tiles = ["4z", "2z", "3s", "2s", "3p", "4s", "8p", "2p", "1m", "5m", "8p", "6m", "5z", "3m"]
+    # REMOVE tiles = ["4z", "2z", "3s", "2s", "3p", "4s", "8p", "2p", "1m", "5m", "8p", "6m", "5z", "3m"]
+    tiles = get_tiles("/home/ubuntu/Michigan_Mahjong/server/media/" + filename)
     fs.delete(filename)
 
     return JsonResponse({"tile_list": tiles})
@@ -52,6 +55,6 @@ def getrecmove(request):
             return HttpResponse(status=500)
 
     # replace tmp value with call to GameLogic
-    #score, tile = cal_result(tile_list["hand"])
+    tile = cal_result(tile_list["hand"])
 
-    return JsonResponse({"tile": "4z", "score": 15})
+    return JsonResponse({"tile": tile})
