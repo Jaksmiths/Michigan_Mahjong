@@ -49,7 +49,7 @@ fun CustomTabs(context: Context, navController: NavHostController) {
                         val y = size.height - strokeWidth / 2
 
                         drawLine(
-                            Color.LightGray,
+                            Color(0xff9d8eff),
                             Offset(0f, y),
                             Offset(size.width, y),
                             strokeWidth
