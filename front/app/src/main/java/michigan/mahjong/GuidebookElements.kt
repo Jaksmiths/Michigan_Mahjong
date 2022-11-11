@@ -102,21 +102,21 @@ Adanced Mechanics
 
             Spacer(modifier = Modifier.height(10.dp))
             Rule("Introduction", stringResource(R.string.rule_intro), null)
-            Rule("Tiles", stringResource(R.string.rule1),R.drawable.all_tiles_display)
-            Rule("Basic Mechanics", stringResource(R.string.rule2), R.drawable.tile_hand)
-            Rule("Winning", stringResource(R.string.rule3), R.drawable.tile_combo)
-            Rule("Basic Yaku - Tanyao (All Simples)", stringResource(R.string.rule4),
+            Rule("Tiles", stringResource(R.string.rule_tiles),R.drawable.all_tiles_display)
+            Rule("Basic Mechanics", stringResource(R.string.rule_basic), R.drawable.tile_hand)
+            Rule("Winning", stringResource(R.string.rule_win), R.drawable.tile_combo)
+            Rule("Basic Yaku - Tanyao (All Simples)", stringResource(R.string.rule_tanyao),
                 R.drawable.tiles_tanyao)
-            Rule("Basic Yaku - Yakuhai", stringResource(R.string.rule5),
+            Rule("Basic Yaku - Yakuhai", stringResource(R.string.rule_yakuhai),
                 R.drawable.tiles_yakuhai)
-            Rule("Basic Yaku - Riichi", stringResource(R.string.rule6), null)
+            Rule("Basic Yaku - Riichi", stringResource(R.string.rule_riichi), null)
             Rule("Advanced Mechanics", stringResource(R.string.rule_advanced), null)
-            Rule("Open Tiles - Chii, Pon, Kan", stringResource(R.string.rule7),
+            Rule("Open Tiles - Chii, Pon, Kan", stringResource(R.string.rule_open),
                 R.drawable.tiles_open)
-            Rule("Furiten", stringResource(R.string.rule8), null)
-            Rule("Yaku - Tsumo", stringResource(R.string.rule9), null)
-            Rule("Yaku - Pinfu", stringResource(R.string.rule10), null)
-            Rule("Yaku - Ippatsu", stringResource(R.string.rule11), null)
+            Rule("Furiten", stringResource(R.string.rule_furiten), null)
+            Rule("Yaku - Tsumo", stringResource(R.string.rule_tsumo), null)
+            Rule("Yaku - Pinfu", stringResource(R.string.rule_pinfu), null)
+            Rule("Yaku - Ippatsu", stringResource(R.string.rule_ippatsu), null)
         }
     }
 
