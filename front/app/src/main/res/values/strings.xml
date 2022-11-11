@@ -5,4 +5,101 @@
 	<string name="mahjong_ai_string">Mahjong AI</string>
 	<string name="text_string">Guidebook</string>
 	<string name="text_ek1_string">Get Started</string>
+	<string name="rule_intro">
+		Welcome player! You never played Mahjong before?
+		You are experienced but need a refresher?
+		This guidebook can help you through!</string>
+	<string name="rule1">
+		Mahjong consists of 34 different tiles.
+		 For each tile, there are 4 of them, so there are a total of 136 tiles.
+		 They belong to 5 groups: Man, Pin, Sou, Wind and Dragon.
+		 Man, Pin, and Sou each have 9 distinct tiles in their suit, numbered 1 through 9.
+		 Wind has 4 distinct tiles in its suit classified as North, East, South, and West
+		 and Dragon has 3 distinct tiles in its suit classified as Red, Green and White.
+		 The 7 Wind and Dragon together are known as Honors.
+	</string>
+	<string name="rule2">
+		When a game starts, a player will have 13 tiles in hand that are hidden to other players.
+		 Every time it is your turn, you will draw a tile, making your hand total 14 tiles.
+		 You will then have to one of the 14 tiles into the discard pile. This process allows
+		 you to change the composition of the tiles in your hand.
+	</string>
+	<string name="rule3">
+		In order to win a round of the game, you must get a winning hand. You get a winning hand
+		 when the 14 tiles you consists of sequences, triplets, and pairs. When you have 13 tiles
+		 and only need one more tile to win, your hand is called Tenpai (Ready Hand).
+		 Additionally, a winning hand must have a Yaku, which is a specific condition for tile
+		 patterns your Tenpai and winning hand must meet.
+		\n\n
+		Pairs are a set of two identical tiles. Triples are a set of three identical tiles.
+		 Sequences are a set of three consecutive tiles from the same group. Usually,
+		 you win when your hand consists of four sequences or triplets and a pair.
+	</string>
+	<string name="rule4">
+		Tanyao means you must not hold any Terminal tiles or Honor tiles in your hand.
+		 Terminal tiles are tiles 1 and 9 of the Man, Pin, and Sou groups and Honor tiles
+		 are from the Wind and Dragon groups.
+	</string>
+	<string name="rule5">
+		Yakuhai refers to having one of the following Triplets:
+		Dragon Tiles, Prevalent Wind and Seat Wind.\n\n
+		Having a triplet of Red, Green or White can be used as Yaku.
+		At the beginning of each round, a wind is assigned to the round and each player.
+		Prevalent Wind is three Wind tiles from the current wind type of the round,
+		East Wind for East Round, South Wind for South Round, and West Wind for West Round.
+		Similarly, Seat Wind is three Wind tiles from of own your player,
+		East Wind for East Player, South Wind for South Player, West Wind for West Player,
+		and North Wind for North Player.
+	</string>
+	<string name="rule6">
+		Riichi is the distinguishing part of this game and namesake mechanic.\n\n
+		Riichi can be declared by a player when the player has Tenpai and at Menzenchin (Closed Hand),
+		meaning that player did not steal any tiles (Chii, Pon, Kan). By declaring Riichi, a player
+		cannot change the content of their hand with the exception of declaring certain closed quads.
+		A player can also decide not to declare Riichi, in which case the player would continue
+		playing as normal.\n\n
+		When calling Riichi, a player must declare before discarding their tile, place 1000 points
+		stick out, and turn the tile sideways when they discard. The player then continues on
+		autopilot until picking up the winning tile. The advantages of Riichi is one Yaku,
+		increasing the value of the hand and allows the winner to receive any 1000 point stick.
+	</string>
+	<string name="rule_advanced">
+		There are 42 Yakus total and various other mechanics.
+	</string>
+	<string name="rule7">
+		Each player discards unwanted tiles to the discard pile. You can steal those discarded
+		tiles in certain circumstances. Upon stealing a tile and forming a valid combination,
+		the stolen tile and tiles from your hand that make the combination are open, meaning
+		they are displayed out to the other players. Your hand is no longer Menzenchin.\n\n
+		Chii is called to steal from the player who last discarded (player on your left)
+		in order to form a valid Sequence with two tiles from your hand.\n\n
+		Pon is called to complete a Triplet with two tiles in your hand. You can call
+		Pon on any player that discards.\n\n
+		Kan is called to complete a Quad, which is four identical tiles. You can call
+		Kan when you have a Triplet in your hand on any player that discards and can also call
+		Kan when you draw the fourth tile to complete an existing Triplet.\n\n
+		Open tiles will be displayed with one tile turned sideways like such.
+	</string>
+	<string name="rule8">
+		When a player is in a state of Furiten, the player cannot declare a winning hand from
+		another player\'s discards meaning the player in Furiten can only win from self drawn tiles.
+		There are three Furiten states: Discard Furiten, Temporary Furiten, and Riichi Furiten.\n\n
+		Discard Furiten occurs when a player discared any potential winning tiles from their
+		current hand.\n\n
+		Temporary Furiten occurs to a player for a turn if a winning tile was discarded and the
+		player did not call it. Temporary Furiten ends after the player discards a tile.\n\n
+		Riichi Furiten occurs when a player declares Riichi and does not call a potential winning
+		tile that was discarded after declaration.
+	</string>
+	<string name="rule9">
+		Tsumo refers to winning a hand by drawing the winning tile while the player has Menzenchin.
+	</string>
+	<string name="rule10">
+		Pinfu refers to winning a hand with four Sequences and one non-Yakuhai Pair, with the
+		potential winning tiles must be from the side of a Sequence, while the player has Menzenchin.
+	</string>
+	<string name="rule11">
+		Ippatsu refers to winning within one turn after declaring Riichi, and no draws or discards
+		are interrupted by tile calls during that turn.
+	</string>
 </resources>
