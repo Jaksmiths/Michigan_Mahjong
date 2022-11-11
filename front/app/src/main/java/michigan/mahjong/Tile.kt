@@ -1,6 +1,6 @@
 package michigan.mahjong
 
-class Tile(var name: String? = null) {
+class Tile(var name: String = "") {
 }
 
 //

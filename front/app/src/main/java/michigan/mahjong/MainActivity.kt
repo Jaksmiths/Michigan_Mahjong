@@ -1,37 +1,32 @@
 package michigan.mahjong
 
 import android.Manifest
-import android.app.Application
-import android.media.Image
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.viewModels
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.runtime.*
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
-import androidx.lifecycle.AndroidViewModel
-import androidx.navigation.NavType
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.navigation.compose.rememberNavController
+import java.io.File
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.navArgument
-import androidx.navigation.compose.rememberNavController
 
 class MainActivity : ComponentActivity() {
+
+    private lateinit var fileOutputDirectory: File
+    private lateinit var cameraExecutor: ExecutorService
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContent {
             val navController = rememberNavController()
-            NavHost(navController, startDestination = "Guidebook") {
+            NavHost(navController, startDestination = "CurrentHandView") {
                 composable("MainMenuView") {
                     MainMenuView(this@MainActivity, navController)
                 }
@@ -41,18 +36,63 @@ class MainActivity : ComponentActivity() {
                 composable("Guidebook"){
                     Guidebook(this@MainActivity, navController)
                 }
-            }
-        }
-        
-        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions())
-        { granted ->
-            granted.forEach{
-                if (!it.value) {
-                    toast("${it.key} Access denied")
-                    finish()
+                composable("CameraView"){
+                    CameraView(
+                        this@MainActivity,
+                        navController,
+                        outputDirectory = fileOutputDirectory,
+                        executor = cameraExecutor,
+                    ) { Log.e("kilo", "View error:", it) }
                 }
             }
-        }.launch(arrayOf(Manifest.permission.CAMERA,
-            Manifest.permission.READ_EXTERNAL_STORAGE))
+        }
+
+        requestCameraPermission()
+
+        fileOutputDirectory = getOutputDirectory()
+        cameraExecutor = Executors.newSingleThreadExecutor()
+    }
+
+    private fun requestCameraPermission() {
+        when {
+            ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.CAMERA
+            ) == PackageManager.PERMISSION_GRANTED -> {
+                Log.i("kilo", "Permission previously granted")
+            }
+
+            ActivityCompat.shouldShowRequestPermissionRationale(
+                this,
+                Manifest.permission.CAMERA
+            ) -> Log.i("kilo", "Show camera permissions dialog")
+
+            else -> requestPermissionLauncher.launch(Manifest.permission.CAMERA)
+        }
+    }
+
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        if (isGranted) {
+            Log.i("kilo", "Permission granted")
+        } else {
+            Log.i("kilo", "Permission denied")
+            toast("Please allow camera access to utilize app")
+            finish()
+        }
+    }
+
+    private fun getOutputDirectory(): File {
+        val mediaDir = externalMediaDirs.firstOrNull()?.let {
+            File(it, resources.getString(R.string.app_name)).apply { mkdirs() }
+        }
+
+        return if (mediaDir != null && mediaDir.exists()) mediaDir else filesDir
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        cameraExecutor.shutdown()
     }
 }
