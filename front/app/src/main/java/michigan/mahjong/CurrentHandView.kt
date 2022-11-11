@@ -1,9 +1,12 @@
 package michigan.mahjong
 
 import android.content.Context
+import android.net.Uri
 import android.util.Log
+import androidx.activity.compose.ManagedActivityResultLauncher
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.DrawableRes
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
@@ -27,6 +30,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.draw.clip
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
+import michigan.mahjong.TileStore.cvresult
 import michigan.mahjong.TileStore.discard
 import michigan.mahjong.TileStore.recmove
 import michigan.mahjong.TileStore.reset
@@ -36,6 +40,18 @@ import michigan.mahjong.TileStore.setup
 fun CurrentHandView(context: Context, navController: NavHostController, apiSent: Boolean = false) {
 
     var isLaunching by rememberSaveable { mutableStateOf(true) }
+
+    val imagePicker = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent(),
+        onResult = { uri ->
+            if (uri != null) {
+                Log.i("kilo", "Gallery")
+                MainScope().launch {
+                    cvresult(context, uri)
+                }
+            }
+        }
+    )
 
     LaunchedEffect(Unit) {
         if (isLaunching) {
@@ -51,44 +67,51 @@ fun CurrentHandView(context: Context, navController: NavHostController, apiSent:
 //    systemUiController.isSystemBarsVisible = false // Status & Navigation bars
 
     MainBackground()
-    MainButtons(navController)
 
+    Crossfade(targetState = TileStore.isLoading.value) { loading ->
+        when (loading) {
+            true-> LoadingAnimation()
+            false -> {
 
-    Column(
-        verticalArrangement = Arrangement.Bottom,
-        modifier = Modifier.fillMaxHeight()
-    ) {
-        Row(
-            horizontalArrangement = Arrangement.End,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Column() {
-                if (discard.value != null) {
-                    ResetButton()
+                MainButtons(navController, imagePicker)
+
+                Column(
+                    verticalArrangement = Arrangement.Bottom,
+                    modifier = Modifier.fillMaxHeight()
+                ) {
+                    Row(
+                        horizontalArrangement = Arrangement.End,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Column() {
+                            if (discard.value != null) {
+                                ResetButton()
+                                Spacer(modifier = Modifier.size(12.dp))
+                            }
+                            CalculateButton()
+                        }
+                        Spacer(modifier = Modifier.size(12.dp))
+                    }
                     Spacer(modifier = Modifier.size(12.dp))
+                    Row(
+                        horizontalArrangement = Arrangement.SpaceEvenly,
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        for (tile in tiles) {
+                            TileButton(tile.name, navController)
+                        }
+                    }
+                    Spacer(modifier = Modifier.size(10.dp))
                 }
-                CalculateButton()
-            }
-            Spacer(modifier = Modifier.size(12.dp))
-        }
-        Spacer(modifier = Modifier.size(12.dp))
-        Row(
-            horizontalArrangement = Arrangement.SpaceEvenly,
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            for (tile in tiles) {
-                TileButton(tile.name, navController)
-            }
-        }
-        Spacer(modifier = Modifier.size(10.dp))
-    }
 
-    Row(
-        horizontalArrangement = Arrangement.End,
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        GuideButton(navController)
+                Row(
+                    horizontalArrangement = Arrangement.End,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    GuideButton(navController)
+                }}
+        }
     }
 }
 //0xFF202325
@@ -292,7 +315,7 @@ fun MainBackground(
 
 
 @Composable
-fun MainButtons(navController: NavHostController) {
+fun MainButtons(navController: NavHostController, imagePicker: ManagedActivityResultLauncher<String, Uri?>) {
     Column(verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier=Modifier.fillMaxHeight()) {
@@ -307,7 +330,7 @@ fun MainButtons(navController: NavHostController) {
                     navController,
                     "CameraView"
                 )
-                TransparentOutLinedButton("Gallery", R.drawable.folder_alt)
+                TransparentOutLinedButton("Gallery", R.drawable.folder_alt, onClick = { imagePicker.launch("image/*") })
                 TransparentOutLinedButton(
                     "Reset",
                     R.drawable.reset_alt,

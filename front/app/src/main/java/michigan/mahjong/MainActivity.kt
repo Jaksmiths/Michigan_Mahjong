@@ -67,24 +67,34 @@ class MainActivity : ComponentActivity() {
                 Log.i("kilo", "Permission previously granted")
             }
 
+            ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            ) == PackageManager.PERMISSION_GRANTED -> {
+                Log.i("kilo", "Permission previously granted")
+            }
+
             ActivityCompat.shouldShowRequestPermissionRationale(
                 this,
                 Manifest.permission.CAMERA
             ) -> Log.i("kilo", "Show camera permissions dialog")
 
-            else -> requestPermissionLauncher.launch(Manifest.permission.CAMERA)
+            ActivityCompat.shouldShowRequestPermissionRationale(
+                this,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            ) -> Log.i("kilo", "Show external storage permissions dialog")
+
+            else -> requestPermissionLauncher.launch(arrayOf(Manifest.permission.CAMERA,
+                Manifest.permission.READ_EXTERNAL_STORAGE))
         }
     }
 
-    private val requestPermissionLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) { isGranted ->
-        if (isGranted) {
-            Log.i("kilo", "Permission granted")
-        } else {
-            Log.i("kilo", "Permission denied")
-            toast("Please allow camera access to utilize app")
-            finish()
+    private val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { results ->
+        results.forEach {
+            if (!it.value) {
+                toast("Please allow ${it.key} access to utilize app")
+                finish()
+            }
         }
     }
 
