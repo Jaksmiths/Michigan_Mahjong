@@ -113,8 +113,7 @@ object TileStore: CoroutineScope by MainScope() {
                         JSONArray()
                     }
                     reset()
-
-                    for (i in 0 until tilesReceived.length()) {
+                    for (i in 0 until minOf(tilesReceived.length(), 14)) {
                         val tileEntry = tilesReceived[i] as String
                         _tiles[i].name = tileEntry
                     }
@@ -143,6 +142,9 @@ object TileStore: CoroutineScope by MainScope() {
                 "hand" to tileNameArray
             )
         )
+
+        Log.i("kilo", jsonObj.toString())
+
         val requestBody = JSONObject(jsonObj).toString().toRequestBody("application/json".toMediaType())
 
         lateinit var response: Response<ResponseBody>
@@ -155,6 +157,7 @@ object TileStore: CoroutineScope by MainScope() {
                 } catch (e: JSONException) {
                     null
                 }
+                Log.i("kilo", tileReceived.toString())
 
                 discard.value = tileReceived.toString()
             }

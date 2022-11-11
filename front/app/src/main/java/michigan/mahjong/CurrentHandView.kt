@@ -152,7 +152,7 @@ fun DiscardInfo() {
                     )
                 }
                 Column {
-                    Text("Optimal Discard:", color = Color(0xFFFEFEFE), fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                    Text(if (discard.value == "") "Winning Hand!" else "Optimal Discard:", color = Color(0xFFFEFEFE), fontSize = 20.sp, fontWeight = FontWeight.Bold)
                     Text(getIconName(discard.value ?: ""), color = Color(0xFF969B9D), fontSize = 15.sp, fontWeight = FontWeight.Bold)
                 }
             }
@@ -162,7 +162,7 @@ fun DiscardInfo() {
 
 @Composable
 fun GuideButton(navController: NavHostController) {
-    IconButton(onClick = {  },
+    IconButton(onClick = { navController.navigate("Rulebook") },
         modifier = Modifier
             .padding(13.dp)
             .border(1.dp, Color(0xff9d8eff), shape = CircleShape)

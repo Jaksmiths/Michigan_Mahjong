@@ -36,6 +36,7 @@ fun getIcon(name: String) : Int {
         "5z" -> R.drawable.z5
         "6z" -> R.drawable.z6
         "7z" -> R.drawable.z7
+        "" -> R.drawable.flag
         else -> {R.drawable.add}
     }
 }
