@@ -5,6 +5,7 @@ import android.media.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -33,7 +34,8 @@ fun CustomTabs(context: Context, navController: NavHostController) {
         backgroundColor = Color.Transparent,
         modifier = Modifier
             .padding(vertical = 4.dp, horizontal = 8.dp)
-            .padding(1.dp),
+            .padding(1.dp)
+            .width(360.dp),
         indicator = { tabPositions: List<TabPosition> ->
             Box {}
         }

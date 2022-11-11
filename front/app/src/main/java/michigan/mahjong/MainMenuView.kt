@@ -8,6 +8,7 @@ import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -74,12 +75,12 @@ fun MenuButtons(navController: NavHostController) {
             Spacer(modifier = Modifier.fillMaxHeight(.2f))
             TransparentOutLinedButton(navController, "CurrentHandView","Get Started")
             Spacer(modifier = Modifier.fillMaxHeight(.05f))
-            TransparentOutLinedButton(null, "", "Guidebook")
+            //TransparentOutLinedButton(navController, "Guidebook", "Guidebook")
+            TransparentOutLinedButton(navController, "Rulebook", "Guidebook")
         }
     }
 
 }
-
 
 @Composable
 fun TransparentOutLinedButton(navController: NavHostController?, path: String, text: String) {
@@ -97,13 +98,28 @@ fun TransparentOutLinedButton(navController: NavHostController?, path: String, t
         contentPadding = PaddingValues(),
         modifier = Modifier
             .height(30.dp)
-            .width(140.dp)
+            .width(150.dp)
             .defaultMinSize(minWidth = 1.dp, minHeight = 1.dp)
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Text(text, fontSize = 15.sp)
+            if(text == "Guidebook"){
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.menu_book),
+                        "",
+                        tint = Color(0xff9d8eff)
+                    )
+                    Spacer(modifier = Modifier.fillMaxWidth(.05f))
+                    Text(text, fontSize = 15.sp)
+                }
+            }
+            else {
+                Text(text, fontSize = 15.sp)
+            }
         }
     }
 

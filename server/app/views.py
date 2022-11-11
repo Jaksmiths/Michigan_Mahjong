@@ -6,6 +6,9 @@ import json
 import os, time
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
+from .logic import cal_result
+from .inference import get_tiles
+
 
 def invalidlocation(location):
     return location != "hand" and location != "discard" and location != "open"
@@ -25,16 +28,17 @@ def getcvresult(request):
     filename = fs.save(filename, content)
     imageurl = fs.url(filename)
     
-    location  = request.POST.get("location")
-    if invalidlocation(location):
-        print("wrong location")
-        return HttpResponse(status=500)
+    #location  = request.POST.get("location")
+    #if invalidlocation(location):
+    #    print("wrong location")
+    #    return HttpResponse(status=500)
 
     # replace tmp value with a call to CV
-    tiles = ["Green", "North", "Sou3", "Sou2", "Pin3", "Sou4", "Pin8", "Pin2", "Man1", "Man5", "Pin8", "Man6", "South", "Man3:"]
+    # REMOVE tiles = ["4z", "2z", "3s", "2s", "3p", "4s", "8p", "2p", "1m", "5m", "8p", "6m", "5z", "3m"]
+    tiles = get_tiles("/home/ubuntu/Michigan_Mahjong/server/media/" + filename)
     fs.delete(filename)
 
-    return JsonResponse({"tile_list": {location: tiles}})
+    return JsonResponse({"tile_list": tiles})
 
 @csrf_exempt
 def getrecmove(request):
@@ -51,6 +55,6 @@ def getrecmove(request):
             return HttpResponse(status=500)
 
     # replace tmp value with call to GameLogic
-    result = "Green Dragon"
+    tile = cal_result(tile_list["hand"])
 
-    return JsonResponse({"tile": result})
+    return JsonResponse({"tile": tile})

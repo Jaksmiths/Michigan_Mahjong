@@ -24,6 +24,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+
         setContent {
             val navController = rememberNavController()
             NavHost(navController, startDestination = "CurrentHandView") {
@@ -44,6 +45,10 @@ class MainActivity : ComponentActivity() {
                         executor = cameraExecutor,
                     ) { Log.e("kilo", "View error:", it) }
                 }
+                composable("Rulebook"){
+                    Rulebook(this@MainActivity, navController)
+                }
+
             }
         }
 
