@@ -107,44 +107,39 @@
 	</string>
 	<string name="rule_yaku_overview">
 		Yakus can be separated into several different categories which yield a different number of
-		points. These are Han, Mangan, and Yakuman which can be further divided. The three basic
+		points. These are 1-Han, 2-Han, 3-Han, 6-Han, Mangan, and Yakuman. The three basic
 		Yakus covered earlier, Riichi, Yakuhai, and Tanyao all fall under 1-Han.
-	</string>
-	<string name="rule_ippatsu">
-
 	</string>
 	<string name="rule_1han">
 		Riichi - refers to winning a hand after achieving Tenpai while having Menzenchin.\n\n
-		Tanyao - refers to winning without Yaochuu (terminal or honor tiles).
-		Also known as All Simples.\n\n
+		Tanyao - All Simples - refers to winning without Yaochuu (terminal or honor tiles).\n\n
 		Tsumo -  refers to winning a hand by drawing the winning tile while the player has Menzenchin.\n\n
 		Yakuhai - refers to winning with a triplet of Player wind, Round wind, or Dragon tiles.\n\n
-		Pinfu - refers to winning a hand with four Sequences and one non-Yakuhai Pair, with the
-		potential winning tiles must be from the side of a Sequence, while the player has Menzenchin.
-		Also known as No-points hand.\n\n
-		Iipeikou - refers to winning a hand with two identical sequences, also know as Pure
-		Double Sequence.\n\n
+		Pinfu - One Shot - refers to winning a hand with four Sequences and one non-Yakuhai Pair,
+		with the potential winning tiles must be from the side of a Sequence, while the player
+		has Menzenchin.\n\n
+		Iipeikou - Pure Double Sequence - refers to winning a hand with two identical sequences.\n\n
 		Ron - refers to winning on another player\'s Kan. Also called Robbing a Kan. Additional
 		condition is when you have a Tenpai for thirteen orphans, you can call on a closed Kan.
-		Rinshan kaihou - refers to winning a hand with the tile drawn from the Dead Wall after
-		immediately calling a Kan. Also know as After a Kan.\n\n
-		Haitei Raoyue - refers to winning with Tsumo on the last drawable tile from the live wall.
-		Also know as Under the Sea.\n\n
-		Houtei Raoyui - refers to winning on the last discarded tile by calling Ron. Also known
-		as Under the River.\n\n.
-		Ippatsu - refers to winning within one turn after declaring Riichi, and no draws or discards
-		are interrupted by tile calls during that turn. Also known as One-shot.\n\n
+		Rinshan Kaihou - After a Kan - refers to winning a hand with the tile drawn from the
+		Dead Wall after immediately calling a Kan.\n\n
+		Haitei Raoyue - Under the Sea - refers to winning with Tsumo on the last drawable tile
+		from the live wall.\n\n
+		Houtei Raoyui - Under the River - refers to winning on the last discarded tile by
+		calling Ron.\n\n
+		Ippatsu - One-shot - refers to winning within one turn after declaring Riichi, and
+		no draws or discards are interrupted by tile calls during that turn.\n\n
 	</string>
 	<string name="rule_2han">
 		Double Riichi - declare Riichi with your starting hand before any tiles are called.\n\n
-		Sanshoku Doukou - win with three identically numbered triplets across the three suits.
-		Also known as Triple Triplets.\n\n
-		Sankantsu - win with three quads, which are considered as triplets plus one extra.
-		Also known as Three Quads.\n\n
-		Toitoi - win with all (four) triplets or quads. Also known as All Triplets.\n\n
+		Sanshoku Doukou - Triple Triplets - win with three identically numbered triplets
+		across the three suits.\n\n
+		Sankantsu - Three Quads - win with three quads, which are considered as triplets
+		plus one extra.\n\n
+		Toitoi - All Triplets - win with all (four) triplets or quads.\n\n
 		Sanankou - Three Concealed Triplets - Win with three closed triplets.\n\n
-		Shousangen - Little Three Dragons - Win a hand with two triplets out of the three Dragon Tiles,
-		plus a pair of the third dragon tile.\n\n
+		Shousangen - Little Three Dragons - Win a hand with two triplets out of the three
+		Dragon Tiles, plus a pair of the third dragon tile.\n\n
 		Honroutou - All Terminals and Honors - Win with only honor and terminal groups.\n\n
 		Chiitoi	- Seven Pairs - Win a hand with seven different pairs, only while Menzenchin.\n\n
 		Chanta - Half Outside Hand - Win a hand where every tile group with an honor or terminal.
@@ -162,7 +157,7 @@
 		3 Han Closed/2 Han Open.
 	</string>
 	<string name="rule_6han">
-		Chinitsu - Full Flush - Win a hand where all tiles are the same numbered suit.
+		Chinitsu - Full Flush - Win a hand where all tiles are from the same numbered suit.
 		6 Han Closed/5 Han Open.\n
 	</string>
 	<string name="rule_mangan">
@@ -177,14 +172,14 @@
 		Daisangen - Big Three Dragons - Win a hand with three triplets or quads of all the
 		three Dragon Tiles. Either Hand open or closed.\n\n
 		Suuankou - Four Concealed Triplets - Win a hand with four closed Triplets.
-		A tanki wait for Suuankou is considered a Double Yakuman.\n\n
+		A Tanki wait for Suuankou is considered a Double Yakuman.\n\n
 		Tsuuiisou - All Honors - Win a hand that consists entirely of honor tiles.\n\n
 		Ryuuiisou - All Green - Win a hand that consists of any four tile groups and
 		a pair that consists of only 2, 3, 4, 6, 8 of souzu and/or the green dragon tiles.
-		Literally, this hand is composed of "all green" painted tiles.\n\n.
+		Literally, this hand is composed of "all green" painted tiles.\n\n
 		Chinroutou - All Terminals - win a hand with every tile being a terminal.
 		No other tile type are used: no simples (2-8) or honors.\n\n
-		Kokushi musou - Thirteen Orphans - win a hand with of one of each terminal tile from
+		Kokushi Musou - Thirteen Orphans - win a hand with of one of each terminal tile from
 		each suit and one of each of the honor tiles. The 14th tile must be a duplicate of
 		any terminal or honor tile. A 13-wait kokushi (waiting for any terminal/honor) is
 		considered a Double Yakuman.\n\n
@@ -193,8 +188,17 @@
 		Daisuushi - Four Big Winds - Win a hand that requires groups of all four winds. Double Yakuman.
 		Suukantsu - Four Quads - Win a hand with four quads. Requires the hand has collected
 		kan four times.\n\n
-		Chuuren poutou - Nine Gates - win a hand that contains the 13-tile pattern
+		Chuuren Poutou - Nine Gates - win a hand that contains the 13-tile pattern
 		1-1-1-2-3-4-5-6-7-8-9-9-9 of the same suit, plus any one more tile from the suit.
 		A 13 sided wait True Nine Gates is worth Double Yakuman.\n
+	</string>
+	<string name="rule_dora">
+		Another feature to earn points is Dora.
+		There are dead wall tiles present at the beginning of the game. At the start, one of the
+		tiles from the dead wall is placed faced up. That tile is called the Dora indicator.
+		A tile that is the next in the same suit (where terminals loop to the beginning) is worth
+		one Han per tile. Also, in Japanese Mahjong, there are red dora which is an extra Han.
+		Ura-dora is when winning using Riichi, the rest of the tiles in dead wall can be used
+		as Dora indicators.
 	</string>
 </resources>

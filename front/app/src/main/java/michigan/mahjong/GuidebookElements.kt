@@ -111,6 +111,7 @@ fun Rulebook(context: Context, navController: NavHostController) {
             Rule("6 Han", stringResource(R.string.rule_6han), null)
             Rule("Mangan", stringResource(R.string.rule_mangan), null)
             Rule("Yakuman", stringResource(R.string.rule_yakuman), null)
+            Rule("Dora", stringResource(R.string.rule_dora), null);
         }
     }
 
