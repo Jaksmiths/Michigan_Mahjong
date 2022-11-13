@@ -86,19 +86,8 @@ fun Rulebook(context: Context, navController: NavHostController) {
             verticalArrangement = Arrangement.spacedBy(10.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            /*
-            Introduction
-Tiles
-Basic Mechanics
-	how many, draw discard
-Winning
-	sequence, triple, pair, yaku
-All Simples
-yakuhai
-Riichi
-Adanced Mechanics
-	Chii, Pon, Kan
-             */
+            /*Sources include Mahjong Soul, https://riichi.wiki/, and
+            https://mjg-repo.neocities.org/pastebin/mahjong-terms.html*/
 
             Spacer(modifier = Modifier.height(10.dp))
             Rule("Introduction", stringResource(R.string.rule_intro), null)
@@ -114,9 +103,14 @@ Adanced Mechanics
             Rule("Open Tiles - Chii, Pon, Kan", stringResource(R.string.rule_open),
                 R.drawable.tiles_open)
             Rule("Furiten", stringResource(R.string.rule_furiten), null)
-            Rule("Yaku - Tsumo", stringResource(R.string.rule_tsumo), null)
-            Rule("Yaku - Pinfu", stringResource(R.string.rule_pinfu), null)
-            Rule("Yaku - Ippatsu", stringResource(R.string.rule_ippatsu), null)
+            Rule("Draw", stringResource(R.string.rule_draw), null)
+            Rule("Yaku Overview", stringResource(R.string.rule_yaku_overview), null)
+            Rule("1 Han", stringResource(R.string.rule_1han), null)
+            Rule("2 Han", stringResource(R.string.rule_2han), null)
+            Rule("3 Han", stringResource(R.string.rule_3han), null)
+            Rule("6 Han", stringResource(R.string.rule_6han), null)
+            Rule("Mangan", stringResource(R.string.rule_mangan), null)
+            Rule("Yakuman", stringResource(R.string.rule_yakuman), null)
         }
     }
 

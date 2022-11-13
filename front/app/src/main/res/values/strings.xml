@@ -8,7 +8,11 @@
 	<string name="rule_intro">
 		Welcome player! You never played Mahjong before?
 		You are experienced but need a refresher?
-		This guidebook can help you through!</string>
+		This guidebook can help you through!\n\n
+		Mahjong is a tile-based game where players win various number of points
+		from the tile combinations in their playing hand. The simplest way to win
+		points is to win a round, but other combinations may also yield points.
+	</string>
 	<string name="rule_tiles">
 		Mahjong consists of 34 different tiles.
 		 For each tile, there are 4 of them, so there are a total of 136 tiles.
@@ -31,8 +35,8 @@
 		 Additionally, a winning hand must have a Yaku, which is a specific condition for tile
 		 patterns your Tenpai and winning hand must meet.
 		\n\n
-		Pairs are a set of two identical tiles. Triples are a set of three identical tiles.
-		 Sequences are a set of three consecutive tiles from the same group. Usually,
+		Pairs are a set of two identical tiles. Triples (Koutsu) are a set of three identical tiles.
+		 Sequences (Shuntsu) are a set of three consecutive tiles from the same group. Usually,
 		 you win when your hand consists of four sequences or triplets and a pair.
 	</string>
 	<string name="rule_tanyao">
@@ -64,7 +68,8 @@
 		increasing the value of the hand and allows the winner to receive any 1000 point stick.
 	</string>
 	<string name="rule_advanced">
-		There are 42 Yakus total and various other mechanics.
+		There are 42 Yakus total and various other mechanics. The next section will cover several
+		mechanics you may encounter, followed by a list of Yakus.
 	</string>
 	<string name="rule_open">
 		Each player discards unwanted tiles to the discard pile. You can steal those discarded
@@ -91,15 +96,105 @@
 		Riichi Furiten occurs when a player declares Riichi and does not call a potential winning
 		tile that was discarded after declaration.
 	</string>
-	<string name="rule_tsumo">
-		Tsumo refers to winning a hand by drawing the winning tile while the player has Menzenchin.
+	<string name="rule_draw">
+		There is a possibility that the round ends in a draw, where no player wins.\n\n
+		Four-Wind Discard - When each player discards the same Wind Tile in the first turn.\n\n
+		Four-Kan Abortion - When two or more players called for a total of four Quads.\n\n
+		Four-Player Riichi - When all four players declare Riichi.\n\n
+		Nine different Terminals and Honors - If you hand consists of nine different terminal and
+		honor tiles, you have the option to declare a draw in your first turn before any tiles
+		are called.
 	</string>
-	<string name="rule_pinfu">
-		Pinfu refers to winning a hand with four Sequences and one non-Yakuhai Pair, with the
-		potential winning tiles must be from the side of a Sequence, while the player has Menzenchin.
+	<string name="rule_yaku_overview">
+		Yakus can be separated into several different categories which yield a different number of
+		points. These are Han, Mangan, and Yakuman which can be further divided. The three basic
+		Yakus covered earlier, Riichi, Yakuhai, and Tanyao all fall under 1-Han.
 	</string>
 	<string name="rule_ippatsu">
-		Ippatsu refers to winning within one turn after declaring Riichi, and no draws or discards
-		are interrupted by tile calls during that turn.
+
+	</string>
+	<string name="rule_1han">
+		Riichi - refers to winning a hand after achieving Tenpai while having Menzenchin.\n\n
+		Tanyao - refers to winning without Yaochuu (terminal or honor tiles).
+		Also known as All Simples.\n\n
+		Tsumo -  refers to winning a hand by drawing the winning tile while the player has Menzenchin.\n\n
+		Yakuhai - refers to winning with a triplet of Player wind, Round wind, or Dragon tiles.\n\n
+		Pinfu - refers to winning a hand with four Sequences and one non-Yakuhai Pair, with the
+		potential winning tiles must be from the side of a Sequence, while the player has Menzenchin.
+		Also known as No-points hand.\n\n
+		Iipeikou - refers to winning a hand with two identical sequences, also know as Pure
+		Double Sequence.\n\n
+		Ron - refers to winning on another player\'s Kan. Also called Robbing a Kan. Additional
+		condition is when you have a Tenpai for thirteen orphans, you can call on a closed Kan.
+		Rinshan kaihou - refers to winning a hand with the tile drawn from the Dead Wall after
+		immediately calling a Kan. Also know as After a Kan.\n\n
+		Haitei Raoyue - refers to winning with Tsumo on the last drawable tile from the live wall.
+		Also know as Under the Sea.\n\n
+		Houtei Raoyui - refers to winning on the last discarded tile by calling Ron. Also known
+		as Under the River.\n\n.
+		Ippatsu - refers to winning within one turn after declaring Riichi, and no draws or discards
+		are interrupted by tile calls during that turn. Also known as One-shot.\n\n
+	</string>
+	<string name="rule_2han">
+		Double Riichi - declare Riichi with your starting hand before any tiles are called.\n\n
+		Sanshoku Doukou - win with three identically numbered triplets across the three suits.
+		Also known as Triple Triplets.\n\n
+		Sankantsu - win with three quads, which are considered as triplets plus one extra.
+		Also known as Three Quads.\n\n
+		Toitoi - win with all (four) triplets or quads. Also known as All Triplets.\n\n
+		Sanankou - Three Concealed Triplets - Win with three closed triplets.\n\n
+		Shousangen - Little Three Dragons - Win a hand with two triplets out of the three Dragon Tiles,
+		plus a pair of the third dragon tile.\n\n
+		Honroutou - All Terminals and Honors - Win with only honor and terminal groups.\n\n
+		Chiitoi	- Seven Pairs - Win a hand with seven different pairs, only while Menzenchin.\n\n
+		Chanta - Half Outside Hand - Win a hand where every tile group with an honor or terminal.
+		2 Han Closed/1 Han Open.\n\n
+		Ittsuu - Pure Straight - Win a hand with a complete string of 1-9 tile,
+		use sequences of the same suit. 2 Han Closed/1 Han Open.\n\n
+		Sanshoku Doujun - Mixed Triple Sequence - Win with three identically numbered sequences
+		across the three different suits. 2 Han Closed/1 Han Open.\n\n
+	</string>
+	<string name="rule_3han">
+		Ryanpeikou - Twice Pure Double Sequence - win with two-identical sequences two times.\n\n
+		Junchan - Fully Outside Hand - win with every tile group (Sequence, Triplet, Pair)
+		with a terminal. 3 Han Closed/2 Han Open.\n\n
+		Honitsu - Half Flush - Win with Honor tiles and with only one suit of numbered tiles.
+		3 Han Closed/2 Han Open.
+	</string>
+	<string name="rule_6han">
+		Chinitsu - Full Flush - Win a hand where all tiles are the same numbered suit.
+		6 Han Closed/5 Han Open.\n
+	</string>
+	<string name="rule_mangan">
+		Nagashi Mangan - Mangan at Draw - win a game with all your discarded tiles being
+		Terminal Tiles and no one has called them.\n
+	</string>
+	<string name="rule_yakuman">
+		Tenhou - Blessing of Heaven - Win a hand by Tsumo as a dealer in the first turn
+		with the first draw.\n\n
+		Chiihou - Blessing of Earth - Win a hand by Tsumo as a non-dealer in the first turn
+		before any tiles are called.\n\n
+		Daisangen - Big Three Dragons - Win a hand with three triplets or quads of all the
+		three Dragon Tiles. Either Hand open or closed.\n\n
+		Suuankou - Four Concealed Triplets - Win a hand with four closed Triplets.
+		A tanki wait for Suuankou is considered a Double Yakuman.\n\n
+		Tsuuiisou - All Honors - Win a hand that consists entirely of honor tiles.\n\n
+		Ryuuiisou - All Green - Win a hand that consists of any four tile groups and
+		a pair that consists of only 2, 3, 4, 6, 8 of souzu and/or the green dragon tiles.
+		Literally, this hand is composed of "all green" painted tiles.\n\n.
+		Chinroutou - All Terminals - win a hand with every tile being a terminal.
+		No other tile type are used: no simples (2-8) or honors.\n\n
+		Kokushi musou - Thirteen Orphans - win a hand with of one of each terminal tile from
+		each suit and one of each of the honor tiles. The 14th tile must be a duplicate of
+		any terminal or honor tile. A 13-wait kokushi (waiting for any terminal/honor) is
+		considered a Double Yakuman.\n\n
+		Shousuushi - Four Little Winds - Win a hand that requires three groups (Triplets or Quads)
+		of winds, and a pair of the last wind.\n\n
+		Daisuushi - Four Big Winds - Win a hand that requires groups of all four winds. Double Yakuman.
+		Suukantsu - Four Quads - Win a hand with four quads. Requires the hand has collected
+		kan four times.\n\n
+		Chuuren poutou - Nine Gates - win a hand that contains the 13-tile pattern
+		1-1-1-2-3-4-5-6-7-8-9-9-9 of the same suit, plus any one more tile from the suit.
+		A 13 sided wait True Nine Gates is worth Double Yakuman.\n
 	</string>
 </resources>
