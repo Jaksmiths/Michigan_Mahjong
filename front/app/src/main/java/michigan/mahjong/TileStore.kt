@@ -113,16 +113,17 @@ object TileStore: CoroutineScope by MainScope() {
                         JSONArray()
                     }
                     reset()
+                    
+                    val filteredTiles = mutableListOf<String>()
                     for (i in 0 until minOf(tilesReceived.length(), 14)) {
                         val tileEntry = tilesReceived[i] as String
-                        _tiles[i].name = tileEntry
+                        filteredTiles.add(tileEntry)
                     }
-//                    for (i in 0 until 14) {
-//                        _tiles[i].name = "2m"
-//                    }
+                    val sortedTiles = filteredTiles.sortedWith(tileComparator)
+                    for (i in sortedTiles.indices) {
+                        _tiles[i].name = sortedTiles[i]
+                    }
 
-
-                    Log.i("kilo", _tiles.map{ it.name }.toString())
                 }
                 else {
                     Log.e("cvresult", response.errorBody()?.string() ?: "Retrofit error")
@@ -166,5 +167,26 @@ object TileStore: CoroutineScope by MainScope() {
             }
         }
         isLoading.value = false
+    }
+}
+
+private val tileComparator =  Comparator<String> { a, b ->
+    when {
+        (a == b) -> 0
+        (a == "") -> 1
+        (b == "") -> -1
+        (a.length == 2 && b.length == 2) -> {
+            when {
+                (a[1] == b[1]) -> {
+                    when {
+                        (a[0] > b[0]) -> 1
+                        else -> -1
+                    }
+                }
+                (a[1] > b[1]) -> 1
+                else -> -1
+            }
+        }
+        else -> 1
     }
 }

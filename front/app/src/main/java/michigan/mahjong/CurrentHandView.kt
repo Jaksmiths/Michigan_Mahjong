@@ -26,8 +26,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.text.font.FontWeight
 import michigan.mahjong.TileStore.tiles
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.GenericShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.tooling.preview.Preview
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import michigan.mahjong.TileStore.cvresult
@@ -37,7 +40,7 @@ import michigan.mahjong.TileStore.reset
 import michigan.mahjong.TileStore.setup
 
 @Composable
-fun CurrentHandView(context: Context, navController: NavHostController, apiSent: Boolean = false) {
+fun CurrentHandView(context: Context, navController: NavHostController) {
 
     var isLaunching by rememberSaveable { mutableStateOf(true) }
 
@@ -60,12 +63,6 @@ fun CurrentHandView(context: Context, navController: NavHostController, apiSent:
         }
     }
 
-//    val systemUiController: SystemUiController = rememberSystemUiController()
-//
-//    systemUiController.isStatusBarVisible = false // Status bar
-//    systemUiController.isNavigationBarVisible = false // Navigation bar
-//    systemUiController.isSystemBarsVisible = false // Status & Navigation bars
-
     MainBackground()
 
     Crossfade(targetState = TileStore.isLoading.value) { loading ->
@@ -85,17 +82,17 @@ fun CurrentHandView(context: Context, navController: NavHostController, apiSent:
                     ) {
                         Column() {
                             if (discard.value != null) {
-                                ResetButton()
+                                ResetButton(navController)
                                 Spacer(modifier = Modifier.size(12.dp))
                             }
                             CalculateButton()
                         }
                         Spacer(modifier = Modifier.size(12.dp))
                     }
-                    Spacer(modifier = Modifier.size(12.dp))
+                    Spacer(modifier = Modifier.size(30.dp))
                     Row(
                         horizontalArrangement = Arrangement.SpaceEvenly,
-                        verticalAlignment = Alignment.CenterVertically,
+                        verticalAlignment = Alignment.Bottom,
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         for (tile in tiles) {
@@ -114,12 +111,24 @@ fun CurrentHandView(context: Context, navController: NavHostController, apiSent:
         }
     }
 }
-//0xFF202325
+
+@Composable
+fun DiscardIndicator() {
+    Icon(
+        painter = painterResource(id = R.drawable.indicator),
+        contentDescription = "indicator icon",
+        modifier = Modifier
+            .size(30.dp)
+            .rotate(90F),
+        tint = Color.Yellow
+    )
+}
+
 @Composable
 fun DiscardInfo() {
     Box(
         modifier = Modifier
-            .size(250.dp, 100.dp)
+            .size(250.dp, 110.dp)
             .clip(RoundedCornerShape(10.dp))
             .background(Color(0xFF2D3135))
     ) {
@@ -154,8 +163,16 @@ fun DiscardInfo() {
                 Column {
                     Text(if (discard.value == "") "Winning Hand!" else "Optimal Discard:", color = Color(0xFFFEFEFE), fontSize = 20.sp, fontWeight = FontWeight.Bold)
                     Text(getIconName(discard.value ?: ""), color = Color(0xFF969B9D), fontSize = 15.sp, fontWeight = FontWeight.Bold)
+                    Spacer(modifier = Modifier.size(3.dp))
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        DiscardIndicator()
+                        Text("Optimal Discard Indicator", color = Color(0xFF969B9D), fontSize = 11.sp, fontWeight = FontWeight.Bold)
+                    }
                 }
             }
+
         }
     }
 }
@@ -172,13 +189,11 @@ fun GuideButton(navController: NavHostController) {
     }
 }
 
-//Color(0xffe3e535)
-
 @Composable
-fun ResetButton() {
+fun ResetButton(navController: NavHostController) {
 
     Button(
-        onClick = { reset() },
+        onClick = { navController.navigate("ResetView") },
         border = BorderStroke(1.dp, Color(0xff9d8eff), ),
         colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.White, backgroundColor = Color.Transparent),
         shape = RoundedCornerShape(10.dp),
@@ -242,46 +257,44 @@ fun CalculateButton() {
     }
 }
 
-//navController.navigate("ManualTileView?startTile=$tile.name")
-//Color(0xffe3e535)
 @Composable
 fun TileButton(tileName: String, navController: NavHostController) {
-    Button(onClick = { },
-        colors = ButtonDefaults.outlinedButtonColors(contentColor =  Color.Black),
-        shape = RoundedCornerShape(8.dp),
-        elevation =  ButtonDefaults.elevation(
-            defaultElevation = 10.dp,
-            pressedElevation = 15.dp,
-            disabledElevation = 0.dp
-        ),
-        contentPadding = PaddingValues(),
-        modifier = Modifier
-            .height(60.dp)
-            .width(43.dp)
-            .defaultMinSize(minWidth = 1.dp, minHeight = 1.dp)
-    )
-    {
-        Image(
-            painter = painterResource(if (tileName == "") R.drawable.add else getIcon(tileName)),
-            contentDescription = tileName)
-        //val emptyTile = tile.name.isEmpty()
-//        Crossfade(targetState = emptyTile) { empty ->
-//            when (empty) {
-//                true-> Image(
-//                    painter = painterResource(R.drawable.add),
-//                    contentDescription = tile.name
-//                )
-//                false -> Image(
-//                    painter = painterResource(getIcon(tile.name)),
-//                    contentDescription = tile.name
-//                )
-//            }
-//        }
-//        Image(
-//            painter = painterResource(if (tile.name.isEmpty()) R.drawable.add else getIcon(tile.name)),
-//            contentDescription = tile.name
-//        )
+    Column(
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        if (tileName == discard.value) {
+            //Text("Discard", fontSize = 5.sp)
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(1.dp)
+            ) {
+                Text("Discard", fontSize = 10.sp, color = Color.White)
+                DiscardIndicator()
+            }
+
+        }
+        Button(onClick = { },
+            colors = ButtonDefaults.outlinedButtonColors(contentColor =  Color.Black),
+            shape = RoundedCornerShape(8.dp),
+            elevation =  ButtonDefaults.elevation(
+                defaultElevation = 10.dp,
+                pressedElevation = 15.dp,
+                disabledElevation = 0.dp
+            ),
+            contentPadding = PaddingValues(),
+            modifier = Modifier
+                .height(60.dp)
+                .width(43.dp)
+                .defaultMinSize(minWidth = 1.dp, minHeight = 1.dp)
+        )
+        {
+            Image(
+                painter = painterResource(if (tileName == "") R.drawable.add else getIcon(tileName)),
+                contentDescription = tileName)
+        }
     }
+
 }
 
 @Composable
@@ -334,30 +347,13 @@ fun MainButtons(navController: NavHostController, imagePicker: ManagedActivityRe
                 TransparentOutLinedButton(
                     "Reset",
                     R.drawable.reset_alt,
-                    onClick = { reset() })
+                    navController,
+                    "ResetView"
+                )
             }
             else {
                 DiscardInfo()
             }
-
-//            Crossfade(targetState = discard) { it ->
-//                when (it.value) {
-//                    is String -> {DiscardInfo(discard = "1m"); Log.i("kilo", it.value.toString())}
-//                    else -> {
-//                        TransparentOutLinedButton(
-//                            "Camera",
-//                            R.drawable.camera_alt,
-//                            navController,
-//                            "CameraView"
-//                        )
-//                        TransparentOutLinedButton("Gallery", R.drawable.folder_alt)
-//                        TransparentOutLinedButton(
-//                            "Reset",
-//                            R.drawable.reset_alt,
-//                            onClick = { reset() })
-//                    }
-//                }
-//            }
         }
     }
 }

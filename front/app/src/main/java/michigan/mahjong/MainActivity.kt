@@ -37,6 +37,9 @@ class MainActivity : ComponentActivity() {
                 composable("Guidebook"){
                     Guidebook(this@MainActivity, navController)
                 }
+                composable("ResetView"){
+                    ResetView(this@MainActivity, navController)
+                }
                 composable("CameraView"){
                     CameraView(
                         this@MainActivity,
