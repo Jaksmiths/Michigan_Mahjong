@@ -50,11 +50,20 @@ def getrecmove(request):
     if "hand" not in tile_list.keys():
         return HttpResponse(status=500)
     
+    # discard pile and open tiles are optional
+    discard_pile, open_tiles = None, None
     for location in tile_list.keys():
         if invalidlocation(location):
             return HttpResponse(status=500)
+        elif location == "discard":
+            discard_pile = tile_list["discard"]
+        elif location == "open":
+            open_tiles = tile_list["open"]
 
     # replace tmp value with call to GameLogic
-    tile = cal_result(tile_list["hand"])
+    #discard_pile = tile_list["discard"] if "discard" in tile_list.keys() else None
+    #open_tiles = tile_list["open"] if "open" in tile_list.keys() else None
+    text = "THIS IS A TEMP PLACEHOLDER GOOD MOVE! :^)"
+    tile = cal_result(tile_list["hand"], discard_pile, open_tiles)
 
-    return JsonResponse({"tile": tile})
+    return JsonResponse({"tile": tile, "text": text})
