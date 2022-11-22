@@ -20,7 +20,7 @@ def getcvresult(request):
 
     if not request.FILES.get("image"):
         print("no image")
-        return HttpResponse(status=500)
+        return HttpResponse(status=400)
 
     content = request.FILES['image']
     filename = str(time.time())+".jpeg"
@@ -48,13 +48,13 @@ def getrecmove(request):
     tile_list = json_data["tile_list"]
     
     if "hand" not in tile_list.keys():
-        return HttpResponse(status=500)
+        return HttpResponse(status=400)
     
     # discard pile and open tiles are optional
     discard_pile, open_tiles = None, None
     for location in tile_list.keys():
         if invalidlocation(location):
-            return HttpResponse(status=500)
+            return HttpResponse(status=400)
         elif location == "discard":
             discard_pile = tile_list["discard"]
         elif location == "open":
