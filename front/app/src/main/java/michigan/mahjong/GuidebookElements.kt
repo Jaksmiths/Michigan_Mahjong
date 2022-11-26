@@ -27,6 +27,8 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 
 
+//https://stackoverflow.com/questions/67419418/how-to-add-swipe-behavior-to-the-screens
+
 @Composable
 fun Guidebook(context: Context, navController: NavHostController) {
 
