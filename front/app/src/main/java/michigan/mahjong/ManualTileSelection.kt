@@ -81,7 +81,7 @@ fun ManualTileCorrection(context: Context, navController: NavHostController, cur
             */
 
     var currentTiles = SuitM[0]
-    ComposableA(currentTiles)
+    ComposableA(currentTiles, navController)
 
             /*
             var cardFace by remember {
@@ -140,11 +140,11 @@ fun prevSuit(s: Char): Char {
 }
 
 @Composable
-fun ComposableA(tile: String) {
+fun ComposableA(tile: String, navController: NavHostController) {
     var currentSuit by remember { mutableStateOf(tile[1]) }
 
     Row {
-        ComposableB(suit = currentSuit){}
+        ComposableB(suit = currentSuit, navController = navController){}
         Box(
             modifier = Modifier
                 .fillMaxHeight()
@@ -234,6 +234,7 @@ fun ComposableA(tile: String) {
 @Composable
 fun ComposableB(
     suit: Char,
+    navController: NavHostController,
     function: () -> Unit
 ) {
     //var tileInfo by remember {mutableStateOf(true)}
@@ -259,7 +260,10 @@ fun ComposableB(
                     ) {
                         MTCTileButtonType2(tileSelected)
                         Spacer(modifier=Modifier.fillMaxHeight(0.1f))
-                        TransparentOutLinedButton(navController = null, path = "", text = "Confirm")
+                        TransparentOutLinedButton(
+                            navController = navController,
+                            path = "back",
+                            text = "Confirm")
                     }
                     Column(
                         modifier = Modifier

@@ -274,7 +274,11 @@ fun TileButton(tileName: String, navController: NavHostController) {
             }
 
         }
-        Button(onClick = { },
+        Button(onClick = {
+            tileSelected = tileName
+            navController.navigate("ManualTileCorrection")
+            //tileName = tileSelected
+                         },
             colors = ButtonDefaults.outlinedButtonColors(contentColor =  Color.Black),
             shape = RoundedCornerShape(8.dp),
             elevation =  ButtonDefaults.elevation(
