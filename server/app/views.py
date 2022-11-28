@@ -8,6 +8,7 @@ from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 from .logic import cal_result
 from .inference import get_tiles
+from nodejs import node
 
 
 def invalidlocation(location):
@@ -63,7 +64,17 @@ def getrecmove(request):
     # replace tmp value with call to GameLogic
     #discard_pile = tile_list["discard"] if "discard" in tile_list.keys() else None
     #open_tiles = tile_list["open"] if "open" in tile_list.keys() else None
-    text = "THIS IS A TEMP PLACEHOLDER GOOD MOVE! :^)"
-    tile = cal_result(tile_list["hand"], discard_pile, open_tiles)
+    #text = "THIS IS A TEMP PLACEHOLDER GOOD MOVE! :^)"
+    #tile = cal_result(tile_list["hand"], discard_pile, open_tiles)
+    result = node.run(["app/tile.js", json.dumps(tile_list)], capture_output=True, text=True)
+
+    if result.returncode != 0:
+        return HttpResponse(status=500)
+    else:
+        print(result.stdout)
+        consolelog_list = result.stdout.split("\n")
+        # extract recommended best discard tile
+        tile = consolelog_list[1].split(":")[1].strip()
+        text = consolelog_list[2]
 
     return JsonResponse({"tile": tile, "text": text})
