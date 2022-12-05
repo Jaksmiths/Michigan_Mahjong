@@ -458,47 +458,81 @@ function sortHand(hand) {
     return handText;
 }
 
-function arrayFromHand(hand) {
-    hand = hand.slice();
+function arrayFromHand(originhand) {
     var handArray = new Array(38).fill(0)
-    for(let tile of hand){
-        var suit = tile[1];
+    for(var i = 0; i < originhand.length; i++){
+        var tile = originhand[i];
+        var suit = tile.charAt(1);
         var by = 0;
         if(suitKeys.indexOf(suit) < 0){
             by = 3;
         } else {
             by = suitKeys.indexOf(suit);
         }
-        var index = by * 10 + parseInt(tile[0])
+        var index = by * 10 + parseInt(tile.charAt(0))
         handArray[index] = handArray[index] + 1;
     }
     return handArray;
 }
 
 
-function leftTilesFromHand(handArray) {
+function leftTiles(handArray) {
     var remainingTilesArray = new Array(38).fill(4)
+    remainingTilesArray[0] = 1
+    remainingTilesArray[10] = 1
+    remainingTilesArray[20] = 1
+    remainingTilesArray[30] = 0
     for(let index in handArray){
         remainingTilesArray[index] = remainingTilesArray[index] - handArray[index];
     }
     return remainingTilesArray;
 }
+function handFromSorted(sorted) {
+    var hand = [];
+    var index = 0;
+    for(var i = 0; i < sorted.length; i++){
+        if(sorted.charAt(i) <= '9' && sorted.charAt(i) >= '0'){
+            hand.push(sorted.charAt(i))
+        } else {
+            for(var j = index; j < hand.length; j++){
+                hand[j] = hand[j] + sorted.charAt(i)
+            }
+            index = hand.length;
+        }
+    }
+    return hand;
+}
+
+function calculateBestDiscard(originhand, discard){
+    var handArray = arrayFromHand(originhand);
+    var seenTiles = discard.concat(originhand);
+    var remainingTilesArray = leftTiles(arrayFromHand(seenTiles))
+    var ukeire = calculateDiscardUkeire(handArray, remainingTilesArray);
+    var bestTile = evaluateBestDiscard(ukeire);
+    var text = getTileAsText(bestTile);
+    var listenTiles = ukeire[bestTile].tiles.map(function (tile){
+        return getTileAsText(tile);
+    }).reduce(function(prev, cur) {
+        return prev + ", " + cur;
+    })
+    return {
+        'best': text,
+        'number': ukeire[bestTile].value,
+        'tiles': listenTiles
+    };
+}
 
 
 // The number of each tile in the player's hand.
-//var originhand = ["1p", "2p", "8p", "5z", "5s", "5s", "1z", "1z", "1z", "6z", "6z", "6z", "5z", "5z"]
-var originhand = JSON.parse(process.argv[2]).hand;
-// The number of each tile the player cannot see.
-var remainingTiles = ['1m', '1m', '1m', '1m', '2m', '3m', '4m', '5m'];
-var handArray = arrayFromHand(originhand)
-// consider remaining tiles
-var remainingTilesArray = arrayFromHand(remainingTiles)
-// Using left tiles from hand as remaining tiles means no considering remaining tiles.
-var remainingTilesArray = leftTilesFromHand(handArray)
-var ukeire = calculateDiscardUkeire(handArray, remainingTilesArray);
-var bestTile = evaluateBestDiscard(ukeire);
-var text = getTileAsText(bestTile);
+var originhand = ["1p", "2p", "8p", "5z", "5s", "5s", "1z", "1z", "1z", "6z", "6z", "6z", "5z", "5z"]
+
+var discard = ['3p']
+
+var result = calculateBestDiscard(originhand, discard)
+var bestTile = result.best;
+var listenTiles = result.tiles;
+var listenNumber = result.number;
 var sortedHand = sortHand(originhand)
-console.log('Sort handle:', sortedHand)
-console.log('Best discard:', text)
-console.log(`And it can result in ${ukeire[bestTile].value} tile that can improve the hand.`)
+console.log('Sort hand:', sortedHand)
+console.log('Best discard:', bestTile)
+console.log(`And it can result in ${listenNumber} tile of ${listenTiles} that can improve the hand.`)
