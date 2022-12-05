@@ -6,7 +6,6 @@ import json
 import os, time
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
-from .logic import cal_result
 from .inference import get_tiles
 from nodejs import node
 
@@ -36,7 +35,8 @@ def getcvresult(request):
 
     # replace tmp value with a call to CV
     # REMOVE tiles = ["4z", "2z", "3s", "2s", "3p", "4s", "8p", "2p", "1m", "5m", "8p", "6m", "5z", "3m"]
-    tiles = get_tiles("/home/ubuntu/Michigan_Mahjong/server/media/" + filename)
+    direction = request.POST.get("direction")
+    tiles = get_tiles("/home/ubuntu/Michigan_Mahjong/server/media/" + filename, direction)
     fs.delete(filename)
 
     return JsonResponse({"tile_list": tiles})
