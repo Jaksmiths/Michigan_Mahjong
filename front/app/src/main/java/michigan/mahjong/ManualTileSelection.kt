@@ -12,10 +12,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBackIos
-import androidx.compose.material.icons.filled.ArrowForwardIos
-import androidx.compose.material.icons.filled.ChevronLeft
-import androidx.compose.material.icons.filled.ChevronRight
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -195,13 +192,13 @@ fun ComposableA(tile: String, navController: NavHostController) {
                             currentSuit = prevSuit(currentSuit)
                         })
                     {
-                        Icon(Icons.Filled.ArrowBackIos, "", tint = Color.White)
+                        Icon(Icons.Filled.ArrowBackIosNew, "", tint = Color.White)
                         //chevron_right
                         //chevron_left
                     }
                     MTCTileButtonType2("1" + currentSuit)
                     IconButton(
-                        modifier = Modifier.fillMaxWidth(.12f)
+                        modifier = Modifier.fillMaxWidth(.26f)
                             .padding(2.dp),
                         onClick = {
                             currentSuit = nextSuit(currentSuit)
