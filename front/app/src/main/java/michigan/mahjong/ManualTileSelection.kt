@@ -146,7 +146,7 @@ fun ComposableA(tile: String, navController: NavHostController) {
             modifier = Modifier
                 .fillMaxHeight()
                 .fillMaxWidth(1f)
-                .background(Color.Magenta)
+                //.background(Color.Magenta)
             ,
             contentAlignment = Alignment.Center
         ) {
@@ -241,7 +241,7 @@ fun ComposableB(
                 modifier = Modifier
                     .fillMaxHeight()
                     .fillMaxWidth(.65f)
-                    .background(Color.Blue)
+                    //.background(Color.Blue)
                 ,
                 contentAlignment = Alignment.Center,
             ) {
