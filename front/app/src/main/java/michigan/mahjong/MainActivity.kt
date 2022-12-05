@@ -27,7 +27,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             val navController = rememberNavController()
-            NavHost(navController, startDestination = "MainMenuView") {
+            NavHost(navController, startDestination = "ManualTileCorrection") {
                 composable("MainMenuView") {
                     MainMenuView(this@MainActivity, navController)
                 }
