@@ -201,9 +201,54 @@
 		Ura-dora is when winning using Riichi, the rest of the tiles in dead wall can be used
 		as Dora indicators.
 	</string>
+	<string name="strat_intro">
+		Here you can find some of helpful strategies for beginners and some of our favorite more
+		complex strategies.
+	</string>
 	<string name="strat_yaku">
 		Riichi is the easiest Yaku to achieve. It is difficult to get a Yaku with an open hand
 		unless you already have Yaku. Otherwise, stealing to complete a Yaku is a way to
 		guarantee Yaku along with giving yourself more available moves to make.
+	</string>
+	<string name="strat_defense">
+		When an opponent calls Riichi, they are close to victory.
+		In order to avoid having Ron called on you, it’s a good idea to start playing defensively.
+		You can do this by discarding tiles that match tiles found in the opponent’s discard pile.
+	</string>
+	<string name="strat_wait">
+		There are 3 types of waits as seen in the image.
+		To create a group, side waits are most advantageous as you can complete them with
+		8 tiles as opposed to 4. Closed waits are better than edge waits because they can evolve
+		into a side wait with 2 kinds of tiles as opposed to an edge wait (1 kind).
+		\nRef: https://dainachiba.github.io/RiichiBooks/
+	</string>
+	<string name="strat_thirteen">
+		When you decide to go for Thirteen Orphans, you are giving up all other ways of winning,
+		so at which point does it seem to be a reasonable choice? In the “9 types 9 tiles”
+		situation, should you draw?\n\n
+		Answer is: when you have more than 11 tiles from the “Thirteen Orphans” set
+		[m19,s19,p19,RGW,ESWN], it seems to be a wise choice to go for Thirteen Orphans.\n
+		Ref: http://yabejp.web.fc2.com/mahjong/tactics/chapter01/section038.html
+	</string>
+	<string name="strat_point">
+		When the game is closer to its end, point standing can affect the decision to declare
+		Riichi or not in many ways. For starters, players who have a large lead will be more cautious,
+		and the risk of less win rate or hand locking become amplified for them, while the reward of
+		increasing value and intimidation are lessened. Players who are greatly behind, on the
+		other hand, will likely cling to Riichi\'s increase in value, as all the risks in the world
+		no longer matter to them. Players who are in the middle will also start having specific
+		point goals for their hands to achieve their goals - one player may choose to damaten their
+		hand because it is large enough to overcome the difference to another player's score,
+		while another may choose to declare Riichi because they need the extra points to do so.
+		For these players there are no fast and hard rules to adhere to any more - they simply
+		have to analyze their own situation and decide what goals to set for their hands, and
+		whether declaring Riichi would fit (or not fit) into their plan.\n
+		Ref: https://riichi.wiki/Riichi_strategy#:~:text=Riichi%20called%20to%20apply%20pressure,that%20is%20already%20in%20tenpai.
+	</string>
+	<string name="strat_quad">
+		By making a concealed quad, player could lose safety tiles and the new dora could go
+		to the opponents. Keep in mind, if your hand is close to ready for chiitoitsu,
+		one of the four tiles can be used as a good floating tile, or if you might lose some
+		yaku if you make the set into a quad, you should avoid making a concealed quad.
 	</string>
 </resources>

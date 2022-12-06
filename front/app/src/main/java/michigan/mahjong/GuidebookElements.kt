@@ -164,10 +164,14 @@ fun StrategyGuide() {
         horizontalAlignment = Alignment.CenterHorizontally,
     ){
         Spacer(modifier = Modifier.height(10.dp))
-        Rule("Introduction", "", null)
+        Rule("Introduction", stringResource(R.string.strat_intro), null)
         Rule("Steal to complete a Yaku", stringResource(R.string.strat_yaku), null)
+        Rule("Play defensively if an opponent calls Riichi", stringResource(R.string.strat_defense),null)
+        Rule("Different kinds of waits", stringResource(R.string.strat_wait), R.drawable.strat_wait)
+        Rule("Should I go for “Thirteen Orphans”? Should I draw the game?", stringResource(R.string.strat_thirteen), null)
+        Rule("Point Standing", stringResource(R.string.strat_point), null)
+        Rule("Concealed Quad (Ankan)", stringResource(R.string.strat_quad), null)
     }
-
 
 }
 
@@ -197,7 +201,12 @@ fun Credits(){
         horizontalAlignment = Alignment.CenterHorizontally,
     ){
         Spacer(modifier = Modifier.height(10.dp))
-        Rule("Credits", "", null)
+        Rule("Credits",
+            "Made by Michigan Mahjong of EECS 441, Fall 2022. " +
+                    "Team Members: Pei Ying Goh, Jingfeng Guo, Christopher Jiang, " +
+                    "Jake Smith, Michelle Ross, Raymen Shu, Hui Yoo.\n" +
+                    "Visit at https://github.com/Jaksmiths/Michigan_Mahjong",
+            null)
     }
 
 }
