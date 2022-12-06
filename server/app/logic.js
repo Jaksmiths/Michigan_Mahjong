@@ -613,7 +613,7 @@ function calculateBestDiscard(originhand, discard){
 
 
 // The number of each tile in the player's hand.
-var originhand = ["1p", "1p", "3p", "3p", "5s", "5s", "1z", "1z", "6z", "6z", "6z", "6z", "5z", "5z"]
+var originhand = ["5m", "6m", "7p", "2p", "3p", "4p", "5p", "6p", "7z", "3s", "3s", "5z", "6s", "7s"]
 
 var discard = ['3p']
 
