@@ -35,14 +35,8 @@ class MainActivity : ComponentActivity() {
                 composable("MainMenuView") {
                     MainMenuView(this@MainActivity, navController)
                 }
-                composable("CurrentHandView") {
-                    CurrentHandView(this@MainActivity, navController)
-                }
                 composable("Guidebook"){
                     Guidebook(this@MainActivity, navController)
-                }
-                composable("ResetView"){
-                    ResetView(this@MainActivity, navController)
                 }
                 composable(
                     route = "ResetView/{tileGroup}",
@@ -57,6 +51,7 @@ class MainActivity : ComponentActivity() {
                             HAND_KEY -> TileGroup.HAND
                             DISCARD_KEY -> TileGroup.DISCARD
                             OPEN_KEY -> TileGroup.OPEN
+                            ALL_KEY -> null
                             else -> null
                         }
                     )
@@ -106,12 +101,6 @@ class MainActivity : ComponentActivity() {
                 composable("TileMenuTabs"){
                     TileMenuTabs(this@MainActivity, navController)
                 }
-                composable("DiscardView"){
-                    DiscardView(this@MainActivity, navController)
-                }
-                composable("OpenTilesView"){
-                    OpenTilesView(this@MainActivity, navController)
-                }
                 composable(
                     route = "DiscardInstructionView/{tileGroup}/{usingCamera}",
                     arguments = listOf(
@@ -123,7 +112,6 @@ class MainActivity : ComponentActivity() {
                         }
                     )
                 ){
-                    Log.i("kilo", it.arguments?.getBoolean("usingCamera").toString() ?: "")
                     DiscardInstructionView(
                         this@MainActivity,
                         navController,

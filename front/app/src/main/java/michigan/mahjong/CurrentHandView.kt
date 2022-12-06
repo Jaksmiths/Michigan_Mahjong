@@ -2,20 +2,14 @@ package michigan.mahjong
 
 import android.content.Context
 import android.net.Uri
-import android.util.Log
 import androidx.activity.compose.ManagedActivityResultLauncher
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.DrawableRes
-import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.*
-import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -29,37 +23,20 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.text.font.FontWeight
 import michigan.mahjong.TileStore.tiles
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.GenericShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.tooling.preview.Preview
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
-import michigan.mahjong.TileStore.cvresult
 import michigan.mahjong.TileStore.discard
 import michigan.mahjong.TileStore.findType
 import michigan.mahjong.TileStore.recent_discards
 import michigan.mahjong.TileStore.recmove
-import michigan.mahjong.TileStore.reset
-import michigan.mahjong.TileStore.setup
 import michigan.mahjong.TileStore.text
 import michigan.mahjong.TileStore.total_tiles
 
 @Composable
-fun CurrentHandView(context: Context, navController: NavHostController) {
-
-    val imagePicker = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.GetContent(),
-        onResult = { uri ->
-            if (uri != null) {
-                MainScope().launch {
-                    cvresult(context, uri, TileGroup.HAND)
-                }
-            }
-        }
-    )
+fun CurrentHandView(context: Context, navController: NavHostController, imagePicker: ManagedActivityResultLauncher<String, Uri?>?) {
 
     MainButtons(navController, imagePicker, TileGroup.HAND)
 
@@ -72,6 +49,7 @@ fun CurrentHandView(context: Context, navController: NavHostController) {
                 horizontalArrangement = Arrangement.Start,
                 modifier = Modifier.fillMaxWidth()
             ) {
+                Spacer(modifier = Modifier.size(12.dp))
                 IndicatorLegend()
             }
         }
@@ -207,7 +185,10 @@ fun IndicatorLegend() {
             }
             Row {
                 Spacer(modifier = Modifier.size(8.dp))
-                Box(modifier = Modifier.size(10.dp).clip(shape=CircleShape).background(Color(0xFF58A5F6)))
+                Box(modifier = Modifier
+                    .size(10.dp)
+                    .clip(shape = CircleShape)
+                    .background(Color(0xFF58A5F6)))
                 Spacer(modifier = Modifier.size(10.dp))
                 Text("Defensive Discard", color = Color(0xFF969B9D), fontSize = 12.sp, fontWeight = FontWeight.Bold)
             }
@@ -226,7 +207,7 @@ fun IndicatorLegend() {
 fun ResetButton(navController: NavHostController) {
 
     Button(
-        onClick = { navController.navigate("ResetView") },
+        onClick = { navController.navigate("ResetView/$ALL_KEY") },
         border = BorderStroke(1.dp, Color(0xff9d8eff), ),
         colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.White, backgroundColor = Color.Transparent),
         shape = RoundedCornerShape(10.dp),
@@ -313,7 +294,10 @@ fun TileButton(tileIndex: Int, navController: NavHostController, tileGroup: Tile
                         DiscardIndicator()
                     }
                     else if (tiles[tileIndex].name in recent_discards) {
-                        Box(modifier = Modifier.size(10.dp).clip(shape=CircleShape).background(Color(0xFF58A5F6)))
+                        Box(modifier = Modifier
+                            .size(10.dp)
+                            .clip(shape = CircleShape)
+                            .background(Color(0xFF58A5F6)))
                         Spacer(modifier = Modifier.size(7.dp))
                     }
                     else {
