@@ -21,14 +21,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.pager.rememberPagerState
 
 
 //https://stackoverflow.com/questions/67419418/how-to-add-swipe-behavior-to-the-screens
 
+@OptIn(ExperimentalUnitApi::class)
+@ExperimentalPagerApi
 @Composable
 fun Guidebook(context: Context, navController: NavHostController) {
 
@@ -42,14 +47,27 @@ fun Guidebook(context: Context, navController: NavHostController) {
 
     var isRefreshing by remember { mutableStateOf(false) }
 
-    MainBackground()
-    CustomTabs(context, navController)
+    val pagerState = rememberPagerState(0)
+
+    //MainBackground()
+    //CustomTabs(context, navController)
     //Rulebook(context, navController)
+    Column() {
+        Row(
+            modifier = Modifier.fillMaxWidth(1f),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            GuideTabs(pagerState = pagerState)
+            ExitButton(navController)
+        }
+        GuideTabsContent(pagerState = pagerState)
+    }
 
 }
 
 @Composable
-fun Rulebook(context: Context, navController: NavHostController) {
+fun Rulebook() {
+    //context: Context, navController: NavHostController
     //, rules: List<String>
 
     var isLaunching by rememberSaveable { mutableStateOf(true) }
@@ -76,8 +94,8 @@ fun Rulebook(context: Context, navController: NavHostController) {
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier.fillMaxWidth()
         ) {
-            CustomTabs(context, navController)
-            ExitButton(navController)
+            //CustomTabs(context, navController)
+            //ExitButton(navController)
         }
         Column(
             modifier = Modifier
@@ -120,8 +138,8 @@ fun Rulebook(context: Context, navController: NavHostController) {
 }
 
 @Composable
-fun StrategyGuide(context: Context, navController: NavHostController) {
-
+fun StrategyGuide() {
+    //context: Context, navController: NavHostController
     var isLaunching by rememberSaveable { mutableStateOf(true) }
 
     LaunchedEffect(Unit) {
