@@ -573,7 +573,7 @@ function checkWin(originhand){
             ke_num += 1;
         }
     }
-    if(shun_num + ke_num == 4){
+    if(shun_num + ke_num == 4 && && pairCount == 1){
         sum = 0
         for(var count of originhand){
             sum += count;
