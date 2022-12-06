@@ -28,12 +28,7 @@ def getcvresult(request):
     filename = fs.save(filename, content)
     imageurl = fs.url(filename)
     
-    #location  = request.POST.get("location")
-    #if invalidlocation(location):
-    #    print("wrong location")
-    #    return HttpResponse(status=500)
-    
-    # default direction is up
+    # default direction is up`
     direction = request.POST.get("direction") if request.POST.get("direction") else "up"
     tiles = get_tiles("/home/ubuntu/Michigan_Mahjong/server/media/" + filename, direction)
     fs.delete(filename)
