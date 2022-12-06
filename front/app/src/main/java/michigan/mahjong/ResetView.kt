@@ -4,30 +4,17 @@ import android.content.Context
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
-import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.ui.text.font.FontWeight
-import michigan.mahjong.TileStore.tiles
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.draw.clip
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
-import michigan.mahjong.TileStore.cvresult
-import michigan.mahjong.TileStore.discard
-import michigan.mahjong.TileStore.recmove
+import androidx.compose.ui.text.style.TextAlign
 import michigan.mahjong.TileStore.reset
 import michigan.mahjong.TileStore.reset_all
-import michigan.mahjong.TileStore.setup
 
 @Composable
 fun ResetView(context: Context, navController: NavHostController, tileGroup: TileGroup? = null) {
@@ -74,9 +61,10 @@ fun ResetConfirmationButton() {
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
+            horizontalArrangement = Arrangement.Center,
+            modifier = Modifier.fillMaxSize()
         ) {
-            Text("Are you sure you want to reset tiles?", fontSize = 14.sp, modifier = Modifier.align(Alignment.CenterVertically))
+            Text("Are you sure you want to reset?", fontSize = 14.sp, textAlign = TextAlign.Center)
         }
     }
 }

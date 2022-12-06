@@ -7,36 +7,21 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.semantics.SemanticsActions.OnClick
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import michigan.mahjong.TileStore.setTile
 
 @Composable
 fun MainMenuView(context: Context, navController: NavHostController){
-
-    var isLaunching by rememberSaveable { mutableStateOf(true) }
-
-    LaunchedEffect(Unit) {
-        if (isLaunching) {
-            isLaunching = false
-        }
-    }
-
-    var isRefreshing by remember { mutableStateOf(false) }
 
     MainBackground()
     MenuButtons(navController)
@@ -46,16 +31,6 @@ fun MainMenuView(context: Context, navController: NavHostController){
 
 @Composable
 fun MenuButtons(navController: NavHostController) {
-    /*
-    Column (
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-        TransparentOutLinedButton({}, "Get Started")
-        TransparentOutLinedButton({}, "Guidebook")
-    }
-    */
-
     Column(verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier=Modifier.fillMaxHeight(1f)) {
@@ -68,7 +43,6 @@ fun MenuButtons(navController: NavHostController) {
         }
         Spacer(modifier = Modifier.fillMaxHeight(.05f))
         Column(
-            //horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterHorizontally),
             verticalArrangement = Arrangement.Center,
             modifier = Modifier.fillMaxWidth(1f),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -77,7 +51,6 @@ fun MenuButtons(navController: NavHostController) {
             Spacer(modifier = Modifier.fillMaxHeight(.2f))
             TransparentOutLinedButton(navController, "TileMenuTabs","Get Started")
             Spacer(modifier = Modifier.fillMaxHeight(.05f))
-            //TransparentOutLinedButton(navController, "Guidebook", "Guidebook")
             TransparentOutLinedButton(navController, "Guidebook", "Guidebook")
         }
     }

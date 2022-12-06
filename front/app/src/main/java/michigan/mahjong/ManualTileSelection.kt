@@ -1,28 +1,18 @@
 package michigan.mahjong
 
 import android.content.Context
-import android.util.Log
 import androidx.annotation.DrawableRes
-import androidx.compose.animation.core.FastOutSlowInEasing
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.*
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.graphics.DefaultAlpha
-import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.input.key.Key.Companion.Back
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -42,91 +32,12 @@ fun ManualTileCorrection(
     tileGroup: TileGroup
 ) {
 
-    var isLaunching by rememberSaveable { mutableStateOf(true) }
-
-    LaunchedEffect(Unit) {
-        if (isLaunching) {
-            isLaunching = false
-        }
-    }
-
-    var isRefreshing by remember { mutableStateOf(false) }
-
     val SuitM = listOf<String>("1m", "1p", "1s", "1z")
 
     MTCBackground()
 
-    /*
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
-            .fillMaxHeight(1f)
-            .fillMaxWidth(1f)
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth(0.6f)
-                .fillMaxHeight(0.5f)
-                .background(Color.White)
-        ){}
-        Row(
-            horizontalArrangement = Arrangement.SpaceEvenly,
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .fillMaxWidth(1f)
-                .fillMaxHeight(1f)
-                .background(Color.Yellow)
-                //.horizontalScroll(rememberScrollState())
-        ) {
-
-            for (tile in SuitM) {
-                MTCTileButton(tile, navController)
-            }
-            */
-
     var currentTiles = SuitM[0]
     ComposableA(currentTiles, navController, tileIndex, tileGroup)
-
-            /*
-            var cardFace by remember {
-                mutableStateOf(CardFace.Front)
-            }
-
-            FlipCard(
-                cardFace = cardFace,
-                onClick = { cardFace = cardFace.next },
-                modifier = Modifier
-                    .fillMaxWidth(.5f)
-                    .aspectRatio(1f),
-                axis = RotationAxis.AxisY,
-                front = {
-                    Box(
-                        modifier = Modifier.fillMaxSize().background(Color.Red),
-                        contentAlignment = Alignment.Center,
-                    ) {
-                        MTCTileButton(SuitM[0], navController)
-                    }
-                },
-                middle = {
-                    Box(modifier = Modifier.fillMaxSize().background(Color.Blue),
-                        contentAlignment = Alignment.Center,
-                    ){
-                        MTCTileButton(SuitM[1], navController)
-                    }
-                },
-                back = {
-                    Box(
-                        modifier = Modifier.fillMaxSize().background(Color.Blue),
-                        contentAlignment = Alignment.Center,
-                    ) {
-                        MTCTileButton(SuitM[2], navController)
-                    }
-                },
-            )*/
-        //}
-    //}
-    //https://developer.android.com/jetpack/compose/lists
-    //https://developer.android.com/jetpack/compose/gestures
 }
 
 fun nextSuit(s: Char): Char {
@@ -222,23 +133,9 @@ fun ComposableA(
                         })
                     {
                         Icon(Icons.Filled.ArrowForwardIos,
-                            //painter = painterResource(id = R.drawable.ic_baseline_arrow_forward_ios_24),
                             "", tint = Color.White)
                     }
                     MTCTileButtonType3("1" + nextSuit(currentSuit))
-                    /*
-                Button(onClick = {
-                    if (currentSuit.equals('z')) {
-                        currentSuit = 'p'
-                    } else if (currentSuit == 'p') {
-                        currentSuit = 's'
-                    } else {
-                        currentSuit = 'z'
-                    }
-                }) {
-                    Text(text = "Test")
-                }
-                */
                 }
             }
         }
@@ -252,14 +149,10 @@ fun ComposableB(
     tileIndex: Int,
     tileGroup: TileGroup
 ) {
-    //var tileInfo by remember {mutableStateOf(true)}
-    //val num = "1"
-
             Box(
                 modifier = Modifier
                     .fillMaxHeight()
                     .fillMaxWidth(.65f)
-                    //.background(Color.Blue)
                 ,
                 contentAlignment = Alignment.Center,
             ) {
@@ -341,126 +234,8 @@ fun ComposableB(
                         }
                     }
                 }
-
-                //MTCTileButtonType1("1" + suit)
             }
-
-
-            /*
-            Box(
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .fillMaxWidth(.65f)
-                    .background(Color.Red),
-                contentAlignment = Alignment.Center,
-            ) {
-                Row() {
-                    MTCTileButtonType1("1p")
-                    MTCTileButtonType2("2p")
-                }
-            }
-            */
-
 }
-/*
-enum class TileSuit(val s: String){
-    Man("m"){
-
-    },
-    Pin("p"){
-
-    },
-    Sou("s"){
-
-    },
-    Honors("z"){
-
-    }
-
-}
-
-
-enum class CardFace(val angle: Float) {
-    Front(0f) {
-        override val next: CardFace
-            get() = Middle
-    },
-    Middle(180f){
-        override val next: CardFace
-        get() = Back
-                },
-    Back(360f) {
-        override val next: CardFace
-            get() = Front
-    };
-
-    abstract val next: CardFace
-}
-
-enum class RotationAxis {
-    AxisX,
-    AxisY,
-}
-
-@ExperimentalMaterialApi
-@Composable
-fun FlipCard(
-    cardFace: CardFace,
-    onClick: (CardFace) -> Unit,
-    modifier: Modifier = Modifier,
-    axis: RotationAxis = RotationAxis.AxisY,
-    back: @Composable () -> Unit = {},
-    front: @Composable () -> Unit = {},
-    middle: @Composable ()-> Unit ={},
-) {
-    val rotation = animateFloatAsState(
-        targetValue = cardFace.angle,
-        animationSpec = tween(
-            durationMillis = 400,
-            easing = FastOutSlowInEasing,
-        )
-    )
-    Row() {
-        Card(
-            onClick = { onClick(cardFace) },
-            modifier = modifier
-                .graphicsLayer {
-                    rotationY = rotation.value
-                    cameraDistance = 12f * density
-                },
-        ) {
-            if (rotation.value <= 90f) {
-                Box(
-                    Modifier.fillMaxSize()
-                ) {
-                    front()
-                }
-            } else if (rotation.value <= 270) {
-                Box(
-                    Modifier
-                        .fillMaxSize()
-                        .graphicsLayer {
-                            rotationY = 180f
-                        },
-                ) {
-                    middle()
-                }
-            } else {
-                Box(
-                    Modifier
-                        .fillMaxSize()
-                        .graphicsLayer {
-                            rotationY = 180f
-                        },
-                ) {
-                    back()
-                }
-            }
-        }
-    }
-}
-*/
-
 
 @Composable
 fun MTCTileButtonType1(

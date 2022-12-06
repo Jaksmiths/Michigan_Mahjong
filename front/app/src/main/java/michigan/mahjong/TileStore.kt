@@ -41,6 +41,7 @@ interface MahjongAPIs {
 const val HAND_KEY = "HAND"
 const val OPEN_KEY = "OPEN"
 const val DISCARD_KEY = "DISCARD"
+const val ALL_KEY = "ALL"
 
 enum class TileGroup {
     DISCARD, OPEN, HAND
@@ -69,8 +70,6 @@ object TileStore: CoroutineScope by MainScope() {
     );
     val total_tiles: Map<Char, MutableList<Int>> = _total_tiles
 
-//    private val _total_indicators = mutableStateListOf<Boolean>();
-//    val total_indicators: List<Boolean> = _total_indicators
 
     private val _discard = mutableStateOf<String?>(null);
     val discard: MutableState<String?> = _discard
@@ -136,10 +135,6 @@ object TileStore: CoroutineScope by MainScope() {
         val group = findGroupType(groupType)
         group[index].name = name
     }
-
-//    fun setTotalIndicator(tileIndex: Int) {
-//        _total_indicators[tileIndex] = !_total_indicators[tileIndex]
-//    }
 
     fun setup() {
         reset_total()
@@ -307,7 +302,10 @@ object TileStore: CoroutineScope by MainScope() {
     suspend fun recmove() {
         isLoading.value = true
 
-        if (discard.value != null) return
+        if (discard.value != null) {
+            isLoading.value = false
+            return
+        }
         val handArray = tiles.map{ if (it.name == "") {isLoading.value = false;return} else it.name }
         val discardArray = discard_pile.map{ if (it.name != "") it.name else "" }.filter { it != "" }
         val openArray = open_tiles.map{ if (it.name != "") it.name else "" }.filter { it != "" }
