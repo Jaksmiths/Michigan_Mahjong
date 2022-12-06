@@ -9,12 +9,14 @@ import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.navigation.NavType
 import androidx.navigation.compose.rememberNavController
 import java.io.File
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import com.google.accompanist.pager.ExperimentalPagerApi
 
 class MainActivity : ComponentActivity() {
@@ -42,25 +44,98 @@ class MainActivity : ComponentActivity() {
                 composable("ResetView"){
                     ResetView(this@MainActivity, navController)
                 }
-                composable("CameraView"){
+                composable(
+                    route = "ResetView/{tileGroup}",
+                    arguments = listOf(navArgument("tileGroup") {
+                        type = NavType.StringType
+                    })
+                ){
+                    ResetView(
+                        this@MainActivity,
+                        navController,
+                        when(it.arguments?.getString("tileGroup")) {
+                            HAND_KEY -> TileGroup.HAND
+                            DISCARD_KEY -> TileGroup.DISCARD
+                            OPEN_KEY -> TileGroup.OPEN
+                            else -> null
+                        }
+                    )
+                }
+                composable(
+                    route = "CameraView/{tileGroup}",
+                    arguments = listOf(navArgument("tileGroup") {
+                        type = NavType.StringType
+                    })
+                ){
                     CameraView(
                         this@MainActivity,
                         navController,
                         outputDirectory = fileOutputDirectory,
                         executor = cameraExecutor,
+                        when(it.arguments?.getString("tileGroup")) {
+                            HAND_KEY -> TileGroup.HAND
+                            DISCARD_KEY -> TileGroup.DISCARD
+                            OPEN_KEY -> TileGroup.OPEN
+                            else -> TileGroup.HAND
+                        }
                     ) { Log.e("kilo", "View error:", it) }
                 }
-                //composable("Rulebook"){
-                    //Rulebook(this@MainActivity, navController)
-                //    Rulebook()
-                //}
-                composable("ManualTileCorrection"){
-                    ManualTileCorrection(this@MainActivity, navController, "")
+                composable(
+                    route = "ManualTileCorrection/{tileIndex}/{tileGroup}",
+                    arguments = listOf(
+                        navArgument("tileIndex") {
+                            type = NavType.IntType
+                        },
+                        navArgument("tileGroup") {
+                            type = NavType.StringType
+                        }
+                    )
+                ){
+                    ManualTileCorrection(
+                        this@MainActivity,
+                        navController,
+                        it.arguments?.getInt("tileIndex") ?: 0,
+                        when(it.arguments?.getString("tileGroup")) {
+                            HAND_KEY -> TileGroup.HAND
+                            DISCARD_KEY -> TileGroup.DISCARD
+                            OPEN_KEY -> TileGroup.OPEN
+                            else -> TileGroup.HAND
+                        }
+                    )
                 }
-                //composable("TabLayout"){
-                //    TabLayout()
-                //}
-
+                composable("TileMenuTabs"){
+                    TileMenuTabs(this@MainActivity, navController)
+                }
+                composable("DiscardView"){
+                    DiscardView(this@MainActivity, navController)
+                }
+                composable("OpenTilesView"){
+                    OpenTilesView(this@MainActivity, navController)
+                }
+                composable(
+                    route = "DiscardInstructionView/{tileGroup}/{usingCamera}",
+                    arguments = listOf(
+                        navArgument("tileGroup") {
+                            type = NavType.StringType
+                        },
+                        navArgument("usingCamera") {
+                            type = NavType.BoolType
+                        }
+                    )
+                ){
+                    Log.i("kilo", it.arguments?.getBoolean("usingCamera").toString() ?: "")
+                    DiscardInstructionView(
+                        this@MainActivity,
+                        navController,
+                        when(it.arguments?.getString("tileGroup")) {
+                            HAND_KEY -> TileGroup.HAND
+                            DISCARD_KEY -> TileGroup.DISCARD
+                            OPEN_KEY -> TileGroup.OPEN
+                            else -> TileGroup.HAND
+                        },
+                        it.arguments?.getBoolean("usingCamera") ?: true
+                    )
+                }
             }
         }
 
