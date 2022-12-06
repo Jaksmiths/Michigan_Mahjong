@@ -1,4 +1,3 @@
-
 /**
  * Calculates the minimum shanten of the hand, considering a standard hand, seven pairs, or thirteen orphans.
  * @param {TileCounts} handToCheck The hand to calculate the shanten of.
@@ -524,9 +523,11 @@ function calculateBestDiscard(originhand, discard){
 
 
 // The number of each tile in the player's hand.
-var originhand = ["1p", "2p", "8p", "5z", "5s", "5s", "1z", "1z", "1z", "6z", "6z", "6z", "5z", "5z"]
-
-var discard = ['3p']
+//var originhand = ["1p", "2p", "8p", "5z", "5s", "5s", "1z", "1z", "1z", "6z", "6z", "6z", "5z", "5z"];
+//var discard = ['3p']
+var tileList = JSON.parse(process.argv[2]);
+var originhand = tileList.hand;
+var discard = tileList.discard.concat(tileList.open);
 
 var result = calculateBestDiscard(originhand, discard)
 var bestTile = result.best;

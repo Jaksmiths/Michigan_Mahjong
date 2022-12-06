@@ -52,7 +52,7 @@ def getrecmove(request):
         return HttpResponse(status=400)
     
     # discard pile and open tiles are optional
-    discard_pile, open_tiles = None, None
+    discard_pile, open_tiles = [], []
     for location in tile_list.keys():
         if invalidlocation(location):
             return HttpResponse(status=400)
@@ -61,12 +61,12 @@ def getrecmove(request):
         elif location == "open":
             open_tiles = tile_list["open"]
 
-    # replace tmp value with call to GameLogic
-    #discard_pile = tile_list["discard"] if "discard" in tile_list.keys() else None
-    #open_tiles = tile_list["open"] if "open" in tile_list.keys() else None
     #text = "THIS IS A TEMP PLACEHOLDER GOOD MOVE! :^)"
     #tile = cal_result(tile_list["hand"], discard_pile, open_tiles)
-    result = node.run(["app/tile.js", json.dumps(tile_list)], capture_output=True, text=True)
+    # force initialize discard and open keys before passing the tile_list to Game Logic
+    tile_list["discard"] = discard_pile
+    tile_list["open"] = open_tiles
+    result = node.run(["app/logic.js", json.dumps(tile_list)], capture_output=True, text=True)
 
     if result.returncode != 0:
         return HttpResponse(status=500)
