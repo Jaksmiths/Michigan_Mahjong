@@ -63,6 +63,20 @@ fun CurrentHandView(context: Context, navController: NavHostController) {
 
     MainButtons(navController, imagePicker, TileGroup.HAND)
 
+    if (discard.value != null) {
+        Column(verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier=Modifier.height(250.dp)
+        ) {
+            Row(
+                horizontalArrangement = Arrangement.Start,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                IndicatorLegend()
+            }
+        }
+    }
+
     Column(
         verticalArrangement = Arrangement.Bottom,
         modifier = Modifier.fillMaxHeight()
@@ -100,7 +114,6 @@ fun DiscardIndicator() {
     Button(
         onClick = { },
         colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.Yellow, backgroundColor = Color.Transparent),
-        shape = RoundedCornerShape(25.dp),
         elevation =  ButtonDefaults.elevation(
             defaultElevation = 10.dp,
             pressedElevation = 15.dp,
@@ -117,7 +130,7 @@ fun DiscardIndicator() {
             painter = painterResource(id = R.drawable.indicator),
             contentDescription = "indicator icon",
             modifier = Modifier
-            .rotate(90F),
+                .rotate(90F)
         )
     }
 }
@@ -164,15 +177,46 @@ fun DiscardInfo() {
                     Text(if (discard.value == "") "Winning Hand!" else "Optimal Discard: ${getIconName(discard.value ?: "")}", color = Color(0xFFFEFEFE), fontSize = 20.sp, fontWeight = FontWeight.Bold)
                     Spacer(modifier = Modifier.size(3.dp))
                     Text(text.value ?: "", color = Color(0xFF969B9D), fontSize = 15.sp, fontWeight = FontWeight.Bold)
-//                    Row(
-//                        verticalAlignment = Alignment.CenterVertically,
-//                    ) {
-//                        DiscardIndicator()
-//                        Text("Optimal Discard Indicator", color = Color(0xFF969B9D), fontSize = 11.sp, fontWeight = FontWeight.Bold)
-//                    }
                 }
             }
 
+        }
+    }
+}
+
+@Composable
+fun IndicatorLegend() {
+    Box(
+        modifier = Modifier
+            .size(150.dp, 100.dp)
+            .clip(RoundedCornerShape(10.dp))
+            .background(Color(0xFF2D3135))
+            .defaultMinSize(minWidth = 1.dp, minHeight = 1.dp)
+    ) {
+        Column(verticalArrangement = Arrangement.SpaceEvenly,
+            horizontalAlignment = Alignment.Start,
+            modifier=Modifier.fillMaxSize()
+        ) {
+            Row{
+                DiscardIndicator()
+                Spacer(modifier = Modifier.size(7.dp))
+                Column {
+                    Text("Optimal", color = Color(0xFF969B9D), fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                    Text("Discard", color = Color(0xFF969B9D), fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                }
+            }
+            Row {
+                Spacer(modifier = Modifier.size(8.dp))
+                Box(modifier = Modifier.size(10.dp).clip(shape=CircleShape).background(Color(0xFF58A5F6)))
+                Spacer(modifier = Modifier.size(10.dp))
+                Text("Defensive Discard", color = Color(0xFF969B9D), fontSize = 12.sp, fontWeight = FontWeight.Bold)
+            }
+            Row{
+                Spacer(modifier = Modifier.size(8.dp))
+                TotalIndicator()
+                Spacer(modifier = Modifier.size(10.dp))
+                Text("Hold for # Left", color = Color(0xFF969B9D), fontSize = 12.sp, fontWeight = FontWeight.Bold)
+            }
         }
     }
 }
@@ -266,7 +310,6 @@ fun TileButton(tileIndex: Int, navController: NavHostController, tileGroup: Tile
                         Spacer(modifier = Modifier.size(7.dp))
                     }
                     else if (tiles[tileIndex].name == discard.value){
-                        //Text("Discard", fontSize = 10.sp, color = Color.White)
                         DiscardIndicator()
                     }
                     else if (tiles[tileIndex].name in recent_discards) {
@@ -436,7 +479,7 @@ fun TransparentOutLinedButton(
 }
 
 @Composable
-fun TotalIndicator(tileIndex: Int) {
+fun TotalIndicator(tileIndex: Int? = null) {
     Button(
         onClick = { },
         colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.White, backgroundColor = Color(0xFF00B7FF)),
@@ -453,7 +496,10 @@ fun TotalIndicator(tileIndex: Int) {
             .defaultMinSize(minWidth = 1.dp, minHeight = 1.dp)
     )
     {
-        if (tiles[tileIndex].name.length == 2) {
+        if (tileIndex == null) {
+            Text("X / 4", fontSize = 7.sp)
+        }
+        else if (tiles[tileIndex].name.length == 2) {
             val number : Int = tiles[tileIndex].name[0].digitToInt()
             val type : Char = tiles[tileIndex].name[1]
             Text("${total_tiles[type]?.get(number - 1).toString()} / 4", fontSize = 7.sp)
