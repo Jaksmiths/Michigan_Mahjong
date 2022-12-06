@@ -1,18 +1,10 @@
 package michigan.mahjong
 
 import android.content.Context
-import android.net.Uri
-import android.util.Log
-import androidx.activity.compose.ManagedActivityResultLauncher
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.DrawableRes
-import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -34,10 +26,11 @@ import michigan.mahjong.TileStore.cvresult
 import michigan.mahjong.TileStore.discard
 import michigan.mahjong.TileStore.recmove
 import michigan.mahjong.TileStore.reset
+import michigan.mahjong.TileStore.reset_all
 import michigan.mahjong.TileStore.setup
 
 @Composable
-fun ResetView(context: Context, navController: NavHostController) {
+fun ResetView(context: Context, navController: NavHostController, tileGroup: TileGroup? = null) {
 
     MainBackground()
 
@@ -56,7 +49,7 @@ fun ResetView(context: Context, navController: NavHostController) {
             modifier = Modifier.fillMaxWidth()
         ) {
             ConfirmButton("No", navController)
-            ConfirmButton("Yes", navController) { reset() }
+            ConfirmButton("Yes", navController) { if (tileGroup != null) reset(tileGroup) else reset_all() }
         }
     }
 }
@@ -65,7 +58,7 @@ fun ResetView(context: Context, navController: NavHostController) {
 fun ResetConfirmationButton() {
 
     Button(
-        onClick = { MainScope().launch { recmove() }},
+        onClick = { },
         border = BorderStroke(1.dp, Color(0xff9d8eff), ),
         colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.White, backgroundColor = Color.Transparent),
         shape = RoundedCornerShape(10.dp),
@@ -83,7 +76,7 @@ fun ResetConfirmationButton() {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
-            Text("Are you sure you want to reset all tiles?", fontSize = 14.sp, modifier = Modifier.align(Alignment.CenterVertically))
+            Text("Are you sure you want to reset tiles?", fontSize = 14.sp, modifier = Modifier.align(Alignment.CenterVertically))
         }
     }
 }
@@ -96,7 +89,7 @@ fun ConfirmButton(
 ) {
 
     Button(
-        onClick = { onClick(); navController.popBackStack("CurrentHandView", inclusive = false) },
+        onClick = { onClick(); navController.popBackStack("TileMenuTabs", inclusive = false) },
         border = BorderStroke(1.dp, Color(0xff9d8eff), ),
         colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.White, backgroundColor = Color.Transparent),
         shape = RoundedCornerShape(10.dp),

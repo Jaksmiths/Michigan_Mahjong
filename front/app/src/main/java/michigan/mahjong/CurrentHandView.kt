@@ -9,6 +9,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.DrawableRes
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.*
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -30,116 +33,124 @@ import androidx.compose.foundation.shape.GenericShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.tooling.preview.Preview
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import michigan.mahjong.TileStore.cvresult
 import michigan.mahjong.TileStore.discard
+import michigan.mahjong.TileStore.findType
 import michigan.mahjong.TileStore.recmove
 import michigan.mahjong.TileStore.reset
 import michigan.mahjong.TileStore.setup
+import michigan.mahjong.TileStore.text
+import michigan.mahjong.TileStore.total_tiles
 
 @Composable
 fun CurrentHandView(context: Context, navController: NavHostController) {
-
-    var isLaunching by rememberSaveable { mutableStateOf(true) }
 
     val imagePicker = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent(),
         onResult = { uri ->
             if (uri != null) {
-                Log.i("kilo", "Gallery")
                 MainScope().launch {
-                    cvresult(context, uri)
+                    cvresult(context, uri, TileGroup.HAND)
                 }
             }
         }
     )
 
-    LaunchedEffect(Unit) {
-        if (isLaunching) {
-            isLaunching = false
-            setup()
-        }
-    }
+    MainButtons(navController, imagePicker, TileGroup.HAND)
 
-    MainBackground()
-
-    Crossfade(targetState = TileStore.isLoading.value) { loading ->
-        when (loading) {
-            true-> LoadingAnimation()
-            false -> {
-
-                MainButtons(navController, imagePicker)
-
-                Column(
-                    verticalArrangement = Arrangement.Bottom,
-                    modifier = Modifier.fillMaxHeight()
-                ) {
-                    Row(
-                        horizontalArrangement = Arrangement.End,
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Column() {
-                            if (discard.value != null) {
-                                ResetButton(navController)
-                                Spacer(modifier = Modifier.size(12.dp))
-                            }
-                            CalculateButton()
-                        }
-                        Spacer(modifier = Modifier.size(12.dp))
-                    }
-                    Spacer(modifier = Modifier.size(30.dp))
-                    Row(
-                        horizontalArrangement = Arrangement.SpaceEvenly,
-                        verticalAlignment = Alignment.Bottom,
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        for (tile in tiles) {
-                            TileButton(tile.name, navController)
-                        }
-                    }
-                    Spacer(modifier = Modifier.size(10.dp))
+    Column(
+        verticalArrangement = Arrangement.Bottom,
+        modifier = Modifier.fillMaxHeight()
+    ) {
+        Row(
+            horizontalArrangement = Arrangement.End,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Column() {
+                if (discard.value != null) {
+                    ResetButton(navController)
+                    Spacer(modifier = Modifier.size(12.dp))
                 }
-
-                Row(
-                    horizontalArrangement = Arrangement.End,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    GuideButton(navController)
-                }}
+                CalculateButton()
+                Spacer(modifier = Modifier.size(20.dp))
+            }
+            Spacer(modifier = Modifier.size(15.dp))
         }
+        Spacer(modifier = Modifier.size(30.dp))
+        Row(
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.Bottom,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            for (i in tiles.indices) {
+                TileButton(i, navController, TileGroup.HAND)
+            }
+        }
+        Spacer(modifier = Modifier.size(10.dp))
     }
 }
 
+//@Composable
+//fun DiscardIndicator() {
+//    Icon(
+//        painter = painterResource(id = R.drawable.indicator),
+//        contentDescription = "indicator icon",
+//        modifier = Modifier
+//            .size(30.dp)
+//            .rotate(90F),
+//        tint = Color.Yellow
+//    )
+//}
+
 @Composable
 fun DiscardIndicator() {
-    Icon(
-        painter = painterResource(id = R.drawable.indicator),
-        contentDescription = "indicator icon",
+    Button(
+        onClick = { },
+        colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.Yellow, backgroundColor = Color.Transparent),
+        shape = RoundedCornerShape(25.dp),
+        elevation =  ButtonDefaults.elevation(
+            defaultElevation = 10.dp,
+            pressedElevation = 15.dp,
+            disabledElevation = 0.dp
+        ),
+        contentPadding = PaddingValues(),
         modifier = Modifier
-            .size(30.dp)
-            .rotate(90F),
-        tint = Color.Yellow
+            .height(25.dp)
+            .width(30.dp)
+            .defaultMinSize(minWidth = 1.dp, minHeight = 1.dp)
     )
+    {
+        Icon(
+            painter = painterResource(id = R.drawable.indicator),
+            contentDescription = "indicator icon",
+            modifier = Modifier
+            .rotate(90F),
+        )
+    }
 }
 
 @Composable
 fun DiscardInfo() {
     Box(
         modifier = Modifier
-            .size(250.dp, 110.dp)
+            .size(340.dp, 130.dp)
             .clip(RoundedCornerShape(10.dp))
             .background(Color(0xFF2D3135))
     ) {
         Column(verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier=Modifier.fillMaxHeight()) {
+            modifier=Modifier.fillMaxSize()
+        ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(15.dp, Alignment.CenterHorizontally),
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxSize()
             ) {
+                Spacer(modifier = Modifier.size(0.dp))
                 Button(
                     onClick = { },
                     colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.Black),
@@ -161,15 +172,15 @@ fun DiscardInfo() {
                     )
                 }
                 Column {
-                    Text(if (discard.value == "") "Winning Hand!" else "Optimal Discard:", color = Color(0xFFFEFEFE), fontSize = 20.sp, fontWeight = FontWeight.Bold)
-                    Text(getIconName(discard.value ?: ""), color = Color(0xFF969B9D), fontSize = 15.sp, fontWeight = FontWeight.Bold)
+                    Text(if (discard.value == "") "Winning Hand!" else "Optimal Discard: ${getIconName(discard.value ?: "")}", color = Color(0xFFFEFEFE), fontSize = 20.sp, fontWeight = FontWeight.Bold)
                     Spacer(modifier = Modifier.size(3.dp))
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        DiscardIndicator()
-                        Text("Optimal Discard Indicator", color = Color(0xFF969B9D), fontSize = 11.sp, fontWeight = FontWeight.Bold)
-                    }
+                    Text(text.value ?: "", color = Color(0xFF969B9D), fontSize = 15.sp, fontWeight = FontWeight.Bold)
+//                    Row(
+//                        verticalAlignment = Alignment.CenterVertically,
+//                    ) {
+//                        DiscardIndicator()
+//                        Text("Optimal Discard Indicator", color = Color(0xFF969B9D), fontSize = 11.sp, fontWeight = FontWeight.Bold)
+//                    }
                 }
             }
 
@@ -177,17 +188,7 @@ fun DiscardInfo() {
     }
 }
 
-@Composable
-fun GuideButton(navController: NavHostController) {
-    IconButton(onClick = { navController.navigate("Rulebook") },
-        modifier = Modifier
-            .padding(13.dp)
-            .border(1.dp, Color(0xff9d8eff), shape = CircleShape)
-            .then(Modifier.size(43.dp))
-    ) {
-        Icon(painterResource(R.drawable.book), contentDescription = "guidebook button", tint = Color.White)
-    }
-}
+
 
 @Composable
 fun ResetButton(navController: NavHostController) {
@@ -258,23 +259,38 @@ fun CalculateButton() {
 }
 
 @Composable
-fun TileButton(tileName: String, navController: NavHostController) {
+fun TileButton(tileIndex: Int, navController: NavHostController, tileGroup: TileGroup) {
+    val interactionSource = remember { MutableInteractionSource() }
+    val isPressed by interactionSource.collectIsPressedAsState()
+
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        if (tileName == discard.value) {
-            //Text("Discard", fontSize = 5.sp)
+        if (tileGroup == TileGroup.HAND) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(1.dp)
             ) {
-                Text("Discard", fontSize = 10.sp, color = Color.White)
-                DiscardIndicator()
+                if (discard.value != null) {
+                    if (isPressed) {
+                        TotalIndicator(tileIndex = tileIndex)
+                        Spacer(modifier = Modifier.size(7.dp))
+                    }
+                    else if (tiles[tileIndex].name == discard.value){
+                        //Text("Discard", fontSize = 10.sp, color = Color.White)
+                        DiscardIndicator()
+                    }
+                    else {
+                        Spacer(modifier = Modifier.size(30.dp))
+                    }
+                }
             }
 
         }
-        Button(onClick = { },
+        Button(
+            interactionSource = interactionSource,
+            onClick = { Log.i("kilo", "HELLO") },
             colors = ButtonDefaults.outlinedButtonColors(contentColor =  Color.Black),
             shape = RoundedCornerShape(8.dp),
             elevation =  ButtonDefaults.elevation(
@@ -289,9 +305,10 @@ fun TileButton(tileName: String, navController: NavHostController) {
                 .defaultMinSize(minWidth = 1.dp, minHeight = 1.dp)
         )
         {
+
             Image(
-                painter = painterResource(if (tileName == "") R.drawable.add else getIcon(tileName)),
-                contentDescription = tileName)
+                painter = painterResource(if (findType(tileGroup)[tileIndex].name == "") R.drawable.add else getIcon(findType(tileGroup)[tileIndex].name)),
+                contentDescription = findType(tileGroup)[tileIndex].name)
         }
     }
 
@@ -328,31 +345,55 @@ fun MainBackground(
 
 
 @Composable
-fun MainButtons(navController: NavHostController, imagePicker: ManagedActivityResultLauncher<String, Uri?>) {
+fun MainButtons(navController: NavHostController, imagePicker: ManagedActivityResultLauncher<String, Uri?>? = null, tileGroup: TileGroup) {
     Column(verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier=Modifier.fillMaxHeight()) {
+        modifier=Modifier.height(250.dp)
+    ) {
         Row(
             horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterHorizontally),
             modifier = Modifier.fillMaxWidth()
         ) {
-            if (discard.value == null) {
-                TransparentOutLinedButton(
-                    "Camera",
-                    R.drawable.camera_alt,
-                    navController,
-                    "CameraView"
-                )
-                TransparentOutLinedButton("Gallery", R.drawable.folder_alt, onClick = { imagePicker.launch("image/*") })
-                TransparentOutLinedButton(
-                    "Reset",
-                    R.drawable.reset_alt,
-                    navController,
-                    "ResetView"
-                )
+
+            if (tileGroup == TileGroup.HAND) {
+                if (discard.value == null) {
+                    TransparentOutLinedButton(
+                        text = "Camera",
+                        icon = R.drawable.camera_alt,
+                        navController = navController,
+                        destination = "CameraView/$tileGroup"
+                    )
+                    TransparentOutLinedButton("Gallery", R.drawable.folder_alt, onClick = { imagePicker?.launch("image/*") })
+                    TransparentOutLinedButton(
+                        "Reset",
+                        R.drawable.reset_alt,
+                        navController,
+                        "ResetView/$tileGroup"
+                    )
+                }
+                else {
+                    DiscardInfo()
+                }
             }
             else {
-                DiscardInfo()
+                TransparentOutLinedButton(
+                    text = "Camera",
+                    icon = R.drawable.camera_alt,
+                    navController = navController,
+                    destination = "DiscardInstructionView/${tileGroup}/${true}"
+                )
+                TransparentOutLinedButton(
+                    text = "Gallery",
+                    icon = R.drawable.folder_alt,
+                    navController = navController,
+                    destination = "DiscardInstructionView/${tileGroup}/${false}"
+                )
+                TransparentOutLinedButton(
+                    text = "Reset",
+                    icon = R.drawable.reset_alt,
+                    navController = navController,
+                    destination = "ResetView/${tileGroup}"
+                )
             }
         }
     }
@@ -369,7 +410,7 @@ fun TransparentOutLinedButton(
 
     Button(
         onClick = { navController?.navigate(destination); onClick() },
-        border = BorderStroke(0.8.dp, Color(0xff9d8eff), ),
+        border = BorderStroke(0.8.dp, Color(0xff9d8eff)),
         colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.White, backgroundColor = Color.Transparent),
         shape = RoundedCornerShape(10.dp),
         elevation =  ButtonDefaults.elevation(
@@ -397,4 +438,30 @@ fun TransparentOutLinedButton(
         }
     }
 
+}
+
+@Composable
+fun TotalIndicator(tileIndex: Int) {
+    Button(
+        onClick = { },
+        colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.White, backgroundColor = Color(0xFF00B7FF)),
+        shape = RoundedCornerShape(25.dp),
+        elevation =  ButtonDefaults.elevation(
+            defaultElevation = 10.dp,
+            pressedElevation = 15.dp,
+            disabledElevation = 0.dp
+        ),
+        contentPadding = PaddingValues(),
+        modifier = Modifier
+            .height(15.dp)
+            .width(40.dp)
+            .defaultMinSize(minWidth = 1.dp, minHeight = 1.dp)
+    )
+    {
+        if (tiles[tileIndex].name.length == 2) {
+            val number : Int = tiles[tileIndex].name[0].digitToInt()
+            val type : Char = tiles[tileIndex].name[1]
+            Text("${total_tiles[type]?.get(number - 1).toString()} / 4", fontSize = 7.sp)
+        }
+    }
 }

@@ -73,7 +73,7 @@ fun MenuButtons(navController: NavHostController) {
 
         ) {
             Spacer(modifier = Modifier.fillMaxHeight(.2f))
-            TransparentOutLinedButton(navController, "CurrentHandView","Get Started")
+            TransparentOutLinedButton(navController, "TileMenuTabs","Get Started")
             Spacer(modifier = Modifier.fillMaxHeight(.05f))
             //TransparentOutLinedButton(navController, "Guidebook", "Guidebook")
             TransparentOutLinedButton(navController, "Rulebook", "Guidebook")

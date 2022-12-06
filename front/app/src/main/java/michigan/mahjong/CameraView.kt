@@ -9,28 +9,30 @@ import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
+import androidx.compose.animation.Crossfade
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.sharp.Lens
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavHostController
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
+import michigan.mahjong.TileStore.addPartUri
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -38,6 +40,10 @@ import java.util.concurrent.Executor
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 import michigan.mahjong.TileStore.cvresult
+import michigan.mahjong.TileStore.discard
+import michigan.mahjong.TileStore.isLoading
+import michigan.mahjong.TileStore.multiple_cvresult
+import michigan.mahjong.TileStore.part_imgs
 
 @Composable
 fun CameraView(
@@ -45,8 +51,16 @@ fun CameraView(
     navController: NavHostController,
     outputDirectory: File,
     executor: Executor,
+    tileGroup: TileGroup,
     onError: (ImageCaptureException) -> Unit
 ) {
+
+    var progress by remember { mutableStateOf(0.75f) }
+    val animatedProgress = animateFloatAsState(
+        targetValue = progress,
+        animationSpec = ProgressIndicatorDefaults.ProgressAnimationSpec
+    ).value
+
     // 1
     val lensFacing = CameraSelector.LENS_FACING_BACK
     val context = LocalContext.current
@@ -61,7 +75,6 @@ fun CameraView(
 
     // 2
     LaunchedEffect(lensFacing) {
-        TileStore.cameraActive.value = true
         val cameraProvider = context.getCameraProvider()
         cameraProvider.unbindAll()
         cameraProvider.bindToLifecycle(
@@ -76,10 +89,11 @@ fun CameraView(
 
     MainBackground()
 
-    if (TileStore.isLoading.value) {
+    progress = part_imgs.size / 4f
+    if (isLoading.value) {
         LoadingAnimation()
     }
-    else if (TileStore.cameraActive.value) {
+    else {
         CameraBox(
             globalContext,
             previewView,
@@ -87,8 +101,26 @@ fun CameraView(
             navController,
             outputDirectory,
             executor,
+            tileGroup,
             onError
         )
+        Column(
+            verticalArrangement = Arrangement.Bottom,
+            modifier = Modifier.fillMaxHeight()
+        ) {
+            Row(
+                horizontalArrangement = Arrangement.Start,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Spacer(modifier = Modifier.size(15.dp))
+                Column() {
+                    CircularProgressIndicator(progress = animatedProgress)
+                    Spacer(modifier = Modifier.size(15.dp))
+                }
+
+            }
+        }
+
     }
 }
 
@@ -100,6 +132,7 @@ fun CameraBox(
     navController: NavHostController,
     outputDirectory: File,
     executor: Executor,
+    tileGroup: TileGroup,
     onError: (ImageCaptureException) -> Unit
 ) {
     // 3
@@ -107,7 +140,9 @@ fun CameraBox(
         AndroidView({ previewView }, modifier = Modifier.fillMaxSize())
 
         IconButton(
-            modifier = Modifier.padding(bottom = 20.dp, end = 20.dp).align(Alignment.CenterEnd),
+            modifier = Modifier
+                .padding(bottom = 20.dp, end = 20.dp)
+                .align(Alignment.CenterEnd),
             onClick = {
                 Log.i("kilo", "ON CLICK")
                 takePhoto(
@@ -117,6 +152,7 @@ fun CameraBox(
                     imageCapture = imageCapture,
                     outputDirectory = outputDirectory,
                     executor = executor,
+                    tileGroup = tileGroup,
                     onError = onError
                 )
             },
@@ -132,6 +168,7 @@ fun CameraBox(
                 )
             }
         )
+
     }
 }
 
@@ -142,6 +179,7 @@ private fun takePhoto(
     imageCapture: ImageCapture,
     outputDirectory: File,
     executor: Executor,
+    tileGroup: TileGroup,
     onError: (ImageCaptureException) -> Unit
 ) {
 
@@ -162,13 +200,24 @@ private fun takePhoto(
 
         override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
             val savedUri = Uri.fromFile(photoFile)
-            uri = savedUri
             Log.i("kilo", savedUri.toString())
-            MainScope().launch {
-                cvresult(globalContext, savedUri)
-                navController.popBackStack("CurrentHandView", inclusive = false)
-            }
 
+            if (tileGroup != TileGroup.HAND) {
+                addPartUri(savedUri)
+                if (part_imgs.size == 4) {
+                    MainScope().launch {
+                        multiple_cvresult(globalContext, tileGroup)
+                        navController.popBackStack("TileMenuTabs", inclusive = false)
+                    }
+                }
+            }
+            else {
+                MainScope().launch {
+                    navController.popBackStack("TileMenuTabs", inclusive = false)
+                    cvresult(globalContext, savedUri, tileGroup)
+
+                }
+            }
         }
     })
 }
