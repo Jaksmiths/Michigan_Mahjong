@@ -179,7 +179,7 @@ fun DiscardInfo() {
 
 @Composable
 fun GuideButton(navController: NavHostController) {
-    IconButton(onClick = { navController.navigate("Rulebook") },
+    IconButton(onClick = { navController.navigate("Guidebook") },
         modifier = Modifier
             .padding(13.dp)
             .border(1.dp, Color(0xff9d8eff), shape = CircleShape)

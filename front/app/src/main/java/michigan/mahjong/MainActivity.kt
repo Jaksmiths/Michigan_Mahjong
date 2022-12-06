@@ -15,12 +15,14 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.google.accompanist.pager.ExperimentalPagerApi
 
 class MainActivity : ComponentActivity() {
 
     private lateinit var fileOutputDirectory: File
     private lateinit var cameraExecutor: ExecutorService
 
+    @OptIn(ExperimentalPagerApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -48,13 +50,16 @@ class MainActivity : ComponentActivity() {
                         executor = cameraExecutor,
                     ) { Log.e("kilo", "View error:", it) }
                 }
-                composable("Rulebook"){
-                    Rulebook(this@MainActivity, navController)
-                }
+                //composable("Rulebook"){
+                    //Rulebook(this@MainActivity, navController)
+                //    Rulebook()
+                //}
                 composable("ManualTileCorrection"){
                     ManualTileCorrection(this@MainActivity, navController, "")
                 }
-
+                //composable("TabLayout"){
+                //    TabLayout()
+                //}
 
             }
         }
