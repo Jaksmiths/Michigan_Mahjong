@@ -40,6 +40,7 @@ import kotlinx.coroutines.launch
 import michigan.mahjong.TileStore.cvresult
 import michigan.mahjong.TileStore.discard
 import michigan.mahjong.TileStore.findType
+import michigan.mahjong.TileStore.recent_discards
 import michigan.mahjong.TileStore.recmove
 import michigan.mahjong.TileStore.reset
 import michigan.mahjong.TileStore.setup
@@ -93,18 +94,6 @@ fun CurrentHandView(context: Context, navController: NavHostController) {
         Spacer(modifier = Modifier.size(10.dp))
     }
 }
-
-//@Composable
-//fun DiscardIndicator() {
-//    Icon(
-//        painter = painterResource(id = R.drawable.indicator),
-//        contentDescription = "indicator icon",
-//        modifier = Modifier
-//            .size(30.dp)
-//            .rotate(90F),
-//        tint = Color.Yellow
-//    )
-//}
 
 @Composable
 fun DiscardIndicator() {
@@ -228,7 +217,7 @@ fun CalculateButton() {
 
     Button(
         onClick = { MainScope().launch { recmove() }},
-        border = BorderStroke(1.dp, Color(0xff9d8eff), ),
+        border = BorderStroke(1.dp, Color(0xff9d8eff) ),
         colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.White, backgroundColor = Color.Transparent),
         shape = RoundedCornerShape(10.dp),
         elevation =  ButtonDefaults.elevation(
@@ -280,6 +269,10 @@ fun TileButton(tileIndex: Int, navController: NavHostController, tileGroup: Tile
                         //Text("Discard", fontSize = 10.sp, color = Color.White)
                         DiscardIndicator()
                     }
+                    else if (tiles[tileIndex].name in recent_discards) {
+                        Box(modifier = Modifier.size(10.dp).clip(shape=CircleShape).background(Color(0xFF58A5F6)))
+                        Spacer(modifier = Modifier.size(7.dp))
+                    }
                     else {
                         Spacer(modifier = Modifier.size(30.dp))
                     }
@@ -289,9 +282,9 @@ fun TileButton(tileIndex: Int, navController: NavHostController, tileGroup: Tile
         }
         Button(
             interactionSource = interactionSource,
-            onClick = { 
-                tileSelected = tileName
-                navController.navigate("ManualTileCorrection") 
+            onClick = {
+                tileSelected = findType(tileGroup)[tileIndex].name
+                navController.navigate("ManualTileCorrection/${tileIndex}/${tileGroup}")
             },
             colors = ButtonDefaults.outlinedButtonColors(contentColor =  Color.Black),
             shape = RoundedCornerShape(8.dp),

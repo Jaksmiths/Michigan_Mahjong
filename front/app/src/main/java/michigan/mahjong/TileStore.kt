@@ -75,6 +75,9 @@ object TileStore: CoroutineScope by MainScope() {
     private val _discard = mutableStateOf<String?>(null);
     val discard: MutableState<String?> = _discard
 
+    private val _recent_discards = mutableStateListOf<String>();
+    val recent_discards: List<String> = _recent_discards
+
     private val _text = mutableStateOf<String?>(null);
     val text: MutableState<String?> = _text
 
@@ -144,6 +147,7 @@ object TileStore: CoroutineScope by MainScope() {
         _discard_pile.clear()
         _open_tiles.clear()
         _part_imgs.clear()
+        _recent_discards.clear()
         discard.value = null
         for (i in 0 until findGroupLimit(TileGroup.HAND)) {
             _tiles.add(Tile())
@@ -213,6 +217,23 @@ object TileStore: CoroutineScope by MainScope() {
         val rightPhoto = cvresult(context, _part_imgs[1], tileGroup, Direction.RIGHT)
         val backPhoto = cvresult(context, _part_imgs[2], tileGroup, Direction.BACK)
         val leftPhoto = cvresult(context, _part_imgs[3], tileGroup, Direction.LEFT)
+        if (tileGroup == TileGroup.DISCARD) {
+            _recent_discards.clear()
+            for (i in 0 until 2) {
+                if (frontPhoto.getOrNull(i) != null) {
+                    _recent_discards.add(frontPhoto[i])
+                }
+                if (rightPhoto.getOrNull(i) != null) {
+                    _recent_discards.add(rightPhoto[i])
+                }
+                if (backPhoto.getOrNull(i) != null) {
+                    _recent_discards.add(backPhoto[i])
+                }
+                if (leftPhoto.getOrNull(i) != null) {
+                    _recent_discards.add(leftPhoto[i])
+                }
+            }
+        }
         val result = listOf(frontPhoto,rightPhoto,backPhoto,leftPhoto).flatten()
         _part_imgs.clear()
         fillGroup(tileGroup, result)

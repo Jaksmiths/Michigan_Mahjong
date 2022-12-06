@@ -16,11 +16,8 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-<<<<<<< HEAD
 import androidx.navigation.navArgument
-=======
 import com.google.accompanist.pager.ExperimentalPagerApi
->>>>>>> 2acd9212ca337b87a33ce5b62eb39ba43f6890ce
 
 class MainActivity : ComponentActivity() {
 
@@ -34,11 +31,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             val navController = rememberNavController()
-<<<<<<< HEAD
-            NavHost(navController, startDestination = "TileMenuTabs") {
-=======
             NavHost(navController, startDestination = "MainMenuView") {
->>>>>>> 2acd9212ca337b87a33ce5b62eb39ba43f6890ce
                 composable("MainMenuView") {
                     MainMenuView(this@MainActivity, navController)
                 }
@@ -87,14 +80,29 @@ class MainActivity : ComponentActivity() {
                         }
                     ) { Log.e("kilo", "View error:", it) }
                 }
-                //composable("Rulebook"){
-                    //Rulebook(this@MainActivity, navController)
-                //    Rulebook()
-                //}
-                composable("ManualTileCorrection"){
-                    ManualTileCorrection(this@MainActivity, navController, "")
+                composable(
+                    route = "ManualTileCorrection/{tileIndex}/{tileGroup}",
+                    arguments = listOf(
+                        navArgument("tileIndex") {
+                            type = NavType.IntType
+                        },
+                        navArgument("tileGroup") {
+                            type = NavType.StringType
+                        }
+                    )
+                ){
+                    ManualTileCorrection(
+                        this@MainActivity,
+                        navController,
+                        it.arguments?.getInt("tileIndex") ?: 0,
+                        when(it.arguments?.getString("tileGroup")) {
+                            HAND_KEY -> TileGroup.HAND
+                            DISCARD_KEY -> TileGroup.DISCARD
+                            OPEN_KEY -> TileGroup.OPEN
+                            else -> TileGroup.HAND
+                        }
+                    )
                 }
-<<<<<<< HEAD
                 composable("TileMenuTabs"){
                     TileMenuTabs(this@MainActivity, navController)
                 }
@@ -128,12 +136,6 @@ class MainActivity : ComponentActivity() {
                         it.arguments?.getBoolean("usingCamera") ?: true
                     )
                 }
-=======
-                //composable("TabLayout"){
-                //    TabLayout()
-                //}
-
->>>>>>> 2acd9212ca337b87a33ce5b62eb39ba43f6890ce
             }
         }
 

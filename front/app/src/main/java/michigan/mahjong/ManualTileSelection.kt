@@ -28,12 +28,19 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import michigan.mahjong.TileStore.discard
+import michigan.mahjong.TileStore.setTile
 
 var tileSelected by mutableStateOf("")
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun ManualTileCorrection(context: Context, navController: NavHostController, currentTile: String) {
+fun ManualTileCorrection(
+    context: Context,
+    navController: NavHostController,
+    tileIndex: Int,
+    tileGroup: TileGroup
+) {
 
     var isLaunching by rememberSaveable { mutableStateOf(true) }
 
@@ -78,7 +85,7 @@ fun ManualTileCorrection(context: Context, navController: NavHostController, cur
             */
 
     var currentTiles = SuitM[0]
-    ComposableA(currentTiles, navController)
+    ComposableA(currentTiles, navController, tileIndex, tileGroup)
 
             /*
             var cardFace by remember {
@@ -137,11 +144,21 @@ fun prevSuit(s: Char): Char {
 }
 
 @Composable
-fun ComposableA(tile: String, navController: NavHostController) {
+fun ComposableA(
+    tile: String,
+    navController: NavHostController,
+    tileIndex: Int,
+    tileGroup: TileGroup
+) {
     var currentSuit by remember { mutableStateOf(tile[1]) }
 
     Row {
-        ComposableB(suit = currentSuit, navController = navController){}
+        ComposableB(
+            suit = currentSuit,
+            navController = navController,
+            tileIndex = tileIndex,
+            tileGroup = tileGroup
+        )
         Box(
             modifier = Modifier
                 .fillMaxHeight()
@@ -232,7 +249,8 @@ fun ComposableA(tile: String, navController: NavHostController) {
 fun ComposableB(
     suit: Char,
     navController: NavHostController,
-    function: () -> Unit
+    tileIndex: Int,
+    tileGroup: TileGroup
 ) {
     //var tileInfo by remember {mutableStateOf(true)}
     //val num = "1"
@@ -260,7 +278,12 @@ fun ComposableB(
                         TransparentOutLinedButton(
                             navController = navController,
                             path = "back",
-                            text = "Confirm")
+                            text = "Confirm",
+                            onClick = {
+                                setTile(tileSelected, tileGroup, tileIndex)
+                                discard.value = null
+                            }
+                        )
                     }
                     Column(
                         modifier = Modifier
@@ -321,7 +344,6 @@ fun ComposableB(
 
                 //MTCTileButtonType1("1" + suit)
             }
-            function()
 
 
             /*
