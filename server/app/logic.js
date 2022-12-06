@@ -1,3 +1,4 @@
+
 /**
  * Calculates the minimum shanten of the hand, considering a standard hand, seven pairs, or thirteen orphans.
  * @param {TileCounts} handToCheck The hand to calculate the shanten of.
@@ -502,8 +503,97 @@ function handFromSorted(sorted) {
     return hand;
 }
 
+function checkWin(originhand){
+    originhand = originhand.slice();
+    var sum = 0;
+    for(var count of originhand){
+        sum += count;
+    }
+    if(sum != 14){
+        return false;
+    }
+    // seven pairs
+    var pairCount = 0;
+    for(var k of originhand){
+       if(k % 2 == 0){
+           pairCount += k / 2;
+       }
+    }
+    if(pairCount === 7){
+        return true;
+    }
+    // thirteen orphans
+    var flag = true;
+    for(var index of [1,9,11,19,21,29,31,32,33,34,35,36,37,38]){
+        if(originhand[index] !== 1){
+            flag = false;
+            break;
+        }
+    }
+    if(flag){
+        return true;
+    }
+    // normal
+    var shun_num = 0;
+    var ke_num = 0;
+    var i = 0;
+
+    while (i <= 7){
+        if(originhand[i] >= 1 && originhand[i+1] >= 1 && originhand[i+2] >= 1){
+            originhand[i] -=  1;
+            originhand[i+1] -= 1;
+            originhand[i+2] -= 1;
+            shun_num += 1
+        }
+        i = i + 1;
+    }
+    i = 11;
+    while (i <= 17){
+        if(originhand[i] >= 1 && originhand[i+1] >= 1 && originhand[i+2] >= 1){
+            originhand[i] -=  1;
+            originhand[i+1] -= 1;
+            originhand[i+2] -= 1;
+            shun_num += 1
+        }
+        i = i + 1;
+    }
+    i = 21;
+    while (i <= 27){
+        if(originhand[i] >= 1 && originhand[i+1] >= 1 && originhand[i+2] >= 1){
+            originhand[i] -=  1;
+            originhand[i+1] -= 1;
+            originhand[i+2] -= 1;
+            shun_num += 1
+        }
+        i = i + 1;
+    }
+    for(var i = 0; i <= 37; i++){
+        if(originhand[i] == 3){
+            originhand[i] -= 3;
+            ke_num += 1;
+        }
+    }
+    if(shun_num + ke_num == 4){
+        sum = 0
+        for(var count of originhand){
+            sum += count;
+        }
+        if(sum == 2){
+            return true;
+        }
+    }
+    return false;
+}
+
 function calculateBestDiscard(originhand, discard){
     var handArray = arrayFromHand(originhand);
+    if(checkWin(handArray)){
+        return  {
+            'best': '',
+            'number': 0,
+            'tiles': ''
+        };
+    }
     var seenTiles = discard.concat(originhand);
     var remainingTilesArray = leftTiles(arrayFromHand(seenTiles))
     var ukeire = calculateDiscardUkeire(handArray, remainingTilesArray);
@@ -522,16 +612,10 @@ function calculateBestDiscard(originhand, discard){
 }
 
 
-// Test Data
-// var originhand = ["1p", "2p", "8p", "5z", "5s", "5s", "1z", "1z", "1z", "6z", "6z", "6z", "5z", "5z"];
-// var discard = ['3p']
+// The number of each tile in the player's hand.
+var originhand = ["1p", "1p", "3p", "3p", "5s", "5s", "1z", "1z", "6z", "6z", "6z", "6z", "5z", "5z"]
 
-// Receive current hand, discard pile, and open tiles from server
-var tileList = JSON.parse(process.argv[2]);
-// Player's current hand
-var originhand = tileList.hand;
-// discard pile + open tiles will be part of discard
-var discard = tileList.discard.concat(tileList.open);
+var discard = ['3p']
 
 var result = calculateBestDiscard(originhand, discard)
 var bestTile = result.best;

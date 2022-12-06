@@ -22,6 +22,21 @@ import androidx.navigation.NavHostController
 import com.google.accompanist.pager.*
 import kotlinx.coroutines.launch
 
+@Composable
+fun remainingIndicator(remain: Int, total: Int){
+    Box(
+        modifier = Modifier.width(40.dp).height(15.dp)
+        .clip(RoundedCornerShape(20.dp)).background(Color.Blue),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = remain.toString() + " / " + total.toString(),
+            color = Color(0xff9d8eff),
+            fontSize = 12.sp,
+        )
+    }
+}
+
 /*
 @OptIn(ExperimentalUnitApi::class)
 @ExperimentalPagerApi
