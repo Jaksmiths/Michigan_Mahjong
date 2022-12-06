@@ -141,7 +141,7 @@ def get_median(float_list):
 """Returns list of tiles found in inputted image, ordered from left to right and top to bottom, given direction that the image is facing"""
 def get_tiles(image_name, direction='up'):
     # Model
-    model = torch.hub.load('ultralytics/yolov5', 'custom', path='/home/ubuntu/Michigan_Mahjong/server/app/oldModel.pt', _verbose=True)
+    model = torch.hub.load('ultralytics/yolov5', 'custom', path='/home/ubuntu/Michigan_Mahjong/server/app/best.pt', _verbose=True)
 
     # Images
     im = Image.open(image_name)  # PIL image

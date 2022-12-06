@@ -573,7 +573,7 @@ function checkWin(originhand){
             ke_num += 1;
         }
     }
-    if(shun_num + ke_num == 4){
+    if(shun_num + ke_num == 4 && && pairCount >= 1){
         sum = 0
         for(var count of originhand){
             sum += count;
@@ -612,10 +612,16 @@ function calculateBestDiscard(originhand, discard){
 }
 
 
-// The number of each tile in the player's hand.
-var originhand = ["5m", "6m", "7p", "2p", "3p", "4p", "5p", "6p", "7z", "3s", "3s", "5z", "6s", "7s"]
+// Test Data
+// var originhand = ["5m", "6m", "7p", "2p", "3p", "4p", "5p", "6p", "7z", "3s", "3s", "5z", "6s", "7s"]
+// var discard = ['3p']
 
-var discard = ['3p']
+// Receive current hand, discard pile, and open tiles from server
+var tileList = JSON.parse(process.argv[2]);
+// Player's current hand
+var originhand = tileList.hand;
+// discard pile + open tiles will be part of discard
+var discard = tileList.discard.concat(tileList.open);
 
 var result = calculateBestDiscard(originhand, discard)
 var bestTile = result.best;
