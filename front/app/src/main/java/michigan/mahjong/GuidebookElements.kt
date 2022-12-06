@@ -152,10 +152,8 @@ fun StrategyGuide() {
 
     MainBackground()
 
-    //temp
-    Column() {
-        Text(text = "Strategy")
-    }
+    remainingIndicator(3, 4)
+
 }
 
 
