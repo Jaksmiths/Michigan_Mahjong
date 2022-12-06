@@ -12,10 +12,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBackIos
-import androidx.compose.material.icons.filled.ArrowForwardIos
-import androidx.compose.material.icons.filled.ChevronLeft
-import androidx.compose.material.icons.filled.ChevronRight
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -81,7 +78,7 @@ fun ManualTileCorrection(context: Context, navController: NavHostController, cur
             */
 
     var currentTiles = SuitM[0]
-    ComposableA(currentTiles)
+    ComposableA(currentTiles, navController)
 
             /*
             var cardFace by remember {
@@ -140,11 +137,11 @@ fun prevSuit(s: Char): Char {
 }
 
 @Composable
-fun ComposableA(tile: String) {
+fun ComposableA(tile: String, navController: NavHostController) {
     var currentSuit by remember { mutableStateOf(tile[1]) }
 
     Row {
-        ComposableB(suit = currentSuit){}
+        ComposableB(suit = currentSuit, navController = navController){}
         Box(
             modifier = Modifier
                 .fillMaxHeight()
@@ -195,13 +192,13 @@ fun ComposableA(tile: String) {
                             currentSuit = prevSuit(currentSuit)
                         })
                     {
-                        Icon(Icons.Filled.ArrowBackIos, "", tint = Color.White)
+                        Icon(Icons.Filled.ArrowBackIosNew, "", tint = Color.White)
                         //chevron_right
                         //chevron_left
                     }
                     MTCTileButtonType2("1" + currentSuit)
                     IconButton(
-                        modifier = Modifier.fillMaxWidth(.12f)
+                        modifier = Modifier.fillMaxWidth(.26f)
                             .padding(2.dp),
                         onClick = {
                             currentSuit = nextSuit(currentSuit)
@@ -234,6 +231,7 @@ fun ComposableA(tile: String) {
 @Composable
 fun ComposableB(
     suit: Char,
+    navController: NavHostController,
     function: () -> Unit
 ) {
     //var tileInfo by remember {mutableStateOf(true)}
@@ -259,7 +257,10 @@ fun ComposableB(
                     ) {
                         MTCTileButtonType2(tileSelected)
                         Spacer(modifier=Modifier.fillMaxHeight(0.1f))
-                        TransparentOutLinedButton(navController = null, path = "", text = "Confirm")
+                        TransparentOutLinedButton(
+                            navController = navController,
+                            path = "back",
+                            text = "Confirm")
                     }
                     Column(
                         modifier = Modifier

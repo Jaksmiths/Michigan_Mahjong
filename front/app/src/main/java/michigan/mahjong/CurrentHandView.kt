@@ -189,7 +189,6 @@ fun DiscardInfo() {
 }
 
 
-
 @Composable
 fun ResetButton(navController: NavHostController) {
 
@@ -290,7 +289,10 @@ fun TileButton(tileIndex: Int, navController: NavHostController, tileGroup: Tile
         }
         Button(
             interactionSource = interactionSource,
-            onClick = { Log.i("kilo", "HELLO") },
+            onClick = { 
+                tileSelected = tileName
+                navController.navigate("ManualTileCorrection") 
+            },
             colors = ButtonDefaults.outlinedButtonColors(contentColor =  Color.Black),
             shape = RoundedCornerShape(8.dp),
             elevation =  ButtonDefaults.elevation(

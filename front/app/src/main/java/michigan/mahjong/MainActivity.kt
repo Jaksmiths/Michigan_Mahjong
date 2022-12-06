@@ -16,20 +16,29 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+<<<<<<< HEAD
 import androidx.navigation.navArgument
+=======
+import com.google.accompanist.pager.ExperimentalPagerApi
+>>>>>>> 2acd9212ca337b87a33ce5b62eb39ba43f6890ce
 
 class MainActivity : ComponentActivity() {
 
     private lateinit var fileOutputDirectory: File
     private lateinit var cameraExecutor: ExecutorService
 
+    @OptIn(ExperimentalPagerApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
 
         setContent {
             val navController = rememberNavController()
+<<<<<<< HEAD
             NavHost(navController, startDestination = "TileMenuTabs") {
+=======
+            NavHost(navController, startDestination = "MainMenuView") {
+>>>>>>> 2acd9212ca337b87a33ce5b62eb39ba43f6890ce
                 composable("MainMenuView") {
                     MainMenuView(this@MainActivity, navController)
                 }
@@ -78,12 +87,14 @@ class MainActivity : ComponentActivity() {
                         }
                     ) { Log.e("kilo", "View error:", it) }
                 }
-                composable("Rulebook"){
-                    Rulebook(this@MainActivity, navController)
-                }
+                //composable("Rulebook"){
+                    //Rulebook(this@MainActivity, navController)
+                //    Rulebook()
+                //}
                 composable("ManualTileCorrection"){
                     ManualTileCorrection(this@MainActivity, navController, "")
                 }
+<<<<<<< HEAD
                 composable("TileMenuTabs"){
                     TileMenuTabs(this@MainActivity, navController)
                 }
@@ -117,6 +128,12 @@ class MainActivity : ComponentActivity() {
                         it.arguments?.getBoolean("usingCamera") ?: true
                     )
                 }
+=======
+                //composable("TabLayout"){
+                //    TabLayout()
+                //}
+
+>>>>>>> 2acd9212ca337b87a33ce5b62eb39ba43f6890ce
             }
         }
 

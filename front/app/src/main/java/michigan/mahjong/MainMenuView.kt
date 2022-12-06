@@ -76,7 +76,7 @@ fun MenuButtons(navController: NavHostController) {
             TransparentOutLinedButton(navController, "TileMenuTabs","Get Started")
             Spacer(modifier = Modifier.fillMaxHeight(.05f))
             //TransparentOutLinedButton(navController, "Guidebook", "Guidebook")
-            TransparentOutLinedButton(navController, "Rulebook", "Guidebook")
+            TransparentOutLinedButton(navController, "Guidebook", "Guidebook")
         }
     }
 
@@ -86,7 +86,10 @@ fun MenuButtons(navController: NavHostController) {
 fun TransparentOutLinedButton(navController: NavHostController?, path: String, text: String) {
 
     Button(
-        onClick = { navController?.navigate(path) },
+        onClick = {
+            if (path == "back") navController?.popBackStack()
+            else navController?.navigate(path)
+                  },
         border = BorderStroke(0.8.dp, Color(0xff9d8eff), ),
         colors = ButtonDefaults.outlinedButtonColors(contentColor = Color(0xff9d8eff), backgroundColor = Color.Transparent),
         shape = RoundedCornerShape(20.dp),

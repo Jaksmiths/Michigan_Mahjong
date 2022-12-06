@@ -6,8 +6,8 @@ import json
 import os, time
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
-from .logic import cal_result
 from .inference import get_tiles
+from nodejs import node
 
 
 def invalidlocation(location):
@@ -32,10 +32,10 @@ def getcvresult(request):
     #if invalidlocation(location):
     #    print("wrong location")
     #    return HttpResponse(status=500)
-
-    # replace tmp value with a call to CV
-    # REMOVE tiles = ["4z", "2z", "3s", "2s", "3p", "4s", "8p", "2p", "1m", "5m", "8p", "6m", "5z", "3m"]
-    tiles = get_tiles("/home/ubuntu/Michigan_Mahjong/server/media/" + filename)
+    
+    # default direction is up
+    direction = request.POST.get("direction") if request.POST.get("direction") else "up"
+    tiles = get_tiles("/home/ubuntu/Michigan_Mahjong/server/media/" + filename, direction)
     fs.delete(filename)
 
     return JsonResponse({"tile_list": tiles})
@@ -51,7 +51,7 @@ def getrecmove(request):
         return HttpResponse(status=400)
     
     # discard pile and open tiles are optional
-    discard_pile, open_tiles = None, None
+    discard_pile, open_tiles = [], []
     for location in tile_list.keys():
         if invalidlocation(location):
             return HttpResponse(status=400)
@@ -60,10 +60,18 @@ def getrecmove(request):
         elif location == "open":
             open_tiles = tile_list["open"]
 
-    # replace tmp value with call to GameLogic
-    #discard_pile = tile_list["discard"] if "discard" in tile_list.keys() else None
-    #open_tiles = tile_list["open"] if "open" in tile_list.keys() else None
-    text = "THIS IS A TEMP PLACEHOLDER GOOD MOVE! :^)"
-    tile = cal_result(tile_list["hand"], discard_pile, open_tiles)
+    # force initialize discard and open keys before passing the tile_list to Game Logic
+    tile_list["discard"] = discard_pile
+    tile_list["open"] = open_tiles
+    result = node.run(["app/logic.js", json.dumps(tile_list)], capture_output=True, text=True)
+
+    if result.returncode != 0:
+        return HttpResponse(status=500)
+    else:
+        print(result.stdout)
+        consolelog_list = result.stdout.split("\n")
+        # extract recommended best discard tile
+        tile = consolelog_list[1].split(":")[1].strip()
+        text = consolelog_list[2]
 
     return JsonResponse({"tile": tile, "text": text})
