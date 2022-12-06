@@ -127,6 +127,6 @@ STATIC_ROOT = BASE_DIR / 'static'   # added line
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-MEDIA_URL = 'https://3.139.106.242/media/'
+MEDIA_URL = 'https://18.222.50.157/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 DATA_UPLOAD_MAX_MEMORY_SIZE = 10485760
