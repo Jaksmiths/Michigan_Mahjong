@@ -32,10 +32,9 @@ def getcvresult(request):
     #if invalidlocation(location):
     #    print("wrong location")
     #    return HttpResponse(status=500)
-
-    # replace tmp value with a call to CV
-    # REMOVE tiles = ["4z", "2z", "3s", "2s", "3p", "4s", "8p", "2p", "1m", "5m", "8p", "6m", "5z", "3m"]
-    direction = request.POST.get("direction")
+    
+    # default direction is up
+    direction = request.POST.get("direction") if request.POST.get("direction") else "up"
     tiles = get_tiles("/home/ubuntu/Michigan_Mahjong/server/media/" + filename, direction)
     fs.delete(filename)
 
@@ -61,8 +60,6 @@ def getrecmove(request):
         elif location == "open":
             open_tiles = tile_list["open"]
 
-    #text = "THIS IS A TEMP PLACEHOLDER GOOD MOVE! :^)"
-    #tile = cal_result(tile_list["hand"], discard_pile, open_tiles)
     # force initialize discard and open keys before passing the tile_list to Game Logic
     tile_list["discard"] = discard_pile
     tile_list["open"] = open_tiles
