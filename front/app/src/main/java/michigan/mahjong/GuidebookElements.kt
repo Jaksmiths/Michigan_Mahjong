@@ -171,6 +171,36 @@ fun StrategyGuide() {
 
 }
 
+@Composable
+fun Credits(){
+    var isLaunching by rememberSaveable { mutableStateOf(true) }
+
+    LaunchedEffect(Unit) {
+        if (isLaunching) {
+            isLaunching = false
+        }
+    }
+
+    val scrollStateVertical = rememberScrollState()
+    var isRefreshing by remember { mutableStateOf(false) }
+
+    MainBackground()
+
+    //remainingIndicator(3, 4)
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(state = scrollStateVertical)
+            .fillMaxWidth(1f),
+        //verticalArrangement = Arrangement.Center,
+        verticalArrangement = Arrangement.spacedBy(10.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ){
+        Spacer(modifier = Modifier.height(10.dp))
+        Rule("Credits", "", null)
+    }
+
+}
 
 @Composable
 fun Rule(title: String, text: String, image: Int?) {

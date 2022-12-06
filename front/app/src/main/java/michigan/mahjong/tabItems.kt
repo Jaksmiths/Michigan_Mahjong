@@ -22,21 +22,6 @@ import androidx.navigation.NavHostController
 import com.google.accompanist.pager.*
 import kotlinx.coroutines.launch
 
-@Composable
-fun remainingIndicator(remain: Int, total: Int){
-    Box(
-        modifier = Modifier.width(40.dp).height(15.dp)
-        .clip(RoundedCornerShape(20.dp)).background(Color.Blue),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(
-            text = remain.toString() + " / " + total.toString(),
-            color = Color(0xff9d8eff),
-            fontSize = 12.sp,
-        )
-    }
-}
-
 /*
 @OptIn(ExperimentalUnitApi::class)
 @ExperimentalPagerApi
@@ -68,7 +53,7 @@ fun GuideTabs(pagerState: PagerState) {
     //context: Context, navController: NavHostController
     //var selectedIndex by rememberSaveable { mutableStateOf(0) }
 
-    val list = listOf("Rulebook", "Strategy Guide")
+    val list = listOf("Rulebook", "Strategy Guide", "Credits")
 
     val scope = rememberCoroutineScope()
 
@@ -79,7 +64,7 @@ fun GuideTabs(pagerState: PagerState) {
         modifier = Modifier
             .padding(vertical = 4.dp, horizontal = 8.dp)
             .padding(1.dp)
-            .width(360.dp),
+            .width(480.dp),
         indicator = { tabPositions: List<TabPosition> ->
             //Box {}
             TabRowDefaults.Indicator(
@@ -131,21 +116,12 @@ fun GuideTabs(pagerState: PagerState) {
 @ExperimentalPagerApi
 @Composable
 fun GuideTabsContent(pagerState: PagerState) {
-    // on below line we are creating
-    // horizontal pager for our tab layout.
-    HorizontalPager(state = pagerState, count = 2) {
-        // on below line we are specifying
-        // the different pages.
+    HorizontalPager(state = pagerState, count = 3) {
             page ->
         when (page) {
-            // on below line we are calling tab content screen
-            // and specifying data as Home Screen.
             0 -> Rulebook()
-            // on below line we are calling tab content screen
-            // and specifying data as Shopping Screen.
             1 -> StrategyGuide()
-            // on below line we are calling tab content screen
-            // and specifying data as Settings Screen.
+            2 -> Credits()
         }
     }
 }
