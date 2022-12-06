@@ -201,4 +201,9 @@
 		Ura-dora is when winning using Riichi, the rest of the tiles in dead wall can be used
 		as Dora indicators.
 	</string>
+	<string name="strat_yaku">
+		Riichi is the easiest Yaku to achieve. It is difficult to get a Yaku with an open hand
+		unless you already have Yaku. Otherwise, stealing to complete a Yaku is a way to
+		guarantee Yaku along with giving yourself more available moves to make.
+	</string>
 </resources>

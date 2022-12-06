@@ -148,11 +148,26 @@ fun StrategyGuide() {
         }
     }
 
+    val scrollStateVertical = rememberScrollState()
     var isRefreshing by remember { mutableStateOf(false) }
 
     MainBackground()
 
-    remainingIndicator(3, 4)
+    //remainingIndicator(3, 4)
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(state = scrollStateVertical)
+            .fillMaxWidth(1f),
+        //verticalArrangement = Arrangement.Center,
+        verticalArrangement = Arrangement.spacedBy(10.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ){
+        Spacer(modifier = Modifier.height(10.dp))
+        Rule("Introduction", "", null)
+        Rule("Steal to complete a Yaku", stringResource(R.string.strat_yaku), null)
+    }
+
 
 }
 
