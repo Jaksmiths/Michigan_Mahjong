@@ -91,43 +91,43 @@ fun Tabs(navController: NavHostController, pagerState: PagerState) {
 
     val scope = rememberCoroutineScope()
 
-    Row() {
-        ScrollableTabRow(
+    TabRow(
 
-            selectedTabIndex = pagerState.currentPage,
-            edgePadding = 0.dp,
-            modifier = Modifier.width(719.dp),
+        selectedTabIndex = pagerState.currentPage,
+        modifier = Modifier
+            .padding(vertical = 4.dp, horizontal = 8.dp)
+            .padding(1.dp)
+            .width(480.dp),
 
-            backgroundColor = Color.Transparent,
+        backgroundColor = Color.Transparent,
 
-            indicator = { tabPositions ->
+        indicator = { tabPositions ->
 
-                TabRowDefaults.Indicator(
-                    Modifier.pagerTabIndicatorOffset(pagerState, tabPositions),
-                    height = 2.dp,
-                    color = Color(0xff9d8eff)
-                )
-            }
-        ) {
-
-            list.forEachIndexed { index, _ ->
-                Tab(
-                    text = {
-                        Text(
-                            list[index].first,
-                            color = if (pagerState.currentPage == index) Color(0xff9d8eff) else Color.LightGray
-                        )
-                    },
-                    selected = pagerState.currentPage == index,
-                    onClick = {
-                        scope.launch {
-                            pagerState.animateScrollToPage(index)
-                        }
-                    }
-                )
-            }
-
+            TabRowDefaults.Indicator(
+                Modifier.pagerTabIndicatorOffset(pagerState, tabPositions),
+                height = 2.dp,
+                color = Color(0xff9d8eff)
+            )
         }
+    ) {
+
+        list.forEachIndexed { index, _ ->
+            Tab(
+                text = {
+                    Text(
+                        list[index].first,
+                        color = if (pagerState.currentPage == index) Color(0xff9d8eff) else Color.LightGray
+                    )
+                },
+                selected = pagerState.currentPage == index,
+                onClick = {
+                    scope.launch {
+                        pagerState.animateScrollToPage(index)
+                    }
+                }
+            )
+        }
+
     }
 
 
