@@ -591,7 +591,7 @@ function calculateBestDiscard(originhand, discard, open){
         return  {
             'best': '',
             'number': 0,
-            'tiles': ''
+            'tiles': 'nothing'
         };
     }
     var seenTiles = discard.concat(originhand).concat(open);
@@ -600,7 +600,7 @@ function calculateBestDiscard(originhand, discard, open){
     var bestTile = evaluateBestDiscard(ukeire);
     var text = getTileAsText(bestTile);
     if(ukeire[bestTile].tiles.length == 0){
-        var listenTiles = "";
+        var listenTiles = "nothing";
     } else {
         var listenTiles = ukeire[bestTile].tiles.map(function (tile){
             return getTileAsText(tile);
@@ -617,10 +617,10 @@ function calculateBestDiscard(originhand, discard, open){
 
 
 // The number of each tile in the player's hand.
-var originhand = ["1p", "1p", "3p", "3p", "5s", "5s", "1z", "1z", "6z", "6z", "6z", "6z", "5z", "5z"]
+var originhand = ["1p", "2p", "4s", "5s", "6s", "1s", "1z", "1z", "6z", "6z", "6z", "6z", "5z", "5z"]
 
 var discard = ['3p']
-
+var open = ['5p']
 var result = calculateBestDiscard(originhand, discard, open)
 var bestTile = result.best;
 var listenTiles = result.tiles;
