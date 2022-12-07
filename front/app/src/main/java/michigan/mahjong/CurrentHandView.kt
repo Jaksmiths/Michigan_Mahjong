@@ -338,7 +338,7 @@ fun TileButton(tileIndex: Int, navController: NavHostController, tileGroup: Tile
 
 @Composable
 fun MainBackground(
-    @DrawableRes backgroundDrawableResId: Int = R.drawable.background,
+    @DrawableRes backgroundDrawableResId: Int = R.drawable.main_background,
     contentDescription: String? = "mainBackground",
     modifier: Modifier = Modifier,
     alignment: Alignment = Alignment.BottomStart,
