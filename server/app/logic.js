@@ -616,11 +616,18 @@ function calculateBestDiscard(originhand, discard, open){
 }
 
 
-// The number of each tile in the player's hand.
-var originhand = ["1p", "2p", "4s", "5s", "6s", "1s", "1z", "1z", "6z", "6z", "6z", "6z", "5z", "5z"]
+// Test Data
+// var originhand = ["1p", "2p", "4s", "5s", "6s", "1s", "1z", "1z", "6z", "6z", "6z", "6z", "5z", "5z"]
+// var discard = ['3p']
+// var open = ['5p']
 
-var discard = ['3p']
-var open = ['5p']
+// Receive current hand, discard pile, and open tiles from server
+var tileList = JSON.parse(process.argv[2]);
+// Player's current hand
+var originhand = tileList.hand;
+var discard = tileList.discard;
+var open = tileList.open;
+
 var result = calculateBestDiscard(originhand, discard, open);
 var bestTile = result.best;
 var listenTiles = result.tiles;
