@@ -194,8 +194,9 @@ fun Credits(){
         Rule("Credits",
             "Made by Michigan Mahjong of EECS 441, Fall 2022. " +
                     "Team Members: Pei Ying Goh, Jingfeng Guo, Christopher Jiang, " +
-                    "Jake Smith, Michelle Ross, Raymen Shu, Hui Yoo.\n" +
-                    "Visit at https://github.com/Jaksmiths/Michigan_Mahjong",
+                    "Jake Smith, Michelle Ross, Raymen Shu, Hui Yoo. Special thanks" +
+                    "to Professor Sugih Jamin.\n" +
+                    "For more info, visit at https://github.com/Jaksmiths/Michigan_Mahjong",
             null)
     }
 
