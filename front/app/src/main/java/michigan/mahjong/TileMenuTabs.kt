@@ -67,10 +67,14 @@ fun TileMenuTabs(context: Context, navController: NavHostController) {
 @Composable
 fun TabLayout(context: Context, navController: NavHostController, pagerState: PagerState, imagePicker: ManagedActivityResultLauncher<String, Uri?>) {
 
-    Column(
-        modifier = Modifier.background(Color.Transparent)
-    ) {
-        Tabs(navController, pagerState = pagerState)
+    Column() {
+        Row(
+            modifier = Modifier.fillMaxWidth(1f).background(Color.Transparent),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Tabs(navController, pagerState = pagerState)
+            GuideButton(navController)
+        }
         TabsContent(context, navController, pagerState, imagePicker)
     }
 }
@@ -86,8 +90,6 @@ fun Tabs(navController: NavHostController, pagerState: PagerState) {
     )
 
     val scope = rememberCoroutineScope()
-
-
 
     Row() {
         ScrollableTabRow(
@@ -126,7 +128,6 @@ fun Tabs(navController: NavHostController, pagerState: PagerState) {
             }
 
         }
-        GuideButton(navController)
     }
 
 

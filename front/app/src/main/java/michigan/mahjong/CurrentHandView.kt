@@ -341,7 +341,7 @@ fun MainBackground(
     @DrawableRes backgroundDrawableResId: Int = R.drawable.background,
     contentDescription: String? = "mainBackground",
     modifier: Modifier = Modifier,
-    alignment: Alignment = Alignment.BottomStart,
+    alignment: Alignment = Alignment.Center,
     contentScale: ContentScale = ContentScale.Fit,
     alpha: Float = 1.1f,
     colorFilter: ColorFilter? = null

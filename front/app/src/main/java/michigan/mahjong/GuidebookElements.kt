@@ -39,7 +39,8 @@ fun Guidebook(context: Context, navController: NavHostController) {
 
     val pagerState = rememberPagerState(0)
 
-    //MainBackground()
+    MainBackground()
+
     //CustomTabs(context, navController)
     //Rulebook(context, navController)
     Column() {
@@ -73,7 +74,6 @@ fun Rulebook() {
     val scrollStateVertical = rememberScrollState()
 
     //background from CurrentHandView.kt
-    MainBackground()
     //CustomTabs(context, navController)
 
     Column(
@@ -141,8 +141,6 @@ fun StrategyGuide() {
     val scrollStateVertical = rememberScrollState()
     var isRefreshing by remember { mutableStateOf(false) }
 
-    MainBackground()
-
     //remainingIndicator(3, 4)
     Column(
         modifier = Modifier
@@ -177,8 +175,6 @@ fun Credits(){
 
     val scrollStateVertical = rememberScrollState()
     var isRefreshing by remember { mutableStateOf(false) }
-
-    MainBackground()
 
     //remainingIndicator(3, 4)
     Column(
