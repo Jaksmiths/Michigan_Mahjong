@@ -574,15 +574,14 @@ function checkWin(originhand){
         }
     }
     if(shun_num + ke_num == 4){
-        sum = 0
         for(var count of originhand){
-            sum += count;
-        }
-        if(sum == 2){
-            return true;
+            if(count==2){
+                return true;
+            }
         }
     }
     return false;
+    
 }
 
 function calculateBestDiscard(originhand, discard, open){
