@@ -134,6 +134,7 @@ object TileStore: CoroutineScope by MainScope() {
     fun setTile(name: String, groupType: TileGroup, index: Int) {
         val group = findGroupType(groupType)
         group[index].name = name
+        _recent_discards.clear()
     }
 
     fun setup() {

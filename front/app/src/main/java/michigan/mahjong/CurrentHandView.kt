@@ -343,7 +343,7 @@ fun MainBackground(
     modifier: Modifier = Modifier,
     alignment: Alignment = Alignment.BottomStart,
     contentScale: ContentScale = ContentScale.Fit,
-    alpha: Float = 0.7f,
+    alpha: Float = 1.1f,
     colorFilter: ColorFilter? = null
 ) {
     Box(
