@@ -1,1 +1,11 @@
 /server/env
+
+/server/static
+
+/server/db.sqlite3
+
+/server/routing/__pycache__
+/server/app/__pycache__
+
+/server/media
+/server/app/logic2.js
