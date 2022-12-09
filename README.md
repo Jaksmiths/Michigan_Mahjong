@@ -4,8 +4,8 @@
 |:-----:|:-----:|:--------:|
 |[<img src="https://eecs441.eecs.umich.edu/img/admin/video.png">][video_page]|[<img src="https://eecs441.eecs.umich.edu/img/admin/wiki.png">][wiki_page]|[<img src="https://eecs441.eecs.umich.edu/img/admin/trello.png">][agile_page]|
 
-![Elevator Pitch](https://user-images.githubusercontent.com/70667577/206577355-1c04aa01-491b-4434-aaef-9be66d9cef22.png)
-![Team](https://user-images.githubusercontent.com/70667577/206577527-4cc68548-b5b6-4c33-973a-7893fa36df44.png)
+![Elevator Pitch](https://user-images.githubusercontent.com/70667577/206756755-a7c186f5-a961-4e90-9172-a7924c2c16f3.png)
+![Team](https://user-images.githubusercontent.com/70667577/206757044-839b2259-f00e-4173-81b7-05b8f92f7280.png)
 
 [video_page]: https://youtu.be/HPRBmXOjGPI
 [wiki_page]: https://github.com/Jaksmiths/Michigan_Mahjong/wiki
