@@ -89,7 +89,7 @@ object TileStore: CoroutineScope by MainScope() {
 
     private val nFields = Tile::class.declaredMemberProperties.size
 
-    private const val serverUrl = "https://18.222.50.157/"
+    private const val serverUrl = "https://YOUR IP/"
 
     private val retrofit = Retrofit.Builder()
         .baseUrl(serverUrl)
