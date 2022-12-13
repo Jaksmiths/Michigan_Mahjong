@@ -1,4 +1,4 @@
-# UM EECS441§3&4 F22 Michigan Mahjong
+# UM EECS441 F22 Michigan Mahjong
 
 | Video  |  Wiki |  Trello  |
 |:-----:|:-----:|:--------:|
